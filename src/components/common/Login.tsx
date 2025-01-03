@@ -1,31 +1,31 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+// import { useNavigate } from 'react-router-dom';
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 
 const Login = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Implement login logic
     console.log('Login:', { email, password });
     // For demo purposes, navigate to donor dashboard
-    navigate('/donor');
+    // navigate('/donor');
   };
 
   return (
     <Card className="w-full max-w-md mx-auto mt-8">
       <CardHeader>
-        <CardTitle>Login</CardTitle>
+        <CardTitle style={{ textAlign: 'left'}}>Login</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
+          <div className="space-y-2 text-left">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
@@ -35,7 +35,7 @@ const Login = () => {
               required
             />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-2 text-left">
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
