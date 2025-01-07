@@ -19,7 +19,7 @@ const Login = () => {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto mt-8">
+    <Card className="w-full max-w-md mx-auto my-auto">
       <CardHeader>
         <CardTitle style={{ textAlign: 'left'}}>Login</CardTitle>
       </CardHeader>

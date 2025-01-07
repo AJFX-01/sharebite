@@ -20,16 +20,36 @@ const Signup = () => {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto mt-8">
+    <Card className="w-full max-w-md mx-auto my-auto h-fit items-center">
       <CardHeader>
-        <CardTitle style={{ textAlign: 'left'}}>Register</CardTitle>
+        <CardTitle style={{ textAlign: 'left', fontSize: 14}}>Register</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2 text-left">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="firstname">Username</Label>
             <Input
-              id="name"
+              id="username"
+              type="text"
+              value={name}
+              onChange={(e: { target: { value: SetStateAction<string>; }; }) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="space-y-2 text-left">
+            <Label htmlFor="firstname">First Name</Label>
+            <Input
+              id="firstname"
+              type="text"
+              value={name}
+              onChange={(e: { target: { value: SetStateAction<string>; }; }) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="space-y-2 text-left">
+            <Label htmlFor="lastname">Last Name</Label>
+            <Input
+              id="lastname"
               type="text"
               value={name}
               onChange={(e: { target: { value: SetStateAction<string>; }; }) => setName(e.target.value)}
