@@ -1,20 +1,35 @@
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import { SigupFormData } from '../../types';
 
 const Signup = () => {
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [formData, setFornData] = useState<SigupFormData>({
+    username: '',
+    firstname: "",
+    lastname: '',
+    email: "",
+    password: '',
+    confirmpassword: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>  {
+    const { name, value } = e.target;
+
+    setFornData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  }
   // const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Implement registration logic
-    console.log('Register:', { name, email, password });
+    // console.log('Register:', { name, email, password });
     // For demo purposes, navigate to login page
     // navigate('/');
   };
@@ -32,8 +47,8 @@ const Signup = () => {
               <Input
                 id="username"
                 type="text"
-                value={name}
-                onChange={(e: { target: { value: SetStateAction<string>; }; }) => setName(e.target.value)}
+                value={formData.username}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -42,8 +57,8 @@ const Signup = () => {
               <Input
                 id="firstname"
                 type="text"
-                value={name}
-                onChange={(e: { target: { value: SetStateAction<string>; }; }) => setName(e.target.value)}
+                value={formData.lastname}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -52,8 +67,8 @@ const Signup = () => {
               <Input
                 id="lastname"
                 type="text"
-                value={name}
-                onChange={(e: { target: { value: SetStateAction<string>; }; }) => setName(e.target.value)}
+                value={formData.lastname}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -62,8 +77,8 @@ const Signup = () => {
               <Input
                 id="email"
                 type="email"
-                value={email}
-                onChange={(e: { target: { value: SetStateAction<string>; }; }) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -72,8 +87,8 @@ const Signup = () => {
               <Input
                 id="password"
                 type="password"
-                value={password}
-                onChange={(e: { target: { value: SetStateAction<string>; }; }) => setPassword(e.target.value)}
+                value={formData.password}
+                onChange={handleChange}
                 required
               />
             </div>

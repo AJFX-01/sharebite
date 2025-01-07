@@ -4,6 +4,11 @@ export interface LoginFormData {
 }
 
 
-export const sigupFormData {
-  
+export interface SigupFormData {
+  username: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  confirmpassword: string;
 }
