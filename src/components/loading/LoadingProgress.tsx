@@ -1,89 +1,29 @@
-import { Box, Portal } from '@mui/material';
-import { keyframes } from '@mui/system';
+import { Stack, StackProps } from '@mui/material';
 
-const rotate = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(1turn);
-  }
-`;
+import LinearProgress from '@mui/material/LinearProgress';
 
-const rotateOpacity = keyframes`
-  0% {
-    transform: rotate(0deg);
-    opacity: 0.1;
-  }
-  100% {
-    transform: rotate(1turn);
-    opacity: 1;
-  }
-`;
+// ----------------------------------------------------------------------
 
-const Spinner = () => {
-  return (
-    <Portal>
-      <Box
-        sx={{
-          position: 'relative',
-          display: 'flex',
-          height: '100vh',
-          width: '100%',
-        }}
-      >
-        <Box
-          sx={{
-            position: 'absolute',
-            left: 'calc(50% - 35px)',
-            top: '50%',
-            width: '55px',
-            height: '55px',
-            borderRadius: '50%',
-            boxSizing: 'border-box',
-            border: '3px solid transparent',
-          }}
-        >
-          <Box
-            sx={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              border: '3px solid transparent',
-              borderLeft: '3px solid #2962ff',
-              borderRadius: '50%',
-              boxSizing: 'border-box',
-              animation: `${rotate} 1s ease infinite`,
-            }}
-          />
-          <Box
-            sx={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              border: '3px solid transparent',
-              borderLeft: '3px solid #2962ff',
-              borderRadius: '50%',
-              boxSizing: 'border-box',
-              animation: `${rotateOpacity} 1s ease infinite 0.1s`,
-            }}
-          />
-          <Box
-            sx={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              border: '3px solid transparent',
-              borderLeft: '3px solid #2962ff',
-              borderRadius: '50%',
-              boxSizing: 'border-box',
-              animation: `${rotateOpacity} 1s ease infinite 0.2s`,
-            }}
-          />
-        </Box>
-      </Box>
-    </Portal>
+const LoadingProgress = ({ sx, ...other }: StackProps) => {
+  const content = (
+    <Stack
+      sx={{
+        px: 5,
+        width: 1,
+        flexGrow: 1,
+        minHeight: 1,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        ...sx,
+      }}
+      {...other}
+    >
+      <LinearProgress color="primary" sx={{ width: 1, maxWidth: 360 }} />
+    </Stack>
   );
+
+  return content;
 };
 
-export default Spinner;
+export default LoadingProgress;
