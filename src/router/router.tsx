@@ -7,6 +7,10 @@ import App from 'App';
 /* ---------------- Lazy loads various components ------------------------- */
 const SignupPage = lazy(() => import('pages/authentication/signup'));
 const LoginPage = lazy(() => import('pages/authentication/login'));
+
+
+const Spinner = lazy(() => import('components/loading/Spinner'));
+const LoadingProgress = lazy(() => import('components/loading/LoadingProgress'));
 /* -------------------------------------------------------------------------- */
 
 
@@ -14,7 +18,7 @@ const LoginPage = lazy(() => import('pages/authentication/login'));
 export const routes = [
   {
     elements: (
-      <Suspense fallback={}>
+      <Suspense fallback={<Spinner/>}>
         <App />
       </Suspense>
     ),
@@ -23,6 +27,20 @@ export const routes = [
         path: paths.default,
         element: <Navigate to={paths.login} replace />
       },
+      {
+        path: rootPaths.authRoot,
+        element:,
+        children: [
+          {
+            path: paths.login,
+            element: <LoginPage />
+          },
+          {
+            path: paths.signup,
+            element: <SignupPage />
+          }
+        ]
+      }
     ]
   }
 ]
