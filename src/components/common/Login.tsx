@@ -11,13 +11,20 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import IconifyIcon from 'components/base/IconifyIcon';
+import { useBreakpoints } from 'providers/useBreakpoints';
+import { useFormValidation } from 'hooks/useFormValidation';
+import AuthSchemas from 'schema/auth';
 
 const LoginForm = () => {
+  const { up } = useBreakpoints();
+  const upSM = up('sm');
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState<LoginFormData>({
     username: "",
     password: ""
   });
-
+  const { errors, validate } = useFormValidation(AuthSchemas.loginSchema);
   const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
     const { name, value} = e.target;
 
@@ -92,9 +99,10 @@ const LoginForm = () => {
           fontSize: 12,
         }}
         color="primary"
-        onClick={handleClick}
+        onClick={handleSubmit}
       >
-        {loading ? 'Loading...' : 'Login'}
+        Login
+        {/* {loading ? 'Loading...' : 'Login'} */}
       </Button>
     </>
   );
