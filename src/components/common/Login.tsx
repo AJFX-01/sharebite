@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { Label } from "../ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+
 import { LoginFormData } from '../../types';
+import {
+  Button,
+  Grid,
+  IconButton,
+  InputAdornment,
+  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState<LoginFormData>({
@@ -31,36 +37,66 @@ const LoginForm = () => {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto my-auto">
-      <CardHeader>
-        <CardTitle style={{ textAlign: 'left'}}>Login</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2 text-left">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="space-y-2 text-left">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <Button type="submit" className="w-full">Login</Button>
-        </form>
-      </CardContent>
-    </Card>
+    <>
+      <Grid container spacing={3} sx={{ mb: 2.5 }}>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            size={upSM ? 'medium' : 'small'}
+            name="username"
+            label="Username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+          {errors.username && (
+            <Typography sx={{ color: 'red', fontSize: '10px' }}>{errors.username}</Typography>
+          )}
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            size={upSM ? 'medium' : 'small'}
+            name="password"
+            label="Password"
+            value={formData.password}
+            onChange={handleChange}
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                    <IconifyIcon icon={showPassword ? 'majesticons:eye' : 'majesticons:eye-off'} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {errors.password && (
+            <Typography sx={{ color: 'red', fontSize: '10px' }}>{errors.password}</Typography>
+          )}
+        </Grid>
+      </Grid>
+      <Grid container justifyContent="flex-end" sx={{ my: 3 }}>
+        <Grid item>
+          <Link href="/forget-password" variant="subtitle2" underline="hover">
+            Forgot password?
+          </Link>
+        </Grid>
+      </Grid>
+      <Button
+        fullWidth
+        size={upSM ? 'large' : 'medium'}
+        type="submit"
+        variant="contained"
+        sx={{
+          fontSize: 12,
+        }}
+        color="primary"
+        onClick={handleClick}
+      >
+        {loading ? 'Loading...' : 'Login'}
+      </Button>
+    </>
   );
 };
 
