@@ -1,5 +1,5 @@
-import { Drawer, List, Toolbar } from '@mui/material';
-import Logo from 'components/common/Logo';
+import { Drawer, List, Toolbar, Typography } from '@mui/material';
+// import Logo from 'components/common/Logo';
 import { menuLinks } from 'layouts/main-layout/sidebar/MenuLinks';
 import MenuListItem from 'layouts/main-layout/sidebar/MenuListItem';
 import { credentailsMenuLinks } from 'layouts/main-layout/sidebar/CredentailsMenuLinks';
@@ -48,7 +48,9 @@ const MobileSidebar = ({
       }}
     >
       <Toolbar sx={{ gap: 1, minHeight: 100 }}>
-        <Logo />
+        <Typography>
+          SHAREBITE
+        </Typography>
       </Toolbar>
 
       <SimpleBar style={{ maxHeight: 'calc(100vh - 100px)' }}>
