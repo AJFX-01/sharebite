@@ -6,7 +6,7 @@ import { Label } from "../ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { SigupFormData } from '../../types';
 
-const Signup = () => {
+const SignupForm = () => {
   const [formData, setFornData] = useState<SigupFormData>({
     username: '',
     firstname: "",
@@ -100,5 +100,5 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupForm;
 

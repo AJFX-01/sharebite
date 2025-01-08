@@ -6,7 +6,7 @@ import { Label } from "../ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { LoginFormData } from '../../types';
 
-const Login = () => {
+const LoginForm = () => {
   const [formData, setFormData] = useState<LoginFormData>({
     username: "",
     password: ""
@@ -64,5 +64,5 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;
 
