@@ -1,13 +1,12 @@
-import './App.css'
-import Signup from './components/common/Signup'
-import LoginPage from './pages/authentication/login'
+import { Outlet } from 'react-router'
+import { Toaster } from 'react-hot-toast'
 
-
-function App() {
+const App = () => {
 
   return (
     <>
-      <LoginPage/>
+      <Toaster />
+      <Outlet />
     </>
   )
 }

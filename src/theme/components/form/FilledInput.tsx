@@ -45,7 +45,7 @@ const FilledInputComponent: Components<Omit<Theme, 'components'>>['MuiFilledInpu
       paddingTop: theme.spacing(1.5),
       paddingBottom: theme.spacing(1.5),
     }),
-    inputAdornedStart: ({ theme }) => ({ paddingLeft: theme.spacing(0) }),
+    inputAdornedStart: ({ theme }: Theme ) => ({ paddingLeft: theme.spacing(0) }),
   },
 };
 
