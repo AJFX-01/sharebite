@@ -1,4 +1,4 @@
-import { Link, Stack, Theme, Toolbar } from '@mui/material';
+import { Link, Stack, Theme, Toolbar, Typography } from '@mui/material';
 // import Logo from 'components/common/Logo';
 import { Outlet } from 'react-router-dom';
 
@@ -29,9 +29,11 @@ const AuthLayout = () => {
           zIndex: 1,
         }}
       >
-        {/* <Link href="/" sx={{ display: 'flex', gap: 2 }}>
-          <Logo />
-        </Link> */}
+        <Link href="/" sx={{ display: 'flex', gap: 2 }}>
+          <Typography>
+            SHAREBITE
+          </Typography>
+        </Link>
       </Toolbar>
       <Stack
         direction="row"
