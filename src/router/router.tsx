@@ -1,10 +1,14 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import paths, { rootPaths } from './path';
-import App from 'App';
+
 
 
 /* ---------------- Lazy loads various components ------------------------- */
+const App = lazy(() => import('App'));
+const MainLayout = lazy(() => import('layouts/main-layout'));
+const AuthLayout = lazy(() => import('layouts/auth-layout'));
+
 const SignupPage = lazy(() => import('pages/authentication/signup'));
 const LoginPage = lazy(() => import('pages/authentication/login'));
 
@@ -29,7 +33,7 @@ export const routes = [
       },
       {
         path: rootPaths.authRoot,
-        element:,
+        element: <AuthLayout />,
         children: [
           {
             path: paths.login,
