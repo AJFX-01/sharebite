@@ -21,18 +21,18 @@ const LoginForm = () => {
   const upSM = up('sm');
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState<LoginFormData>({
-    username: "",
-    password: ""
+    username: '',
+    password: '',
   });
   const { errors, validate } = useFormValidation(AuthSchemas.loginSchema);
-  const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value} = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-  }
+  };
   // const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -56,7 +56,9 @@ const LoginForm = () => {
             onChange={handleChange}
           />
           {errors.username && (
-            <Typography sx={{ color: 'red', fontSize: '10px' }}>{errors.username}</Typography>
+            <Typography sx={{ color: 'red', fontSize: '10px' }}>
+              {errors.username}
+            </Typography>
           )}
         </Grid>
         <Grid item xs={12}>
@@ -71,15 +73,24 @@ const LoginForm = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                    <IconifyIcon icon={showPassword ? 'majesticons:eye' : 'majesticons:eye-off'} />
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                  >
+                    <IconifyIcon
+                      icon={
+                        showPassword ? 'majesticons:eye' : 'majesticons:eye-off'
+                      }
+                    />
                   </IconButton>
                 </InputAdornment>
               ),
             }}
           />
           {errors.password && (
-            <Typography sx={{ color: 'red', fontSize: '10px' }}>{errors.password}</Typography>
+            <Typography sx={{ color: 'red', fontSize: '10px' }}>
+              {errors.password}
+            </Typography>
           )}
         </Grid>
       </Grid>
@@ -109,4 +120,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-

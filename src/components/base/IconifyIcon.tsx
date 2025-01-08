@@ -12,7 +12,9 @@ const IconifyIcon = ({ icon, width = 20, sx, ...rest }: IconifyProps) => {
     flexShrink: 0,
     display: 'inline-flex',
   };
-  return <Box component={Icon} icon={icon} sx={{ ...baseStyles, ...sx }} {...rest} />;
+  return (
+    <Box component={Icon} icon={icon} sx={{ ...baseStyles, ...sx }} {...rest} />
+  );
 };
 
 export default IconifyIcon;

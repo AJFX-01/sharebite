@@ -1,29 +1,43 @@
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { Label } from "../ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import {
+  Button,
+  Grid,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { SigupFormData } from '../../types';
+import { useBreakpoints } from 'providers/useBreakpoints';
+import { useFormValidation } from 'hooks/useFormValidation';
+import AuthSchemas from 'schema/auth';
+import IconifyIcon from 'components/base/IconifyIcon';
 
 const SignupForm = () => {
+  const { up } = useBreakpoints();
+  const upSM = up('sm');
   const [formData, setFornData] = useState<SigupFormData>({
     username: '',
-    firstname: "",
+    firstname: '',
     lastname: '',
-    email: "",
+    email: '',
     password: '',
-    confirmpassword: ''
+    confirmpassword: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>  {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
+
+  const { errors, validate } = useFormValidation(AuthSchemas.signupSchema);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setFornData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-  }
+  };
   // const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -35,70 +49,152 @@ const SignupForm = () => {
   };
 
   return (
-    <div className='flex flex-col items-center'>
-      <Card className="w-full max-w-md mx-auto my-auto h-fit items-center">
-        <CardHeader>
-          <CardTitle style={{ textAlign: 'left', fontSize: 14}}>Register</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2 text-left">
-              <Label htmlFor="firstname">Username</Label>
-              <Input
-                id="username"
-                type="text"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="space-y-2 text-left">
-              <Label htmlFor="firstname">First Name</Label>
-              <Input
-                id="firstname"
-                type="text"
-                value={formData.lastname}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="space-y-2 text-left">
-              <Label htmlFor="lastname">Last Name</Label>
-              <Input
-                id="lastname"
-                type="text"
-                value={formData.lastname}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="space-y-2 text-left">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="space-y-2 text-left">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <Button type="submit" className="w-full">Register</Button>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+    <>
+      <Grid container spacing={3} sx={{ mb: 2.5 }}>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            size={upSM ? 'medium' : 'small'}
+            name="first_name"
+            label="First Name"
+            value={formData.firstname}
+            onChange={handleChange}
+          />
+          {errors.firstname && (
+            <Typography sx={{ color: 'red', fontSize: '10px' }}>
+              {errors.firstname}
+            </Typography>
+          )}
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            size={upSM ? 'medium' : 'small'}
+            name="last_name"
+            label="Last Name"
+            value={formData.lastname}
+            onChange={handleChange}
+          />
+          {errors.lastname && (
+            <Typography sx={{ color: 'red', fontSize: '10px' }}>
+              {errors.lastname}
+            </Typography>
+          )}
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            size={upSM ? 'medium' : 'small'}
+            name="email"
+            label="Email address"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          {errors.email && (
+            <Typography sx={{ color: 'red', fontSize: '10px' }}>
+              {errors.email}
+            </Typography>
+          )}
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            size={upSM ? 'medium' : 'small'}
+            name="username"
+            label="Username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+          {errors.username && (
+            <Typography sx={{ color: 'red', fontSize: '10px' }}>
+              {errors.username}
+            </Typography>
+          )}
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            size={upSM ? 'medium' : 'small'}
+            name="password"
+            label="Password"
+            value={formData.password}
+            onChange={handleChange}
+            type={showPassword ? 'text' : 'password'}
+            sx={{ size: { xs: 'small', sm: 'medium' } }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                  >
+                    <IconifyIcon
+                      icon={
+                        showPassword ? 'majesticons:eye' : 'majesticons:eye-off'
+                      }
+                    />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {errors.password && (
+            <Typography sx={{ color: 'red', fontSize: '10px' }}>
+              {errors.password}
+            </Typography>
+          )}
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            size={upSM ? 'medium' : 'small'}
+            name="confirmPassword"
+            label="Confirm Password"
+            value={formData.confirmpassword}
+            onChange={handleChange}
+            type={showConfirmPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    edge="end"
+                  >
+                    <IconifyIcon
+                      icon={
+                        showConfirmPassword
+                          ? 'majesticons:eye'
+                          : 'majesticons:eye-off'
+                      }
+                    />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {errors.confirmPassword && (
+            <Typography sx={{ color: 'red', fontSize: '10px' }}>
+              {errors.confirmPassword}
+            </Typography>
+          )}
+        </Grid>
+      </Grid>
+      <Button
+        fullWidth
+        size={upSM ? 'large' : 'medium'}
+        sx={{
+          fontSize: 12,
+        }}
+        type="submit"
+        variant="contained"
+        color="primary"
+        onClick={handleSubmit}
+      >
+        Sign Up
+        {/* {loading ? 'Loading...' : 'Sign Up'} */}
+      </Button>
+    </>
   );
 };
 
 export default SignupForm;
-
