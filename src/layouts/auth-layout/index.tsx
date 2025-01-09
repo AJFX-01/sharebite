@@ -30,9 +30,7 @@ const AuthLayout = () => {
         }}
       >
         <Link href="/" sx={{ display: 'flex', gap: 2 }}>
-          <Typography>
-            SHAREBITE
-          </Typography>
+          <Typography>SHAREBITE</Typography>
         </Link>
       </Toolbar>
       <Stack

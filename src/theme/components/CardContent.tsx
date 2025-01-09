@@ -1,7 +1,9 @@
 import { Theme } from '@mui/material';
 import { Components } from '@mui/material/styles/components';
 
-const CardContentComponent: Components<Omit<Theme, 'components'>>['MuiCardContent'] = {
+const CardContentComponent: Components<
+  Omit<Theme, 'components'>
+>['MuiCardContent'] = {
   styleOverrides: {
     root: ({ theme }) => ({
       paddingLeft: theme.spacing(0),

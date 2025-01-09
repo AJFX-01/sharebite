@@ -3,7 +3,9 @@ import { useState } from 'react';
 
 type ValidationError = { [key: string]: string };
 
-export const useFormValidation = <T extends Record<string, unknown>>(schema: z.ZodSchema<T>) => {
+export const useFormValidation = <T extends Record<string, unknown>>(
+  schema: z.ZodSchema<T>,
+) => {
   const [errors, setErrors] = useState<ValidationError>({});
 
   const validate = (formData: T): boolean => {

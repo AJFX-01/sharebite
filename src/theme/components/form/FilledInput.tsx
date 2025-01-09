@@ -2,7 +2,9 @@ import { Theme } from '@mui/material';
 import { Components } from '@mui/material/styles/components';
 import pxToRem from 'theme/functions/pxToRem';
 
-const FilledInputComponent: Components<Omit<Theme, 'components'>>['MuiFilledInput'] = {
+const FilledInputComponent: Components<
+  Omit<Theme, 'components'>
+>['MuiFilledInput'] = {
   defaultProps: {},
   styleOverrides: {
     root: ({ theme }) => ({
@@ -45,7 +47,7 @@ const FilledInputComponent: Components<Omit<Theme, 'components'>>['MuiFilledInpu
       paddingTop: theme.spacing(1.5),
       paddingBottom: theme.spacing(1.5),
     }),
-    inputAdornedStart: ({ theme } ) => ({ paddingLeft: theme.spacing(0) }),
+    inputAdornedStart: ({ theme }) => ({ paddingLeft: theme.spacing(0) }),
   },
 };
 

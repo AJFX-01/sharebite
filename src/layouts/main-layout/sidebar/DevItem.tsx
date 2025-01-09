@@ -1,5 +1,14 @@
-import { Link, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
-import { devLinks, DevLinkType } from 'layouts/main-layout/sidebar/DevMenuLinks';
+import {
+  Link,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from '@mui/material';
+import {
+  devLinks,
+  DevLinkType,
+} from 'layouts/main-layout/sidebar/DevMenuLinks';
 import { useLocation } from 'react-router-dom';
 interface DevProps {
   menuItem: DevLinkType;
@@ -14,7 +23,8 @@ const DevItem = ({ menuItem, onDrawerClose }: DevProps) => {
 
   // check if list item is active
   const isActive =
-    menuItem.title === devLinks.find((item) => item.link === location.pathname)?.title;
+    menuItem.title ===
+    devLinks.find((item) => item.link === location.pathname)?.title;
 
   return (
     <ListItem
@@ -48,7 +58,11 @@ const DevItem = ({ menuItem, onDrawerClose }: DevProps) => {
           gap: 1.325,
           flex: 1,
           borderRadius: 2,
-          color: isActive ? 'primary.main' : menuItem.available ? 'grey[700]' : 'action.disabled',
+          color: isActive
+            ? 'primary.main'
+            : menuItem.available
+              ? 'grey[700]'
+              : 'action.disabled',
           transition: 'color 0.35s ease',
           '&:hover, &:focus': {
             backgroundColor: 'neutral.light',

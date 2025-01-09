@@ -1,4 +1,10 @@
-import { Link, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import {
+  Link,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from '@mui/material';
 import {
   credentailsMenuLinks,
   CredentailsMenuLinks,
@@ -17,7 +23,8 @@ const CredentailsItem = ({ menuItem, onDrawerClose }: CredentailsProps) => {
 
   // check if list item is active
   const isActive =
-    menuItem.title === credentailsMenuLinks.find((item) => item.link === location.pathname)?.title;
+    menuItem.title ===
+    credentailsMenuLinks.find((item) => item.link === location.pathname)?.title;
 
   return (
     <ListItem
@@ -51,7 +58,11 @@ const CredentailsItem = ({ menuItem, onDrawerClose }: CredentailsProps) => {
           gap: 1.325,
           flex: 1,
           borderRadius: 2,
-          color: isActive ? 'primary.main' : menuItem.available ? 'grey[700]' : 'action.disabled',
+          color: isActive
+            ? 'primary.main'
+            : menuItem.available
+              ? 'grey[700]'
+              : 'action.disabled',
           transition: 'color 0.35s ease',
           '&:hover, &:focus': {
             backgroundColor: 'neutral.light',

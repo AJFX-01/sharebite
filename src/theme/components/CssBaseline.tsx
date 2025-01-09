@@ -4,7 +4,9 @@ import 'simplebar-react/dist/simplebar.min.css';
 import scrollbar from 'theme/styles/scrollbar';
 import simplebar from 'theme/styles/simplebar';
 
-const CssBaselineComponent: Components<Omit<Theme, 'components'>>['MuiCssBaseline'] = {
+const CssBaselineComponent: Components<
+  Omit<Theme, 'components'>
+>['MuiCssBaseline'] = {
   defaultProps: {},
   styleOverrides: (theme) => ({
     body: {

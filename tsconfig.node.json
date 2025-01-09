@@ -22,7 +22,6 @@
 //   "include": ["vite.config.ts"]
 // }
 
-
 {
   "compilerOptions": {
     "composite": true,

@@ -67,7 +67,7 @@ const SignupForm = () => {
           <TextField
             fullWidth
             size={upSM ? 'medium' : 'small'}
-            name="first_name"
+            name="firstname"
             label="First Name"
             value={formData.firstname}
             onChange={handleChange}
@@ -82,7 +82,7 @@ const SignupForm = () => {
           <TextField
             fullWidth
             size={upSM ? 'medium' : 'small'}
-            name="last_name"
+            name="lastname"
             label="Last Name"
             value={formData.lastname}
             onChange={handleChange}
@@ -160,7 +160,7 @@ const SignupForm = () => {
           <TextField
             fullWidth
             size={upSM ? 'medium' : 'small'}
-            name="confirmPassword"
+            name="confirmpassword"
             label="Confirm Password"
             value={formData.confirmpassword}
             onChange={handleChange}

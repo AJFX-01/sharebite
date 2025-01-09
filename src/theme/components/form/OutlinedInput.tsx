@@ -2,7 +2,9 @@ import { Theme } from '@mui/material';
 import { Components } from '@mui/material/styles/components';
 import pxToRem from 'theme/functions/pxToRem';
 
-const OutlinedInputComponent: Components<Omit<Theme, 'components'>>['MuiOutlinedInput'] = {
+const OutlinedInputComponent: Components<
+  Omit<Theme, 'components'>
+>['MuiOutlinedInput'] = {
   defaultProps: {
     notched: false,
   },

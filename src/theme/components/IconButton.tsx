@@ -1,7 +1,9 @@
 import { Theme } from '@mui/material';
 import { Components } from '@mui/material/styles/components';
 
-const IconButtonComponent: Components<Omit<Theme, 'components'>>['MuiIconButton'] = {
+const IconButtonComponent: Components<
+  Omit<Theme, 'components'>
+>['MuiIconButton'] = {
   styleOverrides: {
     root: ({ theme }) => ({
       color: theme.palette.primary.light,

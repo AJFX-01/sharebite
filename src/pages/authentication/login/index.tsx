@@ -1,12 +1,18 @@
 import { Card, Grid, Typography } from '@mui/material';
 import LoginForm from 'components/common/Login';
 
-
 const LoginPage = () => {
   return (
     <Grid
       container
-      sx={{ minHeight: '100vh', position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}
+      sx={{
+        minHeight: '100vh',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      }}
     >
       <Grid
         item

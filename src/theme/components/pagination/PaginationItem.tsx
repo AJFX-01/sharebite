@@ -1,7 +1,9 @@
 import { Theme } from '@mui/material';
 import { Components } from '@mui/material/styles/components';
 
-const PaginationItemComponent: Components<Omit<Theme, 'components'>>['MuiPaginationItem'] = {
+const PaginationItemComponent: Components<
+  Omit<Theme, 'components'>
+>['MuiPaginationItem'] = {
   defaultProps: {},
   styleOverrides: {
     rounded: ({ theme }) => ({

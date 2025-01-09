@@ -48,9 +48,7 @@ const MobileSidebar = ({
       }}
     >
       <Toolbar sx={{ gap: 1, minHeight: 100 }}>
-        <Typography>
-          SHAREBITE
-        </Typography>
+        <Typography>SHAREBITE</Typography>
       </Toolbar>
 
       <SimpleBar style={{ maxHeight: 'calc(100vh - 100px)' }}>

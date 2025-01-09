@@ -2,9 +2,19 @@ import { SvgIcon, SvgIconProps } from '@mui/material';
 
 const SignInIcon = (props: SvgIconProps) => {
   return (
-    <SvgIcon fill="#b1b1b1" height="64px" width="64px" viewBox="0 0 330.002 330.002" {...props}>
+    <SvgIcon
+      fill="#b1b1b1"
+      height="64px"
+      width="64px"
+      viewBox="0 0 330.002 330.002"
+      {...props}
+    >
       <g id="SVGRepo_bgCarrier" strokeWidth={0} />
-      <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <g id="SVGRepo_iconCarrier">
         <g id="XMLID_9_">
           <path

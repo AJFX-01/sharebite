@@ -1,7 +1,9 @@
 import { Theme } from '@mui/material';
 import { Components } from '@mui/material/styles/components';
 
-const InputLabelComponent: Components<Omit<Theme, 'components'>>['MuiInputLabel'] = {
+const InputLabelComponent: Components<
+  Omit<Theme, 'components'>
+>['MuiInputLabel'] = {
   defaultProps: { shrink: true },
   styleOverrides: {
     root: ({ theme }) => ({

@@ -1,9 +1,16 @@
-import { AppBar, Box, IconButton, Link, Stack, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  IconButton,
+  Link,
+  Stack,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import IconifyIcon from 'components/base/IconifyIcon';
 import Image from 'components/base/Image';
 import ProfileDropdown from 'layouts/main-layout/appbar/ProfileDropdown';
 import { useLocation } from 'react-router-dom';
-
 
 interface NavbarProps {
   onDrawerToggle: () => void;
@@ -15,7 +22,9 @@ const MainNavbar = ({ onDrawerToggle }: NavbarProps) => {
   const location = useLocation();
 
   // Extract the route name from the pathname
-  const pathSegments = location.pathname.split('/').filter((segment) => segment.trim() !== '');
+  const pathSegments = location.pathname
+    .split('/')
+    .filter((segment) => segment.trim() !== '');
   const routeName = pathSegments.length > 0 ? pathSegments.pop() : 'Overview';
 
   // const handleOpen = (event: MouseEvent<HTMLElement>) => {
@@ -25,7 +34,6 @@ const MainNavbar = ({ onDrawerToggle }: NavbarProps) => {
   // const handleClose = () => {
   //   setOpen(null);
   // };
-
 
   return (
     <>
@@ -50,12 +58,27 @@ const MainNavbar = ({ onDrawerToggle }: NavbarProps) => {
           >
             {routeName}
           </Typography>
-          <Stack direction="row" gap={1} sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <Stack
+            direction="row"
+            gap={1}
+            sx={{ display: { xs: 'flex', md: 'none' } }}
+          >
             <Link href="/" sx={{ display: 'flex', p: 0.5 }}>
-              <Image src="../../../../coincord.svg" alt="Logo" sx={{ width: 25 }} />
+              <Image
+                src="../../../../coincord.svg"
+                alt="Logo"
+                sx={{ width: 25 }}
+              />
             </Link>
-            <IconButton onClick={onDrawerToggle} sx={{ display: { md: 'none' } }}>
-              <IconifyIcon icon="mingcute:menu-line" color="primary.darker" width={25} />
+            <IconButton
+              onClick={onDrawerToggle}
+              sx={{ display: { md: 'none' } }}
+            >
+              <IconifyIcon
+                icon="mingcute:menu-line"
+                color="primary.darker"
+                width={25}
+              />
             </IconButton>
           </Stack>
 

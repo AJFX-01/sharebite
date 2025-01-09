@@ -1,4 +1,13 @@
-import { Avatar, Box, Button, Divider, Link, Menu, Stack, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  Link,
+  Menu,
+  Stack,
+  Typography,
+} from '@mui/material';
 // import ProfileImage from 'assets/avatar.jpg';
 import IconifyIcon from 'components/base/IconifyIcon';
 import { MouseEvent, useState } from 'react';
@@ -91,7 +100,10 @@ const ProfileDropdown = () => {
                         bgcolor: 'transparent',
                       }}
                     >
-                      <IconifyIcon icon={profileItem.icon} color={profileItem.color} />
+                      <IconifyIcon
+                        icon={profileItem.icon}
+                        color={profileItem.color}
+                      />
                     </Avatar>
                   </Stack>
                   <div>
@@ -120,7 +132,12 @@ const ProfileDropdown = () => {
             </Box>
           ))}
           <Box mt={1.25}>
-            <Button onClick={() => {}} variant="outlined" color="error" fullWidth>
+            <Button
+              onClick={() => {}}
+              variant="outlined"
+              color="error"
+              fullWidth
+            >
               Logout
             </Button>
           </Box>

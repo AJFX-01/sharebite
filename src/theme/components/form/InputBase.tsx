@@ -1,7 +1,9 @@
 import { Theme } from '@mui/material';
 import { Components } from '@mui/material/styles/components';
 
-const InputBaseComponent: Components<Omit<Theme, 'components'>>['MuiInputBase'] = {
+const InputBaseComponent: Components<
+  Omit<Theme, 'components'>
+>['MuiInputBase'] = {
   styleOverrides: {
     root: {
       '& .Mui-focused': {

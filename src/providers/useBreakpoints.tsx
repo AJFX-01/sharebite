@@ -1,5 +1,11 @@
 import { Breakpoint, Theme, useMediaQuery } from '@mui/material';
-import { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 interface BreakpointContextInterface {
   currentBreakpoint: Breakpoint;
@@ -9,7 +15,9 @@ interface BreakpointContextInterface {
   between: (start: Breakpoint | number, end: Breakpoint | number) => boolean;
 }
 
-export const BreakpointContext = createContext({} as BreakpointContextInterface);
+export const BreakpointContext = createContext(
+  {} as BreakpointContextInterface,
+);
 
 /**
  * A provider component that manages the current breakpoint based on the screen size.
@@ -55,7 +63,9 @@ const BreakpointsProvider = ({ children }: PropsWithChildren) => {
   }, [isXs, isSm, isMd, isLg, isXl]);
 
   return (
-    <BreakpointContext.Provider value={{ currentBreakpoint, up, down, only, between }}>
+    <BreakpointContext.Provider
+      value={{ currentBreakpoint, up, down, only, between }}
+    >
       {children}
     </BreakpointContext.Provider>
   );

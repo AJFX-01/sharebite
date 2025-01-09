@@ -1,4 +1,8 @@
-import { alpha, PaletteColorOptions, PaletteOptions } from '@mui/material/styles';
+import {
+  alpha,
+  PaletteColorOptions,
+  PaletteOptions,
+} from '@mui/material/styles';
 import { blue, green, grey, magneta, orange, red } from './colors';
 
 declare module '@mui/material/styles' {
@@ -84,7 +88,8 @@ const palette: PaletteOptions = {
   divider: grey[100],
   gradients: {
     blueGradient: `linear-gradient(to top right, ${blue[700]} 30%, ${blue[600]})`,
-    whiteGradient: 'linear-gradient(to bottom, rgba(255, 255, 255, .1) 0%, transparent)',
+    whiteGradient:
+      'linear-gradient(to bottom, rgba(255, 255, 255, .1) 0%, transparent)',
     whiteCardGradient:
       'linear-gradient(to bottom right, rgba(255, 255, 255, 0.15) 0%, transparent)',
     bgGradient: 'linear-gradient(to right bottom, #f9fafb, #E6EFF5)',

@@ -1,7 +1,9 @@
 import { Theme } from '@mui/material';
 import { Components } from '@mui/material/styles/components';
 
-const ListItemTextComponent: Components<Omit<Theme, 'components'>>['MuiListItemText'] = {
+const ListItemTextComponent: Components<
+  Omit<Theme, 'components'>
+>['MuiListItemText'] = {
   defaultProps: {},
   styleOverrides: {
     root: ({ theme }) => ({

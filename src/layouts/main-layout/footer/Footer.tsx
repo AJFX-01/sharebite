@@ -29,13 +29,23 @@ const Footer = () => {
                 >
                   <Typography
                     fontWeight="regular"
-                    sx={{ fontSize: { xs: 'caption.fontSize', md: 'body2.fontSize' } }}
+                    sx={{
+                      fontSize: {
+                        xs: 'caption.fontSize',
+                        md: 'body2.fontSize',
+                      },
+                    }}
                   >
                     &copy; {new Date().getFullYear()}, Your Company Inc.
                   </Typography>
                   <Typography
                     mb={0}
-                    sx={{ fontSize: { xs: 'caption.fontSize', md: 'body2.fontSize' } }}
+                    sx={{
+                      fontSize: {
+                        xs: 'caption.fontSize',
+                        md: 'body2.fontSize',
+                      },
+                    }}
                   >
                     Made with
                     <IconifyIcon
@@ -61,7 +71,13 @@ const Footer = () => {
                   </Typography>
                 </Stack>
               </Grid>
-              <Grid item xs={12} lg="auto" mb={{ xs: 1, lg: 0 }} alignItems="center">
+              <Grid
+                item
+                xs={12}
+                lg="auto"
+                mb={{ xs: 1, lg: 0 }}
+                alignItems="center"
+              >
                 <Stack
                   flexDirection="row"
                   flexWrap="wrap"
@@ -85,7 +101,10 @@ const Footer = () => {
                         px: 2,
                         lineHeight: 1,
                         '& :hover': { color: 'primary.main' },
-                        fontSize: { xs: 'button.fontSize', md: 'body1.fontSize' },
+                        fontSize: {
+                          xs: 'button.fontSize',
+                          md: 'body1.fontSize',
+                        },
                       }}
                     >
                       {link.title}
