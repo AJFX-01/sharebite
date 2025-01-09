@@ -7,7 +7,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { SigupFormData } from '../../types';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import { useFormValidation } from 'hooks/useFormValidation';
 import AuthSchemas from 'schema/auth';
@@ -16,7 +15,7 @@ import IconifyIcon from 'components/base/IconifyIcon';
 const SignupForm = () => {
   const { up } = useBreakpoints();
   const upSM = up('sm');
-  const [formData, setFornData] = useState<SigupFormData>({
+  const [formData, setFornData] = useState<SignupFormData>({
     username: '',
     firstname: '',
     lastname: '',
