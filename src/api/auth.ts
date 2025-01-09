@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from 'helpers/constant';
-import { axiosInstance } from './config';
+import { axiosInstance, handleAxiosError } from './config';
 
 class AuthenticationApi {
   static loginUser = async (credentials: LoginFormData) => {
@@ -10,13 +10,21 @@ class AuthenticationApi {
       );
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        throw new Error(error.response.data.error);
-      } else {
-          throw new Error('an error while proceessing your request');
-      }
+      handleAxiosError(error);
     }
   };
 
-  static registerUser = async (credential: SignupFormData) => {};
+  static registerUser = async (credentials: SignupFormData) => {
+    try {
+      const response = await axiosInstance.post(
+        `/${API_ENDPOINTS.auth.signup}`,
+        credentials,
+      );
+      return response.data;
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
 }
+
+export default AuthenticationApi;
