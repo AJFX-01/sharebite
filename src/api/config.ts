@@ -33,3 +33,11 @@ axiosInstance.interceptors.response.use(
     }
   },
 );
+
+export const handleAxiosError = (error: unknown): never => {
+  if (axios.isAxiosError(error) && error.response) {
+    throw new Error(error.response.data.error || 'An unknown error occurred.');
+  } else {
+    throw new Error('An error occurred while processing your request.');
+  }
+};
