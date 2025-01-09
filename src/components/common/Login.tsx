@@ -12,6 +12,9 @@ import IconifyIcon from 'components/base/IconifyIcon';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import { useFormValidation } from 'hooks/useFormValidation';
 import AuthSchemas from 'schema/auth';
+import { useMutation } from '@tanstack/react-query';
+import ApiRequests from 'api';
+import toast from 'react-hot-toast';
 
 const LoginForm = () => {
   const { up } = useBreakpoints();
@@ -30,14 +33,24 @@ const LoginForm = () => {
       [name]: value,
     }));
   };
-  // const navigate = useNavigate();
+
+  const loginMutation = useMutation({
+    mutationFn: ApiRequests.loginUser,
+    onSuccess(data) {
+      toast.success('Login successful!', { id: 'asyntoast' });
+      console.log(data);
+    },
+    onError(error) {
+      toast.error(error.message, { id: 'asyntoast' });
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement login logic
-    // console.log('Login:', { email, password });
-    // For demo purposes, navigate to donor dashboard
-    // navigate('/donor');
+    if (validate(formData)) {
+      toast.loading('Logging in...', { id: 'asyntoast' });
+      loginMutation.mutate(formData);
+    }
   };
 
   return (
@@ -109,8 +122,7 @@ const LoginForm = () => {
         color="primary"
         onClick={handleSubmit}
       >
-        Login
-        {/* {loading ? 'Loading...' : 'Login'} */}
+        {loginMutation.isPending ? 'Logging in...' : 'Login'}
       </Button>
     </>
   );

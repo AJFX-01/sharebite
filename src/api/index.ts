@@ -1,7 +1,7 @@
 import { API_ENDPOINTS } from 'helpers/constant';
 import { axiosInstance, handleAxiosError } from './config';
 
-class AuthenticationApi {
+class ApiRequests {
   static loginUser = async (credentials: LoginFormData) => {
     try {
       const response = await axiosInstance.post(
@@ -27,4 +27,4 @@ class AuthenticationApi {
   };
 }
 
-export default AuthenticationApi;
+export default ApiRequests;
