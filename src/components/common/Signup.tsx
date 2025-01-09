@@ -11,6 +11,9 @@ import { useBreakpoints } from 'providers/useBreakpoints';
 import { useFormValidation } from 'hooks/useFormValidation';
 import AuthSchemas from 'schema/auth';
 import IconifyIcon from 'components/base/IconifyIcon';
+import { useMutation } from '@tanstack/react-query';
+import ApiRequests from 'api';
+import toast from 'react-hot-toast';
 
 const SignupForm = () => {
   const { up } = useBreakpoints();
@@ -37,14 +40,24 @@ const SignupForm = () => {
       [name]: value,
     }));
   };
-  // const navigate = useNavigate();
+
+  const signupMutation = useMutation({
+    mutationFn: ApiRequests.registerUser,
+    onSuccess(data) {
+      toast.success('Login successful!', { id: 'asyntoast' });
+      console.log(data);
+    },
+    onError(error) {
+      toast.error(error.message, { id: 'asyntoast' });
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement registration logic
-    // console.log('Register:', { name, email, password });
-    // For demo purposes, navigate to login page
-    // navigate('/');
+    if (validate(formData)) {
+      toast.loading('Registering...', { id: 'asyntoast' });
+      signupMutation.mutate(formData);
+    }
   };
 
   return (
@@ -189,8 +202,7 @@ const SignupForm = () => {
         color="primary"
         onClick={handleSubmit}
       >
-        Sign Up
-        {/* {loading ? 'Loading...' : 'Sign Up'} */}
+        {signupMutation.isPending ? 'Loading...' : 'Sign Up'}
       </Button>
     </>
   );

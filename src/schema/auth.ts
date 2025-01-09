@@ -14,11 +14,11 @@ class AuthSchemas {
 
   static signupSchema = z
     .object({
-      first_name: z
+      firstname: z
         .string()
         .min(2, 'First name is required and must have at least 2 characters')
         .max(30, 'First name must not exceed 30 characters'),
-      last_name: z
+      lastname: z
         .string()
         .min(2, 'Last name is required and must have at least 2 characters')
         .max(30, 'Last name must not exceed 30 characters'),
@@ -33,10 +33,13 @@ class AuthSchemas {
         .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
         .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
         .regex(/\d/, 'Password must contain at least one number')
-        .regex(/[@$!%*?&]/, 'Password must contain at least one special character'),
-      confirmPassword: z.string(),
+        .regex(
+          /[@$!%*?&]/,
+          'Password must contain at least one special character',
+        ),
+      confirmpassword: z.string(),
     })
-    .refine((data) => data.password === data.confirmPassword, {
+    .refine((data) => data.password === data.confirmpassword, {
       message: 'Passwords do not match',
       path: ['confirmPassword'],
     });
@@ -44,7 +47,10 @@ class AuthSchemas {
   static setupOrganizationSchema = z.object({
     name: z
       .string()
-      .min(2, 'Organization name is required and must have at least 2 characters')
+      .min(
+        2,
+        'Organization name is required and must have at least 2 characters',
+      )
       .max(30, 'Organization name must not exceed 30 characters'),
     domain: z
       .string()
