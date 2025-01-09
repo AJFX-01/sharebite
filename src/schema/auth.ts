@@ -14,11 +14,11 @@ class AuthSchemas {
 
   static signupSchema = z
     .object({
-      firstname: z
+      first_name: z
         .string()
         .min(2, 'First name is required and must have at least 2 characters')
         .max(30, 'First name must not exceed 30 characters'),
-      lastname: z
+      last_name: z
         .string()
         .min(2, 'Last name is required and must have at least 2 characters')
         .max(30, 'Last name must not exceed 30 characters'),

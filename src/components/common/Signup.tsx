@@ -20,8 +20,8 @@ const SignupForm = () => {
   const upSM = up('sm');
   const [formData, setFornData] = useState<SignupFormData>({
     username: '',
-    firstname: '',
-    lastname: '',
+    first_name: '',
+    last_name: '',
     email: '',
     password: '',
     confirmpassword: '',
@@ -67,9 +67,9 @@ const SignupForm = () => {
           <TextField
             fullWidth
             size={upSM ? 'medium' : 'small'}
-            name="firstname"
+            name="first_name"
             label="First Name"
-            value={formData.firstname}
+            value={formData.first_name}
             onChange={handleChange}
           />
           {errors.firstname && (
@@ -82,9 +82,9 @@ const SignupForm = () => {
           <TextField
             fullWidth
             size={upSM ? 'medium' : 'small'}
-            name="lastname"
+            name="last_name"
             label="Last Name"
-            value={formData.lastname}
+            value={formData.last_name}
             onChange={handleChange}
           />
           {errors.lastname && (
