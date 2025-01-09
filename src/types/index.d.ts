@@ -12,6 +12,50 @@ declare global {
     password: string;
     confirmpassword: string;
   }
+
+  interface User {
+    id: string;
+    username: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    is_donor: boolean;
+    is_reciever: boolean;
+  }
+
+  interface Donation {
+    id: string;
+    donor: User;
+    title: string;
+    description: string;
+    location: string;
+    is_reserved: boolean;
+    is_deleivered: boolean;
+    created_at: string;
+    reserved_by: User;
+  }
+
+  interface Proof {
+    id: string;
+    donation: Donation;
+    proof_image: string;
+    uploaded_by: User;
+  }
+
+  interface DroffSite {
+    id: string;
+    location: string;
+    added_by: User;
+    created_at: string;
+  }
+
+  interface Reciept {
+    id: string;
+    user: User;
+    donation: Donation;
+    pickup_date: string;
+    created_at: string;
+  }
 }
 
 export {};
