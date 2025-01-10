@@ -6,8 +6,8 @@ import {
 } from 'components/icons/menu-icons/CredentialIcons';
 
 export enum linkEnum {
-  Analysis = 'Analysis',
-  Management = 'Credentials',
+  Dashboard = 'Dashboard',
+  Donations = 'Donations',
   Widget = 'Widget',
 }
 
@@ -21,14 +21,14 @@ export interface CredentailsMenuLinks {
 export const credentailsMenuLinks: CredentailsMenuLinks[] = [
   {
     id: 1,
-    title: linkEnum.Analysis,
-    link: '/analysis',
+    title: linkEnum.Dashboard,
+    link: '/dashboard',
     icon: AnalysisIcon,
     available: true,
   },
   {
     id: 2,
-    title: linkEnum.Management,
+    title: linkEnum.Donations,
     link: '/listings',
     icon: CredentialIcon,
     available: true,

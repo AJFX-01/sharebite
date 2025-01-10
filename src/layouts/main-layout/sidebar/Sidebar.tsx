@@ -42,24 +42,37 @@ const Sidebar = ({ drawerWidth }: SidebarProps) => {
       }}
     >
       <Toolbar sx={{ gap: 1, minHeight: 100, cursor: 'pointer' }}>
-        <Typography>SHAREBITE</Typography>
+        <Typography
+          color="#0047CC"
+          variant="h3"
+          fontWeight="700"
+          
+        >
+          SHAREBITE
+        </Typography>
       </Toolbar>
 
       <SimpleBar style={{ maxHeight: 'calc(100vh - 100px)' }}>
         <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Credentials</h3>
+          <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
+            Credentials
+          </h3>
           {credentailsMenuLinks.map((menu) => (
             <CredentailsItem key={menu.id} menuItem={menu} />
           ))}
         </List>
         <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Wallets</h3>
+          <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
+            Wallets
+          </h3>
           {menuLinks.map((menu) => (
             <MenuListItem key={menu.id} menuItem={menu} />
           ))}
         </List>
         <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Settings</h3>
+          <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
+            Settings
+          </h3>
           {settingsMenuLinks.map((menu) => (
             <SettingsItem key={menu.id} menuItem={menu} />
           ))}
