@@ -1,13 +1,13 @@
 import { Drawer, List, Toolbar, Typography } from '@mui/material';
 // import Logo from 'components/common/Logo';
-import { menuLinks } from 'layouts/main-layout/sidebar/MenuLinks';
-import { credentailsMenuLinks } from 'layouts/main-layout/sidebar/CredentailsMenuLinks';
+import { locationLinks } from 'layouts/main-layout/sidebar/MenuLinks';
+import { donationsMenuLinks } from 'layouts/main-layout/sidebar/DonationMenuLinks';
 import { devLinks } from 'layouts/main-layout/sidebar/DevMenuLinks';
 import MenuListItem from 'layouts/main-layout/sidebar/MenuListItem';
-import CredentailsItem from 'layouts/main-layout/sidebar/CredentailsItem';
+import CredentailsItem from 'layouts/main-layout/sidebar/DonationsItem';
 import DevItem from 'layouts/main-layout/sidebar/DevItem';
 import SimpleBar from 'simplebar-react';
-import { settingsMenuLinks } from './SettingsMenuLinks';
+import { usersMenuLinks } from './SettingsMenuLinks';
 import SettingsItem from './SettingsListItem';
 interface SidebarProps {
   drawerWidth: {
@@ -50,25 +50,25 @@ const Sidebar = ({ drawerWidth }: SidebarProps) => {
       <SimpleBar style={{ maxHeight: 'calc(100vh - 100px)' }}>
         <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
           <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
-            Credentials
+            Overview
           </h3>
-          {credentailsMenuLinks.map((menu) => (
+          {donationsMenuLinks.map((menu) => (
             <CredentailsItem key={menu.id} menuItem={menu} />
           ))}
         </List>
         <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
           <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
-            Wallets
+            Locations
           </h3>
-          {menuLinks.map((menu) => (
+          {locationLinks.map((menu) => (
             <MenuListItem key={menu.id} menuItem={menu} />
           ))}
         </List>
         <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
           <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
-            Settings
+            Users
           </h3>
-          {settingsMenuLinks.map((menu) => (
+          {usersMenuLinks.map((menu) => (
             <SettingsItem key={menu.id} menuItem={menu} />
           ))}
         </List>

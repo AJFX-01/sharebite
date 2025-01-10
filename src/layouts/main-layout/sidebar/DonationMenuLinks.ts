@@ -11,14 +11,14 @@ export enum linkEnum {
   Widget = 'Widget',
 }
 
-export interface CredentailsMenuLinks {
+export interface DonationsMenuLinks {
   id: number;
   title: string;
   link: string;
   icon?: (props: SvgIconProps) => JSX.Element;
   available: boolean;
 }
-export const credentailsMenuLinks: CredentailsMenuLinks[] = [
+export const donationsMenuLinks: DonationsMenuLinks[] = [
   {
     id: 1,
     title: linkEnum.Dashboard,
@@ -29,7 +29,7 @@ export const credentailsMenuLinks: CredentailsMenuLinks[] = [
   {
     id: 2,
     title: linkEnum.Donations,
-    link: '/listings',
+    link: '/donations',
     icon: CredentialIcon,
     available: true,
   },

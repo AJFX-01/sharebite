@@ -1,12 +1,14 @@
 import { Drawer, List, Toolbar, Typography } from '@mui/material';
 // import Logo from 'components/common/Logo';
-import { menuLinks } from 'layouts/main-layout/sidebar/MenuLinks';
+import { locationLinks } from 'layouts/main-layout/sidebar/MenuLinks';
 import MenuListItem from 'layouts/main-layout/sidebar/MenuListItem';
-import { credentailsMenuLinks } from 'layouts/main-layout/sidebar/CredentailsMenuLinks';
+import { donationsMenuLinks } from 'layouts/main-layout/sidebar/DonationMenuLinks';
 import { devLinks } from 'layouts/main-layout/sidebar/DevMenuLinks';
-import CredentailsItem from 'layouts/main-layout/sidebar/CredentailsItem';
+import CredentailsItem from 'layouts/main-layout/sidebar/DonationsItem';
 import DevItem from 'layouts/main-layout/sidebar/DevItem';
 import SimpleBar from 'simplebar-react';
+import { usersMenuLinks } from './SettingsMenuLinks';
+import SettingsItem from './SettingsListItem';
 
 interface MobileSidebarProps {
   onDrawerClose: () => void;
@@ -53,15 +55,21 @@ const MobileSidebar = ({
 
       <SimpleBar style={{ maxHeight: 'calc(100vh - 100px)' }}>
         <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Credentials</h3>
-          {credentailsMenuLinks.map((menu) => (
+          <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Overview</h3>
+          {donationsMenuLinks.map((menu) => (
             <CredentailsItem key={menu.id} menuItem={menu} />
           ))}
         </List>
         <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Wallets</h3>
-          {menuLinks.map((menu) => (
+          <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Locations</h3>
+          {locationLinks.map((menu) => (
             <MenuListItem key={menu.id} menuItem={menu} />
+          ))}
+        </List>
+        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+          <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Users</h3>
+          {usersMenuLinks.map((menu) => (
+            <SettingsItem key={menu.id} menuItem={menu} />
           ))}
         </List>
       </SimpleBar>

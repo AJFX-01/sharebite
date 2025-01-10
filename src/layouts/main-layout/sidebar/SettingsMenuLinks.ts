@@ -1,13 +1,10 @@
 import ApiKeyIcon from 'components/icons/menu-icons/ApiKeyIcon';
-import KeyConfigIcon from 'components/icons/menu-icons/KeyConfigIcon';
 import TeamIcon from 'components/icons/menu-icons/TeamIcon';
-import WebhookIcon from 'components/icons/menu-icons/WebhookIcon';
+
 
 export enum linkEnum {
-  Teams = 'Teams',
-  ApiKeys = 'API keys',
-  WebHooks = 'Webhooks',
-  KeyConfig = 'Keys Configurations',
+  Donor = 'Donors',
+  Receiver = 'Receivers',
 }
 
 export interface SettingsMenuLinks {
@@ -17,33 +14,33 @@ export interface SettingsMenuLinks {
   icon: () => JSX.Element;
   available: boolean;
 }
-export const settingsMenuLinks: SettingsMenuLinks[] = [
+export const usersMenuLinks: SettingsMenuLinks[] = [
   {
     id: 1,
-    title: linkEnum.Teams,
-    link: '/teams',
+    title: linkEnum.Donor,
+    link: '/donors',
     icon: TeamIcon,
     available: true,
   },
   {
     id: 2,
-    title: linkEnum.ApiKeys,
-    link: '/apikeys',
+    title: linkEnum.Receiver,
+    link: '/recievers',
     icon: ApiKeyIcon,
     available: true,
   },
-  {
-    id: 3,
-    title: linkEnum.WebHooks,
-    link: '/webhooks',
-    icon: WebhookIcon,
-    available: true,
-  },
-  {
-    id: 4,
-    title: linkEnum.KeyConfig,
-    link: '/keyconfig',
-    icon: KeyConfigIcon,
-    available: true,
-  },
+  // {
+  //   id: 3,
+  //   title: linkEnum.WebHooks,
+  //   link: '/webhooks',
+  //   icon: WebhookIcon,
+  //   available: true,
+  // },
+  // {
+  //   id: 4,
+  //   title: linkEnum.KeyConfig,
+  //   link: '/keyconfig',
+  //   icon: KeyConfigIcon,
+  //   available: true,
+  // },
 ];

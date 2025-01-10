@@ -5,13 +5,16 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-import { menuLinks, MenuLinkType } from 'layouts/main-layout/sidebar/MenuLinks';
+import {
+  locationLinks,
+  MenuLinkType,
+} from 'layouts/main-layout/sidebar/MenuLinks';
 import { useLocation } from 'react-router-dom';
 interface MenuListProps {
   menuItem: MenuLinkType;
   onDrawerClose?: () => void;
 }
-const MenuListItem = ({ menuItem, onDrawerClose }: MenuListProps) => {
+const LocationListItem = ({ menuItem, onDrawerClose }: MenuListProps) => {
   const { icon: Icon } = menuItem;
   const itemIcon = Icon ? (
     <Icon sx={{ width: { xs: 20, xl: 24 }, height: { xs: 20, xl: 24 } }} />
@@ -21,7 +24,7 @@ const MenuListItem = ({ menuItem, onDrawerClose }: MenuListProps) => {
   // check if list item is active
   const isActive =
     menuItem.title ===
-    menuLinks.find((item) => item.link === location.pathname)?.title;
+    locationLinks.find((item) => item.link === location.pathname)?.title;
 
   return (
     <ListItem
@@ -102,4 +105,4 @@ const MenuListItem = ({ menuItem, onDrawerClose }: MenuListProps) => {
   );
 };
 
-export default MenuListItem;
+export default LocationListItem;

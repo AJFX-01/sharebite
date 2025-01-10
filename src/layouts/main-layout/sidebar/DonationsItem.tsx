@@ -6,15 +6,15 @@ import {
   Typography,
 } from '@mui/material';
 import {
-  credentailsMenuLinks,
-  CredentailsMenuLinks,
-} from 'layouts/main-layout/sidebar/CredentailsMenuLinks';
+  DonationsMenuLinks,
+  donationsMenuLinks,
+} from 'layouts/main-layout/sidebar/DonationMenuLinks';
 import { useLocation } from 'react-router-dom';
-interface CredentailsProps {
-  menuItem: CredentailsMenuLinks;
+interface DonationsProps {
+  menuItem: DonationsMenuLinks;
   onDrawerClose?: () => void;
 }
-const CredentailsItem = ({ menuItem, onDrawerClose }: CredentailsProps) => {
+const DonationsItem = ({ menuItem, onDrawerClose }: DonationsProps) => {
   const { icon: Icon } = menuItem;
   const itemIcon = Icon ? (
     <Icon sx={{ width: { xs: 20, xl: 24 }, height: { xs: 20, xl: 24 } }} />
@@ -24,7 +24,7 @@ const CredentailsItem = ({ menuItem, onDrawerClose }: CredentailsProps) => {
   // check if list item is active
   const isActive =
     menuItem.title ===
-    credentailsMenuLinks.find((item) => item.link === location.pathname)?.title;
+    donationsMenuLinks.find((item) => item.link === location.pathname)?.title;
 
   return (
     <ListItem
@@ -105,4 +105,4 @@ const CredentailsItem = ({ menuItem, onDrawerClose }: CredentailsProps) => {
   );
 };
 
-export default CredentailsItem;
+export default DonationsItem;
