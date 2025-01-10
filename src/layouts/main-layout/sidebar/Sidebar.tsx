@@ -42,12 +42,7 @@ const Sidebar = ({ drawerWidth }: SidebarProps) => {
       }}
     >
       <Toolbar sx={{ gap: 1, minHeight: 100, cursor: 'pointer' }}>
-        <Typography
-          color="#0047CC"
-          variant="h3"
-          fontWeight="700"
-          
-        >
+        <Typography color="#0047CC" variant="h3" fontWeight="700">
           SHAREBITE
         </Typography>
       </Toolbar>
