@@ -6,6 +6,7 @@ import paths, { rootPaths } from './path';
 const App = lazy(() => import('App'));
 const MainLayout = lazy(() => import('layouts/main-layout'));
 const AuthLayout = lazy(() => import('layouts/auth-layout'));
+const Dashboard = lazy(() => import('pages/dashboard'))
 
 const SignupPage = lazy(() => import('pages/authentication/signup'));
 const LoginPage = lazy(() => import('pages/authentication/login'));
@@ -41,6 +42,20 @@ export const routes = [
           {
             path: paths.signup,
             element: <SignupPage />,
+          },
+        ],
+      },
+      {
+        paths: rootPaths.pageRoots,
+        element: <MainLayout />,
+        children: [
+          {
+            path: paths.dashboard,
+            element: (
+              <Suspense fallback={<LoadingProgress />}>
+                <Dashboard />
+              </Suspense>
+            ),
           },
         ],
       },

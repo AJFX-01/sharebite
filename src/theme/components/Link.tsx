@@ -6,8 +6,8 @@ import {
   LinkProps as RouterLinkProps,
 } from 'react-router-dom';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LinkBehavior = forwardRef<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   any,
   Omit<RouterLinkProps, 'to'> & { href?: string }
 >((props, ref) => <RouterLink ref={ref} to={props.href || '/'} {...props} />);
