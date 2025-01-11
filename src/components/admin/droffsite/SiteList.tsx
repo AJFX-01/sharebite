@@ -10,6 +10,7 @@ import NoData from '../../base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
 import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
+import AddLocation from './AddLocation';
 
 const columns: GridColDef[] = [
   {
@@ -137,35 +138,41 @@ const SiteListings = () => {
           Donations
         </Typography>
         <Button
-            variant="contained"
-            sx={{
-              px: 1,
-              borderRadius: 2,
-              alignItems: 'center',
-              bgcolor: '#0047CC',
-            }}
-            onClick={() => {}}
-          >
-            <div style={{ alignSelf: 'center' }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 20 20">
-                <path
-                  fill="#ffff"
-                  d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </div>
-            <Typography
-              color="#ffff"
-              fontWeight="400"
-              textAlign="center"
-              alignSelf="center"
-              paddingLeft={0.5}
+          variant="contained"
+          sx={{
+            px: 1,
+            borderRadius: 2,
+            alignItems: 'center',
+            bgcolor: '#0047CC',
+          }}
+          onClick={() => {}}
+        >
+          <div style={{ alignSelf: 'center' }}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="15"
+              height="15"
+              viewBox="0 0 20 20"
             >
-              Add Member
-            </Typography>
-          </Button>
+              <path
+                fill="#ffff"
+                d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+          <Typography
+            color="#ffff"
+            fontWeight="400"
+            textAlign="center"
+            alignSelf="center"
+            paddingLeft={0.5}
+          >
+            Add Location
+          </Typography>
+        </Button>
+        <AddLocation open={open} onClose={() => setOpen(null)} />
       </Stack>
       <Card
         sx={{

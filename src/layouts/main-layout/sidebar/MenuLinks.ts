@@ -1,8 +1,5 @@
 import { SvgIconProps } from '@mui/material';
-import {
-  OverviewIcon,
-  TransactionIcon,
-} from 'components/icons/menu-icons/CredentialIcons';
+import { OverviewIcon } from 'components/icons/menu-icons/CredentialIcons';
 export enum linkEnum {
   DroffSites = 'Droff Sites',
   AddSite = 'Add Location',
@@ -21,13 +18,6 @@ export const locationLinks: MenuLinkType[] = [
     title: linkEnum.DroffSites,
     link: '/droffsites',
     icon: OverviewIcon,
-    available: true,
-  },
-  {
-    id: 2,
-    title: linkEnum.AddSite,
-    link: '/addsite',
-    icon: TransactionIcon,
     available: true,
   },
   // {

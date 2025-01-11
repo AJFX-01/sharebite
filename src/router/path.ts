@@ -15,6 +15,7 @@ const paths = {
   donations: `${rootPaths.pageRoots}donations`,
   donors: `${rootPaths.pageRoots}donors`,
   receivers: `${rootPaths.pageRoots}receivers`,
+  droffsites: `${rootPaths.pageRoots}droffsites`
 };
 
 export default paths;

@@ -11,6 +11,7 @@ const Dashboard = lazy(() => import('pages/admin/dashboard'));
 const Donations = lazy(() => import('pages/admin/donations'));
 const Donors = lazy(() => import('pages/admin/donors'));
 const Recievers = lazy(() => import('pages/admin/recievers'));
+const DroffSites = lazy(() => import('pages/admin/droffsites'));
 
 const SignupPage = lazy(() => import('pages/authentication/signup'));
 const LoginPage = lazy(() => import('pages/authentication/login'));
@@ -82,6 +83,14 @@ export const routes = [
             element: (
               <Suspense fallback={<LoadingProgress />}>
                 <Recievers />
+              </Suspense>
+            ),
+          },
+          {
+            path: paths.droffsites,
+            element: (
+              <Suspense fallback={<LoadingProgress />}>
+                <DroffSites />
               </Suspense>
             ),
           },
