@@ -59,9 +59,9 @@ const SiteListings = () => {
   const title = 'No Locations Available';
   const description = 'There is no Location to display at the moment.';
 
-  // const handleOpen = (event: MouseEvent<HTMLElement>) => {
-  //   setOpen(event.currentTarget);
-  // };
+  const handleOpen = (event: MouseEvent<HTMLElement>) => {
+    setOpen(event.currentTarget);
+  };
 
   // const handleClose = () => {
   //   setOpen(null);
@@ -141,11 +141,12 @@ const SiteListings = () => {
           variant="contained"
           sx={{
             px: 1,
+            py: 1,
             borderRadius: 2,
             alignItems: 'center',
             bgcolor: '#0047CC',
           }}
-          onClick={() => {}}
+          onClick={handleOpen}
         >
           <div style={{ alignSelf: 'center' }}>
             <svg
