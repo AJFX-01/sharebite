@@ -50,28 +50,28 @@ const DonationDetails = () => {
           <DonationIcon
             iconName="carbon:credentials"
             iconColor="#0047CC"
-            iconTitle="Total Credentials Issued"
+            iconTitle="Donors"
             IconNumber={190}
             iconBgColor="neutral.light"
           />
           <DonationIcon
             iconName="stash:shield-check-light"
             iconColor="#06c9a9"
-            iconTitle="Active Credentials"
+            iconTitle="Recievers"
             IconNumber={151}
             iconBgColor="#cffff9"
           />
           <DonationIcon
-            iconName="solar:danger-circle-linear"
+            iconName="mdi:donation-outline"
             iconColor="#e30707"
-            iconTitle="Expired Credentials"
+            iconTitle="Completed Donations"
             IconNumber={23}
             iconBgColor="#f7b5b5"
           />
           <DonationIcon
-            iconName="ant-design:stop-outlined"
+            iconName="hugeicons:pickup-02"
             iconColor="black"
-            iconTitle="Revoked Credentials"
+            iconTitle="Ongoing Donations"
             IconNumber={105}
             iconBgColor="#cfcccc"
           />
