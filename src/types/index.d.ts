@@ -56,6 +56,12 @@ declare global {
     pickup_date: string;
     created_at: string;
   }
+
+  // Props
+  interface NoDataProps {
+    title: string;
+    description: string;
+  }
 }
 
 export {};

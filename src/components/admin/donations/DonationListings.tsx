@@ -6,7 +6,7 @@ import {
   GridRowsProp,
 } from '@mui/x-data-grid';
 import { dateFormatFromUTC } from 'helpers/utils';
-import NoData from './NoData';
+import NoData from '../../base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
 import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
@@ -98,6 +98,8 @@ const RecentListings = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const title = 'No Donations Available';
+  const description = 'There is no Donations to display at the moment.';
 
   // const handleOpen = (event: MouseEvent<HTMLElement>) => {
   //   setOpen(event.currentTarget);
@@ -284,7 +286,9 @@ const RecentListings = () => {
           paginationModel={paginationModel}
           onPaginationModelChange={handlePaginationModelChange}
           slots={{
-            noRowsOverlay: () => <NoData />,
+            noRowsOverlay: () => (
+              <NoData title={title} description={description} />
+            ),
             pagination: () => null, // Hide the default pagination component
           }}
           loading={loading}

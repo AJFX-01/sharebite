@@ -8,9 +8,7 @@ import Image from 'components/base/Image';
 // interface NoDataProps {
 //   open?: () => void;
 // }
-const NoData = () => {
-  const title = 'No Donations Available';
-  const description = 'There is no Donations to display at the moment.';
+const NoData = ({ title, description }: NoDataProps) => {
   // const { up } = useBreakpoints();
   // const upSM = up('sm');
 

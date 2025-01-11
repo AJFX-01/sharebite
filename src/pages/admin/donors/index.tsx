@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 
-const Recievers = () => {
+const Donors = () => {
   return (
     <Grid container spacing={{ xs: 2.5, sm: 3 }} mb={3}>
       {/* ------------- Data-Grid section ---------------- */}
@@ -9,4 +9,4 @@ const Recievers = () => {
   );
 };
 
-export default Recievers;
+export default Donors;
