@@ -1,15 +1,15 @@
 import { Card, Stack } from '@mui/material';
 import DonationIcon from './DonationDetailsIcon';
-import DonationPieChart from './DonationPieChart';
+import DonationPieChart, { PieChartDataType } from './DonationPieChart';
 
-const data = [
+const data: PieChartDataType[] = [
   { name: 'Completed', value: 16.8, color: '#06c9a9' },
   { name: 'Ongoing', value: 14.8, color: '#0047CC' },
 ];
 
-const dataP = [
-  { name: 'Donor', value: 16.8, color: '#06c9a9' },
-  { name: 'Reciever', value: 14.8, color: '#0047CC' },
+const dataP: PieChartDataType[] = [
+  { name: 'Donor', value: 16.8, color: '#e30707' },
+  { name: 'Reciever', value: 14.8, color: '#f5ffc4' },
 ];
 
 const DonationChart = () => {

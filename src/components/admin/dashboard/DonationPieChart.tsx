@@ -3,12 +3,12 @@ import { Card, CardHeader, Typography, Box } from '@mui/material';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { styled } from '@mui/system';
 
-interface PieChartDataType {
+export interface PieChartDataType {
   name: string;
   color: string;
   value: number;
 }
-interface DonationPieChartProps {
+export interface DonationPieChartProps {
   data: PieChartDataType[];
   titleheader: string;
 }
