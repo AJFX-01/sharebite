@@ -76,7 +76,7 @@ const columns: GridColDef[] = [
   },
   {
     field: 'created_at',
-    headerName: 'Date Donated',
+    headerName: 'Date',
     flex: 1,
     minWidth: 100,
     hideable: false,

@@ -7,8 +7,8 @@ const App = lazy(() => import('App'));
 const MainLayout = lazy(() => import('layouts/main-layout'));
 const AuthLayout = lazy(() => import('layouts/auth-layout'));
 
-const Dashboard = lazy(() => import('pages/dashboard'));
-const Donations = lazy(() => import('pages/donations'));
+const Dashboard = lazy(() => import('pages/admin/dashboard'));
+const Donations = lazy(() => import('pages/admin/donations'));
 
 const SignupPage = lazy(() => import('pages/authentication/signup'));
 const LoginPage = lazy(() => import('pages/authentication/login'));
