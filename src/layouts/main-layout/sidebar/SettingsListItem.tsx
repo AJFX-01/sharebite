@@ -6,7 +6,7 @@ import {
   Typography,
 } from '@mui/material';
 import {
-  settingsMenuLinks,
+  usersMenuLinks,
   SettingsMenuLinks,
 } from 'layouts/main-layout/sidebar/SettingsMenuLinks';
 import { useLocation } from 'react-router-dom';
@@ -22,7 +22,7 @@ const SettingsItem = ({ menuItem, onDrawerClose }: SettingsProps) => {
   // check if list item is active
   const isActive =
     menuItem.title ===
-    settingsMenuLinks.find((item) => item.link === location.pathname)?.title;
+    usersMenuLinks.find((item) => item.link === location.pathname)?.title;
 
   return (
     <ListItem

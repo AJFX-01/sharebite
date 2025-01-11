@@ -1,7 +1,6 @@
 import ApiKeyIcon from 'components/icons/menu-icons/ApiKeyIcon';
 import TeamIcon from 'components/icons/menu-icons/TeamIcon';
 
-
 export enum linkEnum {
   Donor = 'Donors',
   Receiver = 'Receivers',
