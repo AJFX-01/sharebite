@@ -13,6 +13,8 @@ const paths = {
 
   dashboard: `${rootPaths.pageRoots}dashboard`,
   donations: `${rootPaths.pageRoots}donations`,
+  donors: `${rootPaths.pageRoots}donors`,
+  receivers: `${rootPaths.pageRoots}receivers`,
 };
 
 export default paths;

@@ -14,7 +14,7 @@ declare global {
   }
 
   interface User {
-    id: string;
+    id: number;
     username: string;
     first_name: string;
     last_name: string;
@@ -61,6 +61,14 @@ declare global {
   interface NoDataProps {
     title: string;
     description: string;
+  }
+
+  interface MemeberDesProps {
+    iconName?: string;
+    iconTitle: string;
+    IconNumber: number;
+    iconColor: string;
+    iconBgColor: string;
   }
 }
 
