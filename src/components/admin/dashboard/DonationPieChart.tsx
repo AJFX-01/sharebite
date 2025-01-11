@@ -3,10 +3,15 @@ import { Card, CardHeader, Typography, Box } from '@mui/material';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { styled } from '@mui/system';
 
-const data = [
-  { name: 'Completed', value: 16.8, color: '#06c9a9' },
-  { name: 'Ongoing', value: 14.8, color: '#0047CC' },
-];
+interface PieChartDataType {
+  name: string;
+  color: string;
+  value: number;
+}
+interface DonationPieChartProps {
+  data: PieChartDataType[];
+  titleheader: string;
+}
 
 const LegendItem = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -22,7 +27,7 @@ const ColorBox = styled(Box)<{ color: string }>(({ color }) => ({
   backgroundColor: color,
 }));
 
-export default function DonationPieChart() {
+const DonationPieChart = ({ data, titleheader }: DonationPieChartProps) => {
   return (
     <Card
       sx={{
@@ -39,7 +44,7 @@ export default function DonationPieChart() {
         sx={{
           pb: 0,
         }}
-        title="Donations Distribution"
+        title={titleheader}
         titleTypographyProps={{
           align: 'left',
           fontSize: {
@@ -131,4 +136,6 @@ export default function DonationPieChart() {
       </Box>
     </Card>
   );
-}
+};
+
+export default DonationPieChart;

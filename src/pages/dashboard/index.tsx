@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
+import DonationChart from 'components/admin/dashboard/DonationChart';
 import DonationDetails from 'components/admin/dashboard/DonationDetails';
-import DonationPieChart from 'components/admin/dashboard/DonationPieChart';
 
 const Dashboard = () => {
   return (
@@ -10,7 +10,7 @@ const Dashboard = () => {
         <DonationDetails />
       </Grid>
       <Grid item xs={12}>
-        <DonationPieChart />
+        <DonationChart />
       </Grid>
     </Grid>
   );

@@ -64,7 +64,7 @@ const DonationDetails = () => {
           <DonationIcon
             iconName="mdi:donation-outline"
             iconColor="#e30707"
-            iconTitle="Completed Donations"
+            iconTitle="Donations Made"
             IconNumber={23}
             iconBgColor="#f7b5b5"
           />
