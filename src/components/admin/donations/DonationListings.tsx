@@ -149,11 +149,11 @@ const RecentListings = () => {
     setPaginationModel(model);
   };
 
-  const fetchListingData = async () => {};
+  // const fetchListingData = async () => {};
 
-  useEffect(() => {
-    fetchListingData();
-  });
+  // useEffect(() => {
+  //   fetchListingData();
+  // });
 
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>

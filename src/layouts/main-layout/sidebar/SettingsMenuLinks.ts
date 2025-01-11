@@ -24,7 +24,7 @@ export const usersMenuLinks: SettingsMenuLinks[] = [
   {
     id: 2,
     title: linkEnum.Receiver,
-    link: '/recievers',
+    link: '/receivers',
     icon: ApiKeyIcon,
     available: true,
   },

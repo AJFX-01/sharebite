@@ -26,7 +26,7 @@ const columns: GridColDef[] = [
   },
   {
     field: 'email',
-    headerName: 'email',
+    headerName: 'Email',
     flex: 1,
     width: 200,
     hideable: false,
@@ -106,11 +106,11 @@ const ReceiversListings = () => {
     setPaginationModel(model);
   };
 
-  const fetchListingData = async () => {};
+  // const fetchListingData = async () => {};
 
-  useEffect(() => {
-    fetchListingData();
-  });
+  // useEffect(() => {
+  //   fetchListingData();
+  // });
 
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>
