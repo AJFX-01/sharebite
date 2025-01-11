@@ -4,10 +4,8 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { styled } from '@mui/system';
 
 const data = [
-  { name: 'Active', value: 16.8, color: '#06c9a9' },
-  { name: 'Revoked', value: 14.8, color: '#0047CC' },
-  { name: 'Expired', value: 67.7, color: '#e30707' },
-  { name: 'In Progress', value: 0.6, color: 'rgb(156, 163, 175)' },
+  { name: 'Completed', value: 16.8, color: '#06c9a9' },
+  { name: 'Ongoing', value: 14.8, color: '#0047CC' },
 ];
 
 const LegendItem = styled(Box)(({ theme }) => ({
@@ -24,7 +22,7 @@ const ColorBox = styled(Box)<{ color: string }>(({ color }) => ({
   backgroundColor: color,
 }));
 
-export default function CredentialPieChart() {
+export default function DonationPieChart() {
   return (
     <Card
       sx={{
@@ -41,7 +39,7 @@ export default function CredentialPieChart() {
         sx={{
           pb: 0,
         }}
-        title="Status Distribution"
+        title="Donations Distribution"
         titleTypographyProps={{
           align: 'left',
           fontSize: {
@@ -98,7 +96,7 @@ export default function CredentialPieChart() {
                 md: 'caption.fontSize',
               }}
             >
-              Credentials
+              Donations
             </Typography>
           </Box>
         </Box>

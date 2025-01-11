@@ -68,13 +68,13 @@ const DonationDetails = () => {
             IconNumber={23}
             iconBgColor="#f7b5b5"
           />
-          <DonationIcon
+          {/* <DonationIcon
             iconName="hugeicons:pickup-02"
             iconColor="black"
             iconTitle="Ongoing Donations"
             IconNumber={105}
             iconBgColor="#cfcccc"
-          />
+          /> */}
         </Stack>
       </Card>
     </Stack>
