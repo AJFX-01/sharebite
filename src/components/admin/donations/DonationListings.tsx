@@ -13,23 +13,37 @@ import { useBreakpoints } from 'providers/useBreakpoints';
 
 const columns: GridColDef[] = [
   {
-    field: 'id',
-    headerName: 'Holder DID',
+    field: 'title',
+    headerName: 'Title',
     flex: 1,
     width: 200,
     hideable: false,
   },
   {
-    field: 'status',
-    headerName: 'Status',
+    field: 'donor',
+    headerName: 'Donated By',
+    flex: 1,
+    width: 200,
+    hideable: false,
+  },
+  {
+    field: 'reserved_by',
+    headerName: 'Recieved By',
+    flex: 1,
+    width: 200,
+    hideable: false,
+  },
+  {
+    field: 'is_reserved',
+    headerName: 'Reserved',
     flex: 1,
     minWidth: 100,
     hideable: false,
     renderCell: (params) => {
       const color =
-        params.row.status === 'ACTIVE'
+        params.row.status === 'TRUE'
           ? '#06c9a9'
-          : params.row.status === 'REVOKED'
+          : params.row.status === 'FALSE'
             ? '#0047CC'
             : '#e30707';
 
@@ -37,19 +51,36 @@ const columns: GridColDef[] = [
     },
   },
   {
+    field: 'is_delivered',
+    headerName: 'Delivered',
+    flex: 1,
+    minWidth: 100,
+    hideable: false,
+    renderCell: (params) => {
+      const color =
+        params.row.status === 'TRUE'
+          ? '#06c9a9'
+          : params.row.status === 'FALSE'
+            ? '#0047CC'
+            : '#e30707';
+
+      return <Typography color={color}>{params.row.status}</Typography>;
+    },
+  },
+  {
+    field: 'location',
+    headerName: 'Location',
+    flex: 1,
+    minWidth: 100,
+    hideable: false,
+  },
+  {
     field: 'created_at',
-    headerName: 'Issued Date',
+    headerName: 'Date Donated',
     flex: 1,
     minWidth: 100,
     hideable: false,
     renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
-  },
-  {
-    field: 'metadata',
-    headerName: 'Times Used',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
   },
 ];
 
