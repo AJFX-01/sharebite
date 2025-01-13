@@ -13,6 +13,12 @@ const Donors = lazy(() => import('pages/admin/donors'));
 const Recievers = lazy(() => import('pages/admin/recievers'));
 const DroffSites = lazy(() => import('pages/admin/droffsites'));
 
+const Reciever = lazy(() => import('pages/reciever/dashboard'));
+const Reciept = lazy(() => import('pages/reciever/reciepts'));
+
+const Donor = lazy(() => import('pages/donor/dashboard'));
+const History = lazy(() => import('pages/donor/history'));
+
 const SignupPage = lazy(() => import('pages/authentication/signup'));
 const LoginPage = lazy(() => import('pages/authentication/login'));
 
@@ -91,6 +97,38 @@ export const routes = [
             element: (
               <Suspense fallback={<LoadingProgress />}>
                 <DroffSites />
+              </Suspense>
+            ),
+          },
+          {
+            path: paths.donordashboard,
+            element: (
+              <Suspense fallback={<LoadingProgress />}>
+                <Donor />
+              </Suspense>
+            ),
+          },
+          {
+            path: paths.history,
+            element: (
+              <Suspense fallback={<LoadingProgress />}>
+                <History />
+              </Suspense>
+            ),
+          },
+          {
+            path: paths.recieverdashboard,
+            element: (
+              <Suspense fallback={<LoadingProgress />}>
+                <Reciever />
+              </Suspense>
+            ),
+          },
+          {
+            path: paths.receipt,
+            element: (
+              <Suspense fallback={<LoadingProgress />}>
+                <Reciept />
               </Suspense>
             ),
           },
