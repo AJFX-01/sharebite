@@ -70,6 +70,11 @@ declare global {
     iconColor: string;
     iconBgColor: string;
   }
+
+  interface FilterDataType {
+    id: number;
+    title: string;
+  }
 }
 
 export {};
