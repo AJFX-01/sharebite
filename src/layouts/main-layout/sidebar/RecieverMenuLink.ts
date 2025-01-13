@@ -9,14 +9,14 @@ export enum linkEnum {
   Reciepts = 'Reciepts',
 }
 
-export interface recieverLinkType {
+export interface RecieverLinkType {
   id: number;
   title: string;
   link: string;
   icon?: (props: SvgIconProps) => JSX.Element;
   available: boolean;
 }
-export const recieverLinks: recieverLinkType[] = [
+export const recieverLinks: RecieverLinkType[] = [
   {
     id: 1,
     title: linkEnum.Dashboard,
