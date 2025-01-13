@@ -21,7 +21,7 @@ const paths = {
   history: `${rootPaths.pageRoots}history`,
 
   recieverdashboard: `${rootPaths.pageRoots}reciever`,
-  receipt: `${rootPaths.pageRoots}receipt`,
+  receipt: `${rootPaths.pageRoots}receipts`,
 };
 
 export default paths;

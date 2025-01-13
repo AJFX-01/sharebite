@@ -20,14 +20,14 @@ export const donorLinks: DonorLinkType[] = [
   {
     id: 1,
     title: linkEnum.Dashboard,
-    link: '/donor/dashboard',
+    link: '/donor',
     icon: OverviewIcon,
     available: true,
   },
   {
     id: 3,
     title: linkEnum.History,
-    link: '/donor/history',
+    link: '/history',
     icon: WalletIcon,
     available: true,
   },

@@ -20,14 +20,14 @@ export const recieverLinks: RecieverLinkType[] = [
   {
     id: 1,
     title: linkEnum.Dashboard,
-    link: '/reciever/dashboard',
+    link: '/reciever',
     icon: OverviewIcon,
     available: true,
   },
   {
     id: 3,
     title: linkEnum.Reciepts,
-    link: '/reciever/Reciepts',
+    link: '//reciepts',
     icon: WalletIcon,
     available: true,
   },
