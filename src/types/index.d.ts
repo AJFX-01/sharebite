@@ -75,6 +75,11 @@ declare global {
     id: number;
     title: string;
   }
+
+  interface AddDonationProps {
+    open: HTMLElement | null;
+    onClose: () => void;
+  }
 }
 
 export {};
