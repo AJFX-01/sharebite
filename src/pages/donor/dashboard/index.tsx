@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import DonationDetails from 'components/donor/DonationDetails';
+import DonationDetails from 'components/donor/DonationInsight';
 import DonationList from 'components/donor/DonationList';
 
 const Donor = () => {

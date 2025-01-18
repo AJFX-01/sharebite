@@ -124,19 +124,7 @@ const DonationHistory = () => {
             </>
           );
         } else {
-          return (
-            <Button
-              onClick={() => handleOpen(params.row)}
-              variant="contained"
-              color="primary"
-              sx={{
-                fontSize: 12,
-                width: 150,
-              }}
-            >
-              View Proof
-            </Button>
-          );
+          return <Typography color={'#06c9a9'}>Avaliable</Typography>;
         }
       },
     },

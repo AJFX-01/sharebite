@@ -11,8 +11,9 @@ import NoData from '../../components/base/NoData';
 import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import FilterDropdown from 'components/base/FilterDropDown';
-import DonationDetails from './DonationDetails';
+import DonationDetails from './DonationInsight';
 import MakeDonation from './MakeDonation';
+import { donations } from 'data/dummydata';
 
 const filter_data: FilterDataType[] = [
   {
@@ -29,78 +30,6 @@ const filter_data: FilterDataType[] = [
   },
 ];
 
-const columns: GridColDef[] = [
-  {
-    field: 'title',
-    headerName: 'Title',
-    flex: 1,
-    width: 200,
-    hideable: false,
-  },
-  {
-    field: 'donor',
-    headerName: 'Donated By',
-    flex: 1,
-    width: 200,
-    hideable: false,
-  },
-  {
-    field: 'reserved_by',
-    headerName: 'Recieved By',
-    flex: 1,
-    width: 200,
-    hideable: false,
-  },
-  {
-    field: 'is_reserved',
-    headerName: 'Reserved',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-    renderCell: (params) => {
-      const color =
-        params.row.status === 'TRUE'
-          ? '#06c9a9'
-          : params.row.status === 'FALSE'
-            ? '#0047CC'
-            : '#e30707';
-
-      return <Typography color={color}>{params.row.status}</Typography>;
-    },
-  },
-  {
-    field: 'is_delivered',
-    headerName: 'Delivered',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-    renderCell: (params) => {
-      const color =
-        params.row.status === 'TRUE'
-          ? '#06c9a9'
-          : params.row.status === 'FALSE'
-            ? '#0047CC'
-            : '#e30707';
-
-      return <Typography color={color}>{params.row.status}</Typography>;
-    },
-  },
-  {
-    field: 'location',
-    headerName: 'Location',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-  },
-  {
-    field: 'created_at',
-    headerName: 'Date',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-    renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
-  },
-];
 
 let rowHeight = 60;
 
@@ -140,6 +69,72 @@ const DonationListings = () => {
     // );
   };
 
+  const columns: GridColDef[] = [
+    {
+      field: 'title',
+      headerName: 'Title',
+      flex: 1,
+      width: 200,
+      hideable: false,
+    },
+    {
+      field: 'is_reserved',
+      headerName: 'Reserved',
+      flex: 1,
+      minWidth: 50,
+      hideable: false,
+      renderCell: (params) => {
+        const color =
+          params.row.status === 'TRUE'
+            ? '#06c9a9'
+            : params.row.status === 'FALSE'
+              ? '#0047CC'
+              : '#e30707';
+  
+        return <Typography color={color}>{params.row.status}</Typography>;
+      },
+    },
+    {
+      field: 'location',
+      headerName: 'Location',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+    },
+    {
+      field: 'created_at',
+      headerName: 'Date',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+      renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
+    },
+    {
+      field: '',
+      headerName: 'Details',
+      flex: 1,
+      minWidth: 150,
+      hideable: false,
+      renderCell: (params) => {
+        return (
+          <>
+            <Button
+              onClick={() => handleOpen(params.row)}
+              variant="contained"
+              color="primary"
+              sx={{
+                fontSize: 12,
+                width: 150,
+              }}
+            >
+              Full Details
+            </Button>
+          </>
+        );
+      },
+    },
+  ];
+
   // const handleRefresh = () => {
   //   fetchListingData();
   // };
@@ -170,11 +165,15 @@ const DonationListings = () => {
     setPaginationModel(model);
   };
 
-  // const fetchListingData = async () => {};
+  const fetchListingData = () => {
+    setLoading(true);
+    setItems(donations); // Always set all items
+    setLoading(false);
+  };
 
-  // useEffect(() => {
-  //   fetchListingData();
-  // });
+  useEffect(() => {
+    fetchListingData();
+  });
 
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>
