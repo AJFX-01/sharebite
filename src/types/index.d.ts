@@ -76,8 +76,7 @@ declare global {
     title: string;
   }
 
-  interface AddDonationProps {
-    open: HTMLElement | null;
+  interface MakeDonationProps {
     onClose: () => void;
   }
 }
