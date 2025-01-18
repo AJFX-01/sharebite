@@ -30,3 +30,11 @@ export const numberFormat = (
   new Intl.NumberFormat('en-US', {
     notation,
   }).format(number);
+
+export const toUpperCase = (value: string | boolean): string => {
+  if (typeof value === 'boolean') {
+    return value.toString().toUpperCase(); // Convert boolean to string and then to uppercase
+  } else {
+    return value.toUpperCase(); // Directly apply uppercase for strings
+  }
+};

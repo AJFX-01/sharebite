@@ -6,12 +6,13 @@ import {
   GridRowsProp,
   GridValidRowModel,
 } from '@mui/x-data-grid';
-import { dateFormatFromUTC } from 'helpers/utils';
+import { dateFormatFromUTC, toUpperCase } from 'helpers/utils';
 import NoData from '../../components/base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
 import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import DonationProofUpload from './DonationProofUpload';
+import { donations } from 'data/dummydata';
 
 let rowHeight = 60;
 
@@ -53,34 +54,30 @@ const DonationHistory = () => {
       field: 'is_reserved',
       headerName: 'Reserved',
       flex: 1,
-      minWidth: 100,
+      minWidth: 50,
       hideable: false,
       renderCell: (params) => {
-        const color =
-          params.row.status === 'TRUE'
-            ? '#06c9a9'
-            : params.row.status === 'FALSE'
-              ? '#0047CC'
-              : '#e30707';
+        const color = !params.row.is_reserved ? '#06c9a9' : '#0047CC';
 
-        return <Typography color={color}>{params.row.status}</Typography>;
+        return <Typography>{toUpperCase(params.row.is_reserved)}</Typography>;
       },
     },
     {
-      field: 'is_delivered',
+      field: 'is_deleivered',
       headerName: 'Delivered',
       flex: 1,
-      minWidth: 100,
+      minWidth: 50,
       hideable: false,
       renderCell: (params) => {
         const color =
-          params.row.status === 'TRUE'
+          toUpperCase(params.row.is_deleivered) === 'TRUE'
             ? '#06c9a9'
-            : params.row.status === 'FALSE'
-              ? '#0047CC'
-              : '#e30707';
-
-        return <Typography color={color}>{params.row.status}</Typography>;
+            : '#e30707';
+        const newParams =
+          toUpperCase(params.row.is_deleivered) === 'TRUE'
+            ? (params.row.is_deleivered = 'YES')
+            : (params.row.is_deleivered = 'NO');
+        return <Typography color={color}>{toUpperCase(newParams)}</Typography>;
       },
     },
     {
@@ -128,15 +125,6 @@ const DonationHistory = () => {
   //   fetchListingData();
   // };
 
-  // const handleSearch = (value: string) => {
-  //   setSearchTerm(value);
-  //   setItems(
-  //     credentials.filter((item) =>
-  //       item.id.toLowerCase().includes(value.toLowerCase()),
-  //     ),
-  //   );
-  // };
-
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
     pageSize: 10,
@@ -154,11 +142,15 @@ const DonationHistory = () => {
     setPaginationModel(model);
   };
 
-  // const fetchListingData = async () => {};
+  const fetchListingData = () => {
+    setLoading(true);
+    setItems(donations); // Always set all items
+    setLoading(false);
+  };
 
-  // useEffect(() => {
-  //   fetchListingData();
-  // });
+  useEffect(() => {
+    fetchListingData();
+  });
 
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>

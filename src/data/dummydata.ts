@@ -1,4 +1,4 @@
-const users: User[] = [
+export const users: User[] = [
   {
     id: 1,
     username: 'john_doe',
@@ -46,7 +46,7 @@ const users: User[] = [
   },
 ];
 
-const donations: Donation[] = [
+export const donations: Donation[] = [
   {
     id: 1,
     donor: users[0],
@@ -92,7 +92,7 @@ const donations: Donation[] = [
 
 donations[2].proof!.donation = donations[2]; // Resolve circular reference
 
-const proofs: Proof[] = [
+export const proofs: Proof[] = [
   {
     id: 1,
     donation: donations[2],
