@@ -14,6 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 import IconifyIcon from 'components/base/IconifyIcon';
+import ImageUpload from 'components/base/ImageUpload';
 import { useEffect, useState } from 'react';
 
 const MakeDonation = ({ onClose }: MakeDonationProps) => {
@@ -178,6 +179,7 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
                       Select a drop off location
                     </FormHelperText>
                   </FormControl>
+                  <ImageUpload />
                 </Stack>
               </>
             )}

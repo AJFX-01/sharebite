@@ -80,8 +80,8 @@ declare global {
     onClose: () => void;
   }
 
-  interface LogoUploadProps {
-    onLogoUpload?: (logoUrl: string) => void;
+  interface ImageUploadProps {
+    onImageUpload?: (logoUrl: string) => void;
   }
 }
 
