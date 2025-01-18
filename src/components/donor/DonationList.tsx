@@ -4,6 +4,7 @@ import {
   GridColDef,
   GridPaginationModel,
   GridRowsProp,
+  GridValidRowModel,
 } from '@mui/x-data-grid';
 import { dateFormatFromUTC } from 'helpers/utils';
 import NoData from '../../components/base/NoData';
@@ -14,6 +15,7 @@ import FilterDropdown from 'components/base/FilterDropDown';
 import DonationDetails from './DonationInsight';
 import MakeDonation from './MakeDonation';
 import { donations } from 'data/dummydata';
+import DonationView from './DonationDetails';
 
 const filter_data: FilterDataType[] = [
   {
@@ -30,7 +32,6 @@ const filter_data: FilterDataType[] = [
   },
 ];
 
-
 let rowHeight = 60;
 
 const DonationListings = () => {
@@ -43,16 +44,25 @@ const DonationListings = () => {
   const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
     popover1: null,
     popover2: null,
+    popover3: null,
   });
   const [issueModal, setIssueModal] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [rowDetails, setRowDetails] = useState<GridValidRowModel | null>(null);
   const title = 'No Donations Available';
   const description = 'There is no Donations to display at the moment.';
 
-  const handleOpen = (event: MouseEvent<HTMLElement>, popoverId: string) => {
+  const handleOpen = (
+    event: MouseEvent<HTMLElement>,
+    popoverId: string,
+    row?: GridValidRowModel,
+  ) => {
     setOpen({ ...open, [popoverId]: event.currentTarget });
+    if (row != null) {
+      setRowDetails(row);
+    }
   };
 
   const handleClose = (popoverId: string) => {
@@ -90,7 +100,7 @@ const DonationListings = () => {
             : params.row.status === 'FALSE'
               ? '#0047CC'
               : '#e30707';
-  
+
         return <Typography color={color}>{params.row.status}</Typography>;
       },
     },
@@ -119,7 +129,7 @@ const DonationListings = () => {
         return (
           <>
             <Button
-              onClick={() => handleOpen(params.row)}
+              onClick={(event) => handleOpen(event, 'popover3', params.row)}
               variant="contained"
               color="primary"
               sx={{
@@ -389,6 +399,12 @@ const DonationListings = () => {
       </Card>
       {open.popover2 && (
         <MakeDonation onClose={() => handleClose('popover2')} />
+      )}
+      {open.popover3 && (
+        <DonationView
+          onClose={() => handleClose('popover3')}
+          donation={rowDetails as Donation}
+        />
       )}
     </Stack>
   );
