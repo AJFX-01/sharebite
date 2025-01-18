@@ -6,7 +6,7 @@ import {
   GridRowsProp,
   GridValidRowModel,
 } from '@mui/x-data-grid';
-import { dateFormatFromUTC, toUpperCase } from 'helpers/utils';
+import { dateFormatFromUTC, toUpperCase, transformBool } from 'helpers/utils';
 import NoData from '../../components/base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
 import { useState, MouseEvent, useEffect } from 'react';
@@ -40,44 +40,49 @@ const DonationHistory = () => {
       field: 'title',
       headerName: 'Title',
       flex: 1,
-      width: 200,
+      minWidth: 150,
       hideable: false,
     },
     {
       field: 'description',
       headerName: 'Description',
       flex: 1,
-      width: 200,
+      minWidth: 200,
       hideable: false,
     },
     {
       field: 'is_reserved',
       headerName: 'Reserved',
-      flex: 1,
-      minWidth: 50,
+      minWidth: 20,
       hideable: false,
       renderCell: (params) => {
-        const color = !params.row.is_reserved ? '#06c9a9' : '#0047CC';
+        const color =
+          toUpperCase(params.row.is_reserved) === 'TRUE'
+            ? '#06c9a9'
+            : '#e30707';
 
-        return <Typography>{toUpperCase(params.row.is_reserved)}</Typography>;
+        return (
+          <Typography color={color}>
+            {transformBool(params.row.is_reserved)}
+          </Typography>
+        );
       },
     },
     {
       field: 'is_deleivered',
       headerName: 'Delivered',
-      flex: 1,
-      minWidth: 50,
+      minWidth: 20,
       hideable: false,
       renderCell: (params) => {
         const color =
           toUpperCase(params.row.is_deleivered) === 'TRUE'
             ? '#06c9a9'
             : '#e30707';
-        const newParams =
-          toUpperCase(params.row.is_deleivered) === 'TRUE'
-            ? (params.row.is_deleivered = 'YES')
-            : (params.row.is_deleivered = 'NO');
-        return <Typography color={color}>{toUpperCase(newParams)}</Typography>;
+        return (
+          <Typography color={color}>
+            {transformBool(params.row.is_deleivered)}
+          </Typography>
+        );
       },
     },
     {
@@ -91,19 +96,35 @@ const DonationHistory = () => {
       field: 'created_at',
       headerName: 'Date',
       flex: 1,
-      minWidth: 100,
+      minWidth: 120,
       hideable: false,
       renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
     },
     {
       field: '',
-      headerName: '',
+      headerName: 'Proof',
       flex: 1,
-      width: 150,
+      minWidth: 150,
       hideable: false,
       renderCell: (params) => {
-        return (
-          <>
+        if (params.row.proof === undefined || params.row.proof === null) {
+          return (
+            <>
+              <Button
+                onClick={() => handleOpen(params.row)}
+                variant="contained"
+                color="primary"
+                sx={{
+                  fontSize: 12,
+                  width: 150,
+                }}
+              >
+                Upload Proof
+              </Button>
+            </>
+          );
+        } else {
+          return (
             <Button
               onClick={() => handleOpen(params.row)}
               variant="contained"
@@ -113,10 +134,10 @@ const DonationHistory = () => {
                 width: 150,
               }}
             >
-              Upload Proof
+              View Proof
             </Button>
-          </>
-        );
+          );
+        }
       },
     },
   ];

@@ -38,3 +38,11 @@ export const toUpperCase = (value: string | boolean): string => {
     return value.toUpperCase(); // Directly apply uppercase for strings
   }
 };
+
+export const transformBool = (value: boolean): string => {
+  if (typeof value === 'boolean' && value === true) {
+    return 'YES';
+  } else {
+    return 'NO';
+  }
+};
