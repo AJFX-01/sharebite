@@ -12,6 +12,7 @@ import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import FilterDropdown from 'components/base/FilterDropDown';
 import DonationDetails from './DonationDetails';
+import MakeDonation from './AddDonation';
 
 const filter_data: FilterDataType[] = [
   {
@@ -110,7 +111,10 @@ const DonationListings = () => {
   // );
   const [items, setItems] = useState<GridRowsProp<Donation>>([]);
   const { down } = useBreakpoints();
-  const [open, setOpen] = useState<null | HTMLElement>(null);
+  const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
+    popover1: null,
+    popover2: null,
+  });
   const [issueModal, setIssueModal] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<string>('');
@@ -118,17 +122,17 @@ const DonationListings = () => {
   const title = 'No Donations Available';
   const description = 'There is no Donations to display at the moment.';
 
-  const handleOpen = (event: MouseEvent<HTMLElement>) => {
-    setOpen(event.currentTarget);
+  const handleOpen = (event: MouseEvent<HTMLElement>, popoverId: string) => {
+    setOpen({ ...open, [popoverId]: event.currentTarget });
   };
 
-  const handleClose = () => {
-    setOpen(null);
+  const handleClose = (popoverId: string) => {
+    setOpen({ ...open, [popoverId]: null });
   };
 
   const handleSelect = (value: string) => {
     setSelectedItem(value);
-    setOpen(null);
+    setOpen({});
     // setItems(
     //   credentials.filter(
     //     (item) => item.status.toUpperCase() === value.toUpperCase(),
@@ -232,7 +236,7 @@ const DonationListings = () => {
                 borderRadius: 2,
                 alignItems: 'center',
               }}
-              onClick={handleOpen}
+              onClick={(event) => handleOpen(event, 'popover1')}
             >
               <div style={{ alignSelf: 'center' }}>
                 <svg
@@ -260,8 +264,8 @@ const DonationListings = () => {
               </Typography>
             </Button>
             <FilterDropdown
-              open={open}
-              onClose={handleClose}
+              open={open.popover1}
+              onClose={() => handleClose('popover1')}
               selectedItem={selectedItem}
               onSelect={handleSelect}
               filterData={filter_data}
@@ -274,7 +278,7 @@ const DonationListings = () => {
                 alignItems: 'center',
                 bgcolor: '#0047CC',
               }}
-              onClick={() => {}}
+              onClick={(event) => handleOpen(event, 'popover2')}
             >
               <div style={{ alignSelf: 'center' }}>
                 <svg
@@ -384,6 +388,9 @@ const DonationListings = () => {
         {/* )}
         </> */}
       </Card>
+      {open.popover2 && (
+        <MakeDonation onClose={() => handleClose('popover2')} />
+      )}
     </Stack>
   );
 };

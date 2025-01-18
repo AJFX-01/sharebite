@@ -79,6 +79,10 @@ declare global {
   interface MakeDonationProps {
     onClose: () => void;
   }
+
+  interface LogoUploadProps {
+    onLogoUpload?: (logoUrl: string) => void;
+  }
 }
 
 export {};

@@ -127,146 +127,23 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
                   fontWeight="400"
                   sx={{ mb: 2.5, mt: 1.5, fontSize: 12 }}
                 >
-                  Please enter details for the webhook
+                  Please enter details for the donations
                 </Typography>
 
                 <Stack spacing={3} position="relative">
                   <TextField
                     name="email"
-                    label="Name *"
+                    label="Donation title *"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <TextField
                     name="url"
-                    label="Webhook URL *"
+                    label="Description *"
                     value={url}
                     multiline
                     onChange={(e) => setUrl(e.target.value)}
                   />
-                  <Typography
-                    color="textSecondary"
-                    variant="body1"
-                    fontWeight="400"
-                    sx={{ fontSize: 11 }}
-                  >
-                    Enter the URL where your webhook should send data
-                  </Typography>
-                  <Box
-                    sx={{
-                      background: '#f7f7f7',
-                      width: '100%',
-                      border: '1px solid #dceef7',
-                      borderRadius: 1,
-                      padding: 2,
-                    }}
-                  >
-                    <Stack
-                      direction="row"
-                      sx={{
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                      }}
-                    >
-                      <Button
-                        sx={{ p: 0 }}
-                        onClick={() => setShowHeaders(!showHeaders)}
-                      >
-                        <IconifyIcon
-                          icon={
-                            showHeaders
-                              ? 'mdi:chevron-down'
-                              : 'mdi:chevron-right'
-                          }
-                          width={20}
-                          height={20}
-                          color="black"
-                        />
-                        <Typography
-                          color="black"
-                          variant="h6"
-                          sx={{
-                            fontSize: 12,
-                          }}
-                        >
-                          HTTP Headers
-                        </Typography>
-                      </Button>
-                      <Typography
-                        variant="h6"
-                        gutterBottom
-                        sx={{
-                          fontSize: 10,
-                        }}
-                      >
-                        optional
-                      </Typography>
-                    </Stack>
-                    {/* {showHeaders && (
-                      <>
-                        {headers.map((header, index) => (
-                          <Grid container spacing={2} alignItems="center" sx={{ mb: 1, mt: 1 }}>
-                            <Grid item xs={5.5}>
-                              <TextField
-                                label="Key"
-                                value={header.key}
-                                onChange={(e) => handleHeaderChange(e, index)}
-                                fullWidth
-                              />
-                            </Grid>
-                            <Grid item xs={5.5}>
-                              <TextField
-                                label="Value"
-                                value={header.value}
-                                onChange={(e) => handleHeaderChange(e, index)}
-                                fullWidth
-                              />
-                            </Grid>
-                            <Grid
-                              item
-                              xs={0.5}
-                              alignItems="center"
-                              alignSelf="center"
-                              sx={{ mt: 2.5 }}
-                            >
-                              {headers.length > 1 && (
-                                <IconButton
-                                  sx={{
-                                    alignSelf: 'center',
-                                    alignItems: 'center',
-                                  }}
-                                  onClick={() => handleRemoveHeader(index)}
-                                >
-                                  <IconifyIcon
-                                    icon="mdi:delete-outline"
-                                    width={25}
-                                    sx={{
-                                      alignSelf: 'center',
-                                    }}
-                                  />
-                                </IconButton>
-                              )}
-                            </Grid>
-                          </Grid>
-                        ))}
-                        <Button
-                          sx={{
-                            fontSize: '11px',
-                            pl: 0,
-                          }}
-                          onClick={handleAddHeader}
-                        >
-                          + Add New Header
-                        </Button>
-                      </>
-                    )} */}
-                  </Box>
-                  <InputLabel
-                    sx={{ mb: 0 }}
-                    id="demo-simple-select-helper-label"
-                  >
-                    Event to Send
-                  </InputLabel>
                   <FormControl fullWidth>
                     <Select
                       labelId="demo-simple-select-helper-label"
@@ -298,7 +175,7 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
                         ml: 0,
                       }}
                     >
-                      Select event that will trigger the webhook
+                      Select a drop off location
                     </FormHelperText>
                   </FormControl>
                 </Stack>
@@ -316,7 +193,7 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
             p: 1,
           }}
         >
-          <Stack direction="row" spacing={2} justifyContent="flex-start">
+          <Stack direction="row" spacing={2} justifyContent="flex-end">
             <Button
               variant="contained"
               color="primary"
@@ -326,16 +203,6 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
               }}
             >
               Make Donation
-            </Button>
-            <Button
-              variant="outlined"
-              color="primary"
-              sx={{
-                fontSize: 12,
-                borderRadius: 1,
-              }}
-            >
-              Test
             </Button>
           </Stack>
         </Box>
