@@ -11,6 +11,7 @@ import NoData from '../../components/base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
 import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
+import DonationProofUpload from './DonationProofUpload';
 
 let rowHeight = 60;
 
@@ -21,10 +22,6 @@ const DonationHistory = () => {
   // );
   const [items, setItems] = useState<GridRowsProp<Donation>>([]);
   const { down } = useBreakpoints();
-  const [open, setOpen] = useState<null | HTMLElement>(null);
-  const [issueModal, setIssueModal] = useState<boolean>(false);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [selectedItem, setSelectedItem] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const title = 'You have not made any donations';
   const description = 'No Donations History.';
@@ -256,6 +253,12 @@ const DonationHistory = () => {
         {/* )}
         </> */}
       </Card>
+      {isProofBox && (
+        <DonationProofUpload
+          onClose={() => setProofBox(false)}
+          donation={rowDetails as Donation}
+        />
+      )}
     </Stack>
   );
 };
