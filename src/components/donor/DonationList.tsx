@@ -12,7 +12,7 @@ import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import FilterDropdown from 'components/base/FilterDropDown';
 import DonationDetails from './DonationDetails';
-import MakeDonation from './AddDonation';
+import MakeDonation from './MakeDonation';
 
 const filter_data: FilterDataType[] = [
   {

@@ -1,26 +1,20 @@
 import {
   Box,
   Button,
-  FormControl,
-  FormHelperText,
   Grid,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
-import IconifyIcon from 'components/base/IconifyIcon';
 import ImageUpload from 'components/base/ImageUpload';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-const MakeDonation = ({ onClose }: MakeDonationProps) => {
-  const [title, setTitle] = useState<string>();
-  const [description, setDescription] = useState<string>();
-  const [selectedOption, setSelectedOption] = useState<string>();
+const DonationProofUpload = ({
+  onClose,
+  donation,
+}: DonationProofUploadProps) => {
+  const [title, setTitle] = useState<string>(donation.title);
+  const [description, setDescription] = useState<string>(donation.description);
 
   // const handleAddHeader = () => {
   //   setHeaders([...headers, { key: '', value: '' }]);
@@ -40,10 +34,6 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
   //   updatedHeaders[index] = { ...updatedHeaders[index], [e.target.name]: e.target.value };
   //   setHeaders(updatedHeaders);
   // };
-
-  const handleSelectChange = (event: SelectChangeEvent) => {
-    setSelectedOption(event.target.value);
-  };
 
   return (
     <>
@@ -117,7 +107,7 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
           >
             <>
               <Typography variant="h4" fontWeight="700" fontSize="15px">
-                Add Donations
+                Upload Donation Proof
               </Typography>
               <Typography
                 color="textSecondary"
@@ -134,6 +124,7 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
                   label="Donation title *"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
+                  disabled
                 />
                 <TextField
                   name="description"
@@ -141,41 +132,8 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
                   value={description}
                   multiline
                   onChange={(e) => setDescription(e.target.value)}
+                  disabled
                 />
-                <FormControl fullWidth>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    value={selectedOption}
-                    onChange={handleSelectChange}
-                    label="Event to Send"
-                    MenuProps={{
-                      PaperProps: {
-                        sx: {
-                          zIndex: 44444,
-                          maxHeight: 300,
-                        },
-                      },
-                    }}
-                    style={{
-                      zIndex: 44444,
-                    }}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value="option1">Option 1</MenuItem>
-                    <MenuItem value="option2">Option 2</MenuItem>
-                    <MenuItem value="option3">Option 3</MenuItem>
-                  </Select>
-                  <FormHelperText
-                    sx={{
-                      ml: 0,
-                    }}
-                  >
-                    Select a drop off location
-                  </FormHelperText>
-                </FormControl>
                 <ImageUpload />
               </Stack>
             </>
@@ -200,7 +158,7 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
                 width: 150,
               }}
             >
-              Make Donation
+              Upload
             </Button>
           </Stack>
         </Box>
@@ -209,4 +167,4 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
   );
 };
 
-export default MakeDonation;
+export default DonationProofUpload;

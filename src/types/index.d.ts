@@ -24,7 +24,7 @@ declare global {
   }
 
   interface Donation {
-    id: string;
+    id: number;
     donor: User;
     title: string;
     description: string;
@@ -33,10 +33,11 @@ declare global {
     is_deleivered: boolean;
     created_at: string;
     reserved_by: User;
+    proof?: Proof;
   }
 
   interface Proof {
-    id: string;
+    id: number;
     donation: Donation;
     proof_image: string;
     uploaded_by: User;
@@ -82,6 +83,11 @@ declare global {
 
   interface ImageUploadProps {
     onImageUpload?: (logoUrl: string) => void;
+  }
+
+  interface DonationProofUploadProps {
+    onClose: () => void;
+    donation: Donation;
   }
 }
 
