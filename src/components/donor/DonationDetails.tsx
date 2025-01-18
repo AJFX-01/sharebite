@@ -97,7 +97,7 @@ const DonationView = ({ onClose, donation }: DonationProofUploadProps) => {
           >
             <>
               <Typography variant="h4" fontWeight="700" fontSize="15px">
-                Upload Donation Proof
+                Donation Details
               </Typography>
               <Typography
                 color="textSecondary"
@@ -109,21 +109,6 @@ const DonationView = ({ onClose, donation }: DonationProofUploadProps) => {
               </Typography>
 
               <Stack spacing={3} position="relative">
-                <TextField
-                  name="title"
-                  label="Donation title *"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  disabled
-                />
-                <TextField
-                  name="description"
-                  label="Description *"
-                  value={description}
-                  multiline
-                  onChange={(e) => setDescription(e.target.value)}
-                  disabled
-                />
                 <ImageUpload />
               </Stack>
             </>

@@ -89,6 +89,13 @@ declare global {
     onClose: () => void;
     donation: Donation;
   }
+
+  interface DetailsProps {
+    titleRight: string;
+    titleLeft: string;
+    labelRight: string;
+    labelLeft: string;
+  }
 }
 
 export {};
