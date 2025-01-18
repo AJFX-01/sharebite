@@ -18,10 +18,8 @@ import ImageUpload from 'components/base/ImageUpload';
 import { useEffect, useState } from 'react';
 
 const MakeDonation = ({ onClose }: MakeDonationProps) => {
-  const [showHeaders, setShowHeaders] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>();
-  const [url, setUrl] = useState<string>();
-  const [expanded, setExpanded] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>();
+  const [description, setDescription] = useState<string>();
   const [selectedOption, setSelectedOption] = useState<string>();
 
   // const handleAddHeader = () => {
@@ -117,72 +115,70 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
               width: '100%',
             }}
           >
-            {!expanded && (
-              <>
-                <Typography variant="h4" fontWeight="700" fontSize="15px">
-                  Add Donations
-                </Typography>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                  fontWeight="400"
-                  sx={{ mb: 2.5, mt: 1.5, fontSize: 12 }}
-                >
-                  Please enter details for the donations
-                </Typography>
+            <>
+              <Typography variant="h4" fontWeight="700" fontSize="15px">
+                Add Donations
+              </Typography>
+              <Typography
+                color="textSecondary"
+                variant="body1"
+                fontWeight="400"
+                sx={{ mb: 2.5, mt: 1.5, fontSize: 12 }}
+              >
+                Please enter details for the donations
+              </Typography>
 
-                <Stack spacing={3} position="relative">
-                  <TextField
-                    name="email"
-                    label="Donation title *"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <TextField
-                    name="url"
-                    label="Description *"
-                    value={url}
-                    multiline
-                    onChange={(e) => setUrl(e.target.value)}
-                  />
-                  <FormControl fullWidth>
-                    <Select
-                      labelId="demo-simple-select-helper-label"
-                      id="demo-simple-select-helper"
-                      value={selectedOption}
-                      onChange={handleSelectChange}
-                      label="Event to Send"
-                      MenuProps={{
-                        PaperProps: {
-                          sx: {
-                            zIndex: 44444,
-                            maxHeight: 300,
-                          },
+              <Stack spacing={3} position="relative">
+                <TextField
+                  name="title"
+                  label="Donation title *"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <TextField
+                  name="description"
+                  label="Description *"
+                  value={description}
+                  multiline
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+                <FormControl fullWidth>
+                  <Select
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
+                    value={selectedOption}
+                    onChange={handleSelectChange}
+                    label="Event to Send"
+                    MenuProps={{
+                      PaperProps: {
+                        sx: {
+                          zIndex: 44444,
+                          maxHeight: 300,
                         },
-                      }}
-                      style={{
-                        zIndex: 44444,
-                      }}
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value="option1">Option 1</MenuItem>
-                      <MenuItem value="option2">Option 2</MenuItem>
-                      <MenuItem value="option3">Option 3</MenuItem>
-                    </Select>
-                    <FormHelperText
-                      sx={{
-                        ml: 0,
-                      }}
-                    >
-                      Select a drop off location
-                    </FormHelperText>
-                  </FormControl>
-                  <ImageUpload />
-                </Stack>
-              </>
-            )}
+                      },
+                    }}
+                    style={{
+                      zIndex: 44444,
+                    }}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="option1">Option 1</MenuItem>
+                    <MenuItem value="option2">Option 2</MenuItem>
+                    <MenuItem value="option3">Option 3</MenuItem>
+                  </Select>
+                  <FormHelperText
+                    sx={{
+                      ml: 0,
+                    }}
+                  >
+                    Select a drop off location
+                  </FormHelperText>
+                </FormControl>
+                <ImageUpload />
+              </Stack>
+            </>
           </Grid>
         </Box>
         <Box
