@@ -3,7 +3,7 @@ import ImageUpload from 'components/base/ImageUpload';
 import Details from './DetailsComponents';
 import { dateFormatFromUTC, transformBool } from 'helpers/utils';
 
-const DonationView = ({ onClose, donation }: DonationProofUploadProps) => {
+const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
   // const handleAddHeader = () => {
   //   setHeaders([...headers, { key: '', value: '' }]);
   // };
@@ -136,29 +136,31 @@ const DonationView = ({ onClose, donation }: DonationProofUploadProps) => {
             </>
           </Grid>
         </Box>
-        {/* <Box
-          sx={{
-            mt: 3,
-            mb: 0,
-            background: '#',
-            zIndex: 1112,
-            borderTop: '1px solid #c7ebfc',
-            p: 1,
-          }}
-        >
-          <Stack direction="row" spacing={2} justifyContent="flex-end">
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{
-                fontSize: 12,
-                width: 150,
-              }}
-            >
-              Upload
-            </Button>
-          </Stack>
-        </Box> */}
+        {mode === 'Reserved' && (
+          <Box
+            sx={{
+              mt: 3,
+              mb: 0,
+              background: '#',
+              zIndex: 1112,
+              borderTop: '1px solid #c7ebfc',
+              p: 1,
+            }}
+          >
+            <Stack direction="row" spacing={2} justifyContent="flex-end">
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{
+                  fontSize: 12,
+                  width: 150,
+                }}
+              >
+                Reserve
+              </Button>
+            </Stack>
+          </Box>
+        )}
       </Box>
     </>
   );

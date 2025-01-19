@@ -6,7 +6,7 @@ import {
   GridRowsProp,
   GridValidRowModel,
 } from '@mui/x-data-grid';
-import { dateFormatFromUTC } from 'helpers/utils';
+import { dateFormatFromUTC, toUpperCase, transformBool } from 'helpers/utils';
 import NoData from '../../components/base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
 import { useState, MouseEvent, useEffect } from 'react';
@@ -91,17 +91,19 @@ const DonationListings = () => {
       field: 'is_reserved',
       headerName: 'Reserved',
       flex: 1,
-      minWidth: 50,
+      maxWidth: 100,
       hideable: false,
       renderCell: (params) => {
         const color =
-          params.row.status === 'TRUE'
+          toUpperCase(params.row.is_reserved) === 'TRUE'
             ? '#06c9a9'
-            : params.row.status === 'FALSE'
-              ? '#0047CC'
-              : '#e30707';
+            : '#e30707';
 
-        return <Typography color={color}>{params.row.status}</Typography>;
+        return (
+          <Typography color={color}>
+            {transformBool(params.row.is_reserved)}
+          </Typography>
+        );
       },
     },
     {
@@ -113,7 +115,7 @@ const DonationListings = () => {
     },
     {
       field: 'created_at',
-      headerName: 'Date',
+      headerName: 'Date Donated',
       flex: 1,
       minWidth: 100,
       hideable: false,
@@ -121,7 +123,7 @@ const DonationListings = () => {
     },
     {
       field: '',
-      headerName: 'Details',
+      headerName: 'View Details',
       flex: 1,
       minWidth: 150,
       hideable: false,
@@ -404,6 +406,7 @@ const DonationListings = () => {
         <DonationView
           onClose={() => handleClose('popover3')}
           donation={rowDetails as Donation}
+          mode=""
         />
       )}
     </Stack>

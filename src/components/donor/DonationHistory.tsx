@@ -44,16 +44,9 @@ const DonationHistory = () => {
       hideable: false,
     },
     {
-      field: 'description',
-      headerName: 'Description',
-      flex: 1,
-      minWidth: 200,
-      hideable: false,
-    },
-    {
       field: 'is_reserved',
       headerName: 'Reserved',
-      minWidth: 20,
+      maxWidth: 100,
       hideable: false,
       renderCell: (params) => {
         const color =
@@ -71,7 +64,7 @@ const DonationHistory = () => {
     {
       field: 'is_deleivered',
       headerName: 'Delivered',
-      minWidth: 20,
+      maxWidth: 100,
       hideable: false,
       renderCell: (params) => {
         const color =
@@ -96,7 +89,7 @@ const DonationHistory = () => {
       field: 'created_at',
       headerName: 'Date',
       flex: 1,
-      minWidth: 120,
+      minWidth: 100,
       hideable: false,
       renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
     },
@@ -104,7 +97,7 @@ const DonationHistory = () => {
       field: '',
       headerName: 'Proof',
       flex: 1,
-      minWidth: 150,
+      minWidth: 100,
       hideable: false,
       renderCell: (params) => {
         if (params.row.proof === undefined || params.row.proof === null) {

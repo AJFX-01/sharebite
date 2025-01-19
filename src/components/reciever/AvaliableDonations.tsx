@@ -1,88 +1,18 @@
-import { Card, Stack, Typography } from '@mui/material';
+import { Button, Card, Stack, Typography } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
   GridPaginationModel,
   GridRowsProp,
+  GridValidRowModel,
 } from '@mui/x-data-grid';
-import { dateFormatFromUTC } from 'helpers/utils';
+import { dateFormatFromUTC, toUpperCase, transformBool } from 'helpers/utils';
 import NoData from '../../components/base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
 import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
-
-const columns: GridColDef[] = [
-  {
-    field: 'title',
-    headerName: 'Title',
-    flex: 1,
-    width: 200,
-    hideable: false,
-  },
-  {
-    field: 'donor',
-    headerName: 'Donated By',
-    flex: 1,
-    width: 200,
-    hideable: false,
-  },
-  {
-    field: 'reserved_by',
-    headerName: 'Recieved By',
-    flex: 1,
-    width: 200,
-    hideable: false,
-  },
-  {
-    field: 'is_reserved',
-    headerName: 'Reserved',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-    renderCell: (params) => {
-      const color =
-        params.row.status === 'TRUE'
-          ? '#06c9a9'
-          : params.row.status === 'FALSE'
-            ? '#0047CC'
-            : '#e30707';
-
-      return <Typography color={color}>{params.row.status}</Typography>;
-    },
-  },
-  {
-    field: 'is_delivered',
-    headerName: 'Delivered',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-    renderCell: (params) => {
-      const color =
-        params.row.status === 'TRUE'
-          ? '#06c9a9'
-          : params.row.status === 'FALSE'
-            ? '#0047CC'
-            : '#e30707';
-
-      return <Typography color={color}>{params.row.status}</Typography>;
-    },
-  },
-  {
-    field: 'location',
-    headerName: 'Location',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-  },
-  {
-    field: 'created_at',
-    headerName: 'Date',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-    renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
-  },
-];
+import DonationView from 'components/donor/DonationDetails';
+import { donations } from 'data/dummydata';
 
 let rowHeight = 60;
 
@@ -98,16 +28,21 @@ const AvailableDonations = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const [rowDetails, setRowDetails] = useState<GridValidRowModel | null>(null);
   const title = 'No Donation is Avaliable for pickup';
   const description = 'No Donations is avaliable.';
 
-  // const handleOpen = (event: MouseEvent<HTMLElement>) => {
-  //   setOpen(event.currentTarget);
-  // };
+  const handleOpen = (
+    event: MouseEvent<HTMLElement>,
+    row: GridValidRowModel,
+  ) => {
+    setOpen(event.currentTarget);
+    setRowDetails(row);
+  };
 
-  // const handleClose = () => {
-  //   setOpen(null);
-  // };
+  const handleClose = () => {
+    setOpen(null);
+  };
 
   // const handleSelect = (value: string) => {
   //   setSelectedItem(value);
@@ -132,6 +67,92 @@ const AvailableDonations = () => {
   //   );
   // };
 
+  const columns: GridColDef[] = [
+    {
+      field: 'title',
+      headerName: 'Title',
+      flex: 1,
+      width: 200,
+      hideable: false,
+    },
+    {
+      field: 'is_reserved',
+      headerName: 'Reserved',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+      renderCell: (params) => {
+        const color =
+          toUpperCase(params.row.is_reserved) === 'TRUE'
+            ? '#06c9a9'
+            : '#e30707';
+
+        return (
+          <Typography color={color}>
+            {transformBool(params.row.is_reserved)}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: 'is_delivered',
+      headerName: 'Delivered',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+      renderCell: (params) => {
+        const color =
+          toUpperCase(params.row.is_deleivered) === 'TRUE'
+            ? '#06c9a9'
+            : '#e30707';
+        return (
+          <Typography color={color}>
+            {transformBool(params.row.is_deleivered)}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: 'location',
+      headerName: 'Location',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+    },
+    {
+      field: 'created_at',
+      headerName: 'Date',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+      renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
+    },
+    {
+      field: '',
+      headerName: 'View Details',
+      flex: 1,
+      minWidth: 150,
+      hideable: false,
+      renderCell: (params) => {
+        return (
+          <>
+            <Button
+              onClick={(event) => handleOpen(event, params.row)}
+              variant="contained"
+              color="primary"
+              sx={{
+                fontSize: 12,
+                width: 150,
+              }}
+            >
+              Full Details
+            </Button>
+          </>
+        );
+      },
+    },
+  ];
+
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
     pageSize: 10,
@@ -149,11 +170,15 @@ const AvailableDonations = () => {
     setPaginationModel(model);
   };
 
-  // const fetchListingData = async () => {};
+  const fetchListingData = () => {
+    setLoading(true);
+    setItems(donations); // Always set all items
+    setLoading(false);
+  };
 
-  // useEffect(() => {
-  //   fetchListingData();
-  // });
+  useEffect(() => {
+    fetchListingData();
+  });
 
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>
@@ -317,6 +342,13 @@ const AvailableDonations = () => {
         {/* )}
         </> */}
       </Card>
+      {open && (
+        <DonationView
+          onClose={() => handleClose()}
+          donation={rowDetails as Donation}
+          mode="Reserved"
+        />
+      )}
     </Stack>
   );
 };
