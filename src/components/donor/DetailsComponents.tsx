@@ -12,7 +12,7 @@ const Details = ({
       sx={{
         justifyContent: 'space-between',
         alignItems: 'start',
-        mb: 4,
+        mb: 2,
       }}
     >
       <Stack
@@ -20,15 +20,16 @@ const Details = ({
         sx={{
           justifyContent: 'space-between',
           alignItems: 'start',
-          mb: 4,
-          width: '50%',
+          width: '45%',
+          borderBottom: '1px solid #0047CC',
         }}
       >
         <Typography
           variant="h4"
           sx={{
-            fontSize: 14,
+            fontSize: 11,
             fontWeight: 600,
+            mb: 1,
           }}
         >
           {titleLeft}
@@ -48,16 +49,17 @@ const Details = ({
         sx={{
           justifyContent: 'space-between',
           alignItems: 'start',
-          mb: 4,
           width: '50%',
+          borderBottom: '1px solid #0047CC',
         }}
       >
         <Typography
           variant="h4"
           sx={{
-            fontSize: 14,
+            fontSize: 11,
             fontWeight: 600,
             textAlign: 'left',
+            mb: 1,
           }}
         >
           {titleRight}

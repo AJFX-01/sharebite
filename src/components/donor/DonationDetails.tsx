@@ -1,12 +1,9 @@
-import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import ImageUpload from 'components/base/ImageUpload';
-import { useState } from 'react';
 import Details from './DetailsComponents';
+import { dateFormatFromUTC, transformBool } from 'helpers/utils';
 
 const DonationView = ({ onClose, donation }: DonationProofUploadProps) => {
-  const [title, setTitle] = useState<string>(donation.title);
-  const [description, setDescription] = useState<string>(donation.description);
-
   // const handleAddHeader = () => {
   //   setHeaders([...headers, { key: '', value: '' }]);
   // };
@@ -111,17 +108,35 @@ const DonationView = ({ onClose, donation }: DonationProofUploadProps) => {
 
               <Stack spacing={3} position="relative">
                 <Details
-                  titleLeft="Donation Title"
+                  titleLeft="Title"
                   titleRight="Description"
-                  labelLeft={title}
-                  labelRight={description}
+                  labelLeft={donation.title}
+                  labelRight={donation.description}
+                />
+                <Details
+                  titleLeft="Reserved"
+                  titleRight="Delievered"
+                  labelLeft={transformBool(donation.is_reserved)}
+                  labelRight={transformBool(donation.is_deleivered)}
+                />
+                <Details
+                  titleLeft="Dropoff location"
+                  titleRight="Donated at"
+                  labelLeft={donation.location}
+                  labelRight={dateFormatFromUTC(donation.created_at)}
+                />
+                <Details
+                  titleLeft="Donor Name"
+                  titleRight="Donor Email"
+                  labelLeft={`${donation.donor.first_name} ${donation.donor.last_name}`}
+                  labelRight={donation.donor.email}
                 />
                 <ImageUpload />
               </Stack>
             </>
           </Grid>
         </Box>
-        <Box
+        {/* <Box
           sx={{
             mt: 3,
             mb: 0,
@@ -143,7 +158,7 @@ const DonationView = ({ onClose, donation }: DonationProofUploadProps) => {
               Upload
             </Button>
           </Stack>
-        </Box>
+        </Box> */}
       </Box>
     </>
   );

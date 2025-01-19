@@ -6,7 +6,7 @@ import utc from 'dayjs/plugin/utc';
 dayjs.extend(utc);
 dayjs.extend(localizedFormat);
 
-export const dateFormatFromUTC = (dateString: Date) => {
+export const dateFormatFromUTC = (dateString: string | Date) => {
   return dayjs.utc(dateString).local().format('D MMM, h.mm A');
 };
 
