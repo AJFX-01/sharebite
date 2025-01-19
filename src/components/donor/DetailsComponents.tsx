@@ -12,7 +12,6 @@ const Details = ({
       sx={{
         justifyContent: 'space-between',
         alignItems: 'start',
-        pl: '10px',
         mb: 4,
       }}
     >
@@ -21,41 +20,15 @@ const Details = ({
         sx={{
           justifyContent: 'space-between',
           alignItems: 'start',
-          pl: '10px',
           mb: 4,
+          width: '50%',
         }}
       >
         <Typography
+          variant="h4"
           sx={{
-            fontSize: 12,
-            fontWeight: 500,
-          }}
-        >
-          {titleRight}
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: 13,
-            fontWeight: 500,
-            color: '#0047CC',
-          }}
-        >
-          {labelRight}
-        </Typography>
-      </Stack>
-      <Stack
-        direction="column"
-        sx={{
-          justifyContent: 'space-between',
-          alignItems: 'start',
-          pl: '10px',
-          mb: 4,
-        }}
-      >
-        <Typography
-          sx={{
-            fontSize: 12,
-            fontWeight: 500,
+            fontSize: 14,
+            fontWeight: 600,
           }}
         >
           {titleLeft}
@@ -70,6 +43,38 @@ const Details = ({
           {labelLeft}
         </Typography>
       </Stack>
+      <Stack
+        direction="column"
+        sx={{
+          justifyContent: 'space-between',
+          alignItems: 'start',
+          mb: 4,
+          width: '50%',
+        }}
+      >
+        <Typography
+          variant="h4"
+          sx={{
+            fontSize: 14,
+            fontWeight: 600,
+            textAlign: 'left',
+          }}
+        >
+          {titleRight}
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: 13,
+            fontWeight: 500,
+            color: '#0047CC',
+            textAlign: 'left',
+          }}
+        >
+          {labelRight}
+        </Typography>
+      </Stack>
     </Stack>
   );
 };
+
+export default Details;

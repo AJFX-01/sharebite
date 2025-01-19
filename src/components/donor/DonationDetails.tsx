@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
 import ImageUpload from 'components/base/ImageUpload';
 import { useState } from 'react';
+import Details from './DetailsComponents';
 
 const DonationView = ({ onClose, donation }: DonationProofUploadProps) => {
   const [title, setTitle] = useState<string>(donation.title);
@@ -109,6 +110,12 @@ const DonationView = ({ onClose, donation }: DonationProofUploadProps) => {
               </Typography>
 
               <Stack spacing={3} position="relative">
+                <Details
+                  titleLeft="Donation Title"
+                  titleRight="Description"
+                  labelLeft={title}
+                  labelRight={description}
+                />
                 <ImageUpload />
               </Stack>
             </>
