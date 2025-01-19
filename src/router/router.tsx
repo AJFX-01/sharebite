@@ -15,6 +15,7 @@ const DroffSites = lazy(() => import('pages/admin/droffsites'));
 
 const Reciever = lazy(() => import('pages/reciever/dashboard'));
 const Reciept = lazy(() => import('pages/reciever/reciepts'));
+const Reservations = lazy(() => import('pages/reciever/reservations'));
 
 const Donor = lazy(() => import('pages/donor/dashboard'));
 const History = lazy(() => import('pages/donor/history'));
@@ -121,6 +122,14 @@ export const routes = [
             element: (
               <Suspense fallback={<LoadingProgress />}>
                 <Reciever />
+              </Suspense>
+            ),
+          },
+          {
+            path: paths.reservations,
+            element: (
+              <Suspense fallback={<LoadingProgress />}>
+                <Reservations />
               </Suspense>
             ),
           },

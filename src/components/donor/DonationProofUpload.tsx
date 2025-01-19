@@ -5,6 +5,7 @@ import { useState } from 'react';
 const DonationProofUpload = ({
   onClose,
   donation,
+  mode
 }: DonationProofUploadProps) => {
   const [title, setTitle] = useState<string>(donation.title);
   const [description, setDescription] = useState<string>(donation.description);
@@ -100,7 +101,9 @@ const DonationProofUpload = ({
           >
             <>
               <Typography variant="h4" fontWeight="700" fontSize="15px">
-                Upload Donation Proof
+                {mode === 'proof'
+                  ? 'Upload Donation Proof'
+                  : 'Upload Pickup proof'}
               </Typography>
               <Typography
                 color="textSecondary"
@@ -108,7 +111,7 @@ const DonationProofUpload = ({
                 fontWeight="400"
                 sx={{ mb: 2.5, mt: 1.5, fontSize: 12 }}
               >
-                Please enter details for the donations
+                Here details for the donations
               </Typography>
 
               <Stack spacing={3} position="relative">

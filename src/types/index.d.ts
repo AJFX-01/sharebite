@@ -32,8 +32,22 @@ declare global {
     is_reserved: boolean;
     is_deleivered: boolean;
     created_at: string | Date;
-    reserved_by: User;
+    reserved_by: User | null;
     proof?: Proof;
+  }
+
+  interface ReDonation {
+    id: number;
+    donor: User;
+    title: string;
+    description: string;
+    location: string;
+    is_reserved: boolean;
+    is_deleivered: boolean;
+    created_at: string | Date;
+    reserved_by: User | null;
+    proof?: Proof;
+    receipt?: Reciept;
   }
 
   interface Proof {
@@ -43,18 +57,19 @@ declare global {
     uploaded_by: User;
   }
 
+  interface Reciept {
+    id: number;
+    donation: Donation;
+    proof_image: string;
+    uploaded_by: User;
+    pickup_date: string;
+    created_at: string;
+  }
+
   interface DroffSite {
     id: string;
     location: string;
     added_by: User;
-    created_at: string;
-  }
-
-  interface Reciept {
-    id: string;
-    user: User;
-    donation: Donation;
-    pickup_date: string;
     created_at: string;
   }
 
@@ -88,6 +103,7 @@ declare global {
   interface DonationProofUploadProps {
     onClose: () => void;
     donation: Donation;
+    mode: string;
   }
 
   interface DonationViewProps {
@@ -95,7 +111,6 @@ declare global {
     donation: Donation;
     mode: string;
   }
-   
   interface DetailsProps {
     titleRight: string;
     titleLeft: string;

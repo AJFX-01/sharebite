@@ -6,6 +6,7 @@ import {
 
 export enum linkEnum {
   Dashboard = 'Dashboard',
+  Reservations = 'Reservations',
   Reciepts = 'Reciepts',
 }
 
@@ -26,8 +27,15 @@ export const recieverLinks: RecieverLinkType[] = [
   },
   {
     id: 3,
+    title: linkEnum.Reservations,
+    link: '/reservations',
+    icon: WalletIcon,
+    available: true,
+  },
+  {
+    id: 3,
     title: linkEnum.Reciepts,
-    link: '//reciepts',
+    link: '/reciepts',
     icon: WalletIcon,
     available: true,
   },

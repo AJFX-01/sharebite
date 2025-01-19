@@ -11,72 +11,77 @@ import NoData from '../../components/base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
 import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
-import DonationProofUpload from './DonationProofUpload';
-import { donations } from 'data/dummydata';
+import DonationView from 'components/donor/DonationDetails';
+import { donations, reserveddonations } from 'data/dummydata';
+import DonationProofUpload from 'components/donor/DonationProofUpload';
 
 let rowHeight = 60;
 
-const DonationHistory = () => {
+const ReserveDonations = () => {
   // const dispatch = useDispatch();
   // const credentials = useSelector(
   //   (state: RootState) => state.credential.credentials.credentials,
   // );
-  const [items, setItems] = useState<GridRowsProp<Donation>>([]);
+  const [items, setItems] = useState<GridRowsProp<ReDonation>>([]);
   const { down } = useBreakpoints();
+  const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
+    popover1: null,
+    popover2: null,
+    popover3: null,
+  });
+  const [issueModal, setIssueModal] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedItem, setSelectedItem] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const title = 'You have not made any donations';
-  const description = 'No Donations History.';
-
-  const [isProofBox, setProofBox] = useState(false);
   const [rowDetails, setRowDetails] = useState<GridValidRowModel | null>(null);
+  const title = 'No Donation is Avaliable for pickup';
+  const description = 'No Donations is avaliable.';
 
-  const handleOpen = (row: GridValidRowModel) => {
-    setRowDetails(row);
-    setProofBox(true);
+  const handleOpen = (
+    event: MouseEvent<HTMLElement>,
+    popoverId: string,
+    row: GridValidRowModel,
+  ) => {
+    setOpen({ ...open, [popoverId]: event.currentTarget });
+    if (row != null) {
+      setRowDetails(row);
+    }
   };
+
+  const handleClose = (popoverId: string) => {
+    setOpen({ ...open, [popoverId]: null });
+  };
+
+  // const handleSelect = (value: string) => {
+  //   setSelectedItem(value);
+  //   setOpen(null);
+  //   setItems(
+  //     credentials.filter(
+  //       (item) => item.status.toUpperCase() === value.toUpperCase(),
+  //     ),
+  //   );
+  // };
+
+  // const handleRefresh = () => {
+  //   fetchListingData();
+  // };
+
+  // const handleSearch = (value: string) => {
+  //   setSearchTerm(value);
+  //   setItems(
+  //     credentials.filter((item) =>
+  //       item.id.toLowerCase().includes(value.toLowerCase()),
+  //     ),
+  //   );
+  // };
 
   const columns: GridColDef[] = [
     {
       field: 'title',
       headerName: 'Title',
       flex: 1,
-      minWidth: 150,
+      width: 200,
       hideable: false,
-    },
-    {
-      field: 'is_reserved',
-      headerName: 'Reserved',
-      maxWidth: 100,
-      hideable: false,
-      renderCell: (params) => {
-        const color =
-          toUpperCase(params.row.is_reserved) === 'TRUE'
-            ? '#06c9a9'
-            : '#e30707';
-
-        return (
-          <Typography color={color}>
-            {transformBool(params.row.is_reserved)}
-          </Typography>
-        );
-      },
-    },
-    {
-      field: 'is_deleivered',
-      headerName: 'Delivered',
-      maxWidth: 100,
-      hideable: false,
-      renderCell: (params) => {
-        const color =
-          toUpperCase(params.row.is_deleivered) === 'TRUE'
-            ? '#06c9a9'
-            : '#e30707';
-        return (
-          <Typography color={color}>
-            {transformBool(params.row.is_deleivered)}
-          </Typography>
-        );
-      },
     },
     {
       field: 'location',
@@ -94,17 +99,41 @@ const DonationHistory = () => {
       renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
     },
     {
+      field: 'is_reserved',
+      headerName: 'View Details',
+      flex: 1,
+      minWidth: 150,
+      hideable: false,
+      renderCell: (params) => {
+        return (
+          <>
+            <Button
+              onClick={(event) => handleOpen(event, 'popover1', params.row)}
+              variant="contained"
+              color="primary"
+              sx={{
+                fontSize: 12,
+                width: 150,
+              }}
+            >
+              Cancel Pickup
+            </Button>
+          </>
+        );
+      },
+    },
+    {
       field: '',
       headerName: 'Proof',
       flex: 1,
       minWidth: 100,
       hideable: false,
       renderCell: (params) => {
-        if (params.row.proof === undefined || params.row.proof === null) {
+        if (params.row.receipt === undefined || params.row.receipt === null) {
           return (
             <>
               <Button
-                onClick={() => handleOpen(params.row)}
+                onClick={(event) => handleOpen(event, 'popover2', params.row)}
                 variant="contained"
                 color="primary"
                 sx={{
@@ -117,15 +146,11 @@ const DonationHistory = () => {
             </>
           );
         } else {
-          return <Typography color={'#06c9a9'}>Avaliable</Typography>;
+          return <Typography color={'#06c9a9'}>Picked Up Completed</Typography>;
         }
       },
     },
   ];
-
-  // const handleRefresh = () => {
-  //   fetchListingData();
-  // };
 
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
@@ -146,7 +171,7 @@ const DonationHistory = () => {
 
   const fetchListingData = () => {
     setLoading(true);
-    setItems(donations); // Always set all items
+    setItems(reserveddonations)// Always set all items
     setLoading(false);
   };
 
@@ -176,8 +201,77 @@ const DonationHistory = () => {
             alignSelf: 'center',
           }}
         >
-          All Donations You Made
+          Avaliable Donations
         </Typography>
+        {/* <Stack
+          direction="row"
+          sx={{
+            justifyContent: 'space-between',
+            width: '40%',
+          }}
+        >
+          <SearchInput
+            fullWidth={true}
+            size={'small'}
+            placeholder={'Enter DID to search'}
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+          <>
+            <Button
+              sx={{
+                px: 1,
+                position: 'relative',
+                border: '2px solid #0047CC',
+                borderRadius: 2,
+                alignItems: 'center',
+              }}
+              onClick={handleOpen}
+            >
+              <div style={{ alignSelf: 'center' }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill="#0047CC"
+                    d="M7 11h10v2H7zM4 7h16v2H4zm6 8h4v2h-4z"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <Typography
+                color="#0047CC"
+                fontWeight="400"
+                textAlign="center"
+                alignSelf="center"
+                paddingLeft={0.5}
+              >
+                Filter By
+              </Typography>
+            </Button>
+            <FilterDropdown
+              open={open}
+              onClose={handleClose}
+              selectedItem={selectedItem}
+              onSelect={handleSelect}
+              filterData={filter_data}
+            />
+          </>
+          <IconButton sx={{ bgcolor: 'neutral.light' }} onClick={handleRefresh}>
+            <IconifyIcon
+              color="#0047CC"
+              icon="radix-icons:reload"
+              sx={{
+                width: { xs: 15, md: 15, xl: 15 },
+                height: { xs: 15, md: 15, xl: 15 },
+              }}
+            />
+          </IconButton>
+        </Stack> */}
       </Stack>
       <Card
         sx={{
@@ -247,15 +341,14 @@ const DonationHistory = () => {
         {/* )}
         </> */}
       </Card>
-      {isProofBox && (
+      {open.popover2 && (
         <DonationProofUpload
-          onClose={() => setProofBox(false)}
-          donation={rowDetails as Donation}
-          mode="proof"
+          onClose={() => handleClose('popover2')}
+          donation={rowDetails as ReDonation}
         />
       )}
     </Stack>
   );
 };
 
-export default DonationHistory;
+export default ReserveDonations;
