@@ -95,7 +95,7 @@ declare global {
     donation: Donation;
     mode: string;
   }
-  
+   
   interface DetailsProps {
     titleRight: string;
     titleLeft: string;

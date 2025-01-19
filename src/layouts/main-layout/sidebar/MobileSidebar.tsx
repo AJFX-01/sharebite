@@ -9,6 +9,9 @@ import DevItem from 'layouts/main-layout/sidebar/DevItem';
 import SimpleBar from 'simplebar-react';
 import { usersMenuLinks } from './SettingsMenuLinks';
 import SettingsItem from './SettingsListItem';
+import { donorLinks } from './DonorMenuLinks';
+import DonorMenuItem from './DonorMenuItem';
+import { recieverLinks } from './RecieverMenuLink';
 
 interface MobileSidebarProps {
   onDrawerClose: () => void;
@@ -70,6 +73,22 @@ const MobileSidebar = ({
           <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Users</h3>
           {usersMenuLinks.map((menu) => (
             <SettingsItem key={menu.id} menuItem={menu} />
+          ))}
+        </List>
+        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+          <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
+            Donors
+          </h3>
+          {donorLinks.map((menu) => (
+            <DonorMenuItem key={menu.id} menuItem={menu} />
+          ))}
+        </List>
+        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+          <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
+            Recievers
+          </h3>
+          {recieverLinks.map((menu) => (
+            <MenuListItem key={menu.id} menuItem={menu} />
           ))}
         </List>
       </SimpleBar>
