@@ -195,4 +195,3 @@ export const reserveddonations: ReDonation[] = [
   },
 ];
 
-console.log(users, donations, proofs);

@@ -64,7 +64,13 @@ const RecieptList = () => {
       flex: 1,
       minWidth: 100,
       hideable: false,
-      renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
+      renderCell: (params) => {
+        if (params.row.receipt === undefined || params.row.receipt === null) {
+          return <>-</>;
+        } else {
+          return <>{dateFormatFromUTC(params.row.receipt.pickup_date)}</>;
+        }
+      },
     },
     {
       field: 'is_reserved',
