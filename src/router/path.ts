@@ -23,6 +23,8 @@ const paths = {
   recieverdashboard: `${rootPaths.pageRoots}reciever`,
   receipt: `${rootPaths.pageRoots}reciepts`,
   reservations: `${rootPaths.pageRoots}reservations`,
+
+  profile: `${rootPaths.pageRoots}profile`,
 };
 
 export default paths;

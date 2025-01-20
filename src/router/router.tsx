@@ -13,6 +13,8 @@ const Donors = lazy(() => import('pages/admin/donors'));
 const Recievers = lazy(() => import('pages/admin/recievers'));
 const DroffSites = lazy(() => import('pages/admin/droffsites'));
 
+const Profile = lazy(() => import('pages/profile'));
+
 const Reciever = lazy(() => import('pages/reciever/dashboard'));
 const Reciept = lazy(() => import('pages/reciever/reciepts'));
 const Reservations = lazy(() => import('pages/reciever/reservations'));
@@ -61,6 +63,14 @@ export const routes = [
         paths: rootPaths.pageRoots,
         element: <MainLayout />,
         children: [
+          {
+            path: paths.profile,
+            element: (
+              <Suspense fallback={<LoadingProgress />}>
+                <Profile />
+              </Suspense>
+            ),
+          },
           {
             path: paths.dashboard,
             element: (
