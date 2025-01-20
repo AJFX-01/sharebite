@@ -198,31 +198,42 @@ const AdminDonationDetails = ({ onClose, donation }: ReceiptProps) => {
             </>
           </Grid>
         </Box>
-        {/* {mode === 'Reserved' && (
-          <Box
+        <Box
+          sx={{
+            mt: 3,
+            mb: 0,
+            background: '#',
+            zIndex: 1112,
+            borderTop: '1px solid #c7ebfc',
+            p: 1,
+          }}
+        >
+          <Typography
+            variant="h4"
             sx={{
-              mt: 3,
-              mb: 0,
-              background: '#',
-              zIndex: 1112,
-              borderTop: '1px solid #c7ebfc',
-              p: 1,
+              fontSize: 11,
+              fontWeight: 600,
+              my: 1.5,
+              textTransform: 'uppercase'
             }}
           >
-            <Stack direction="row" spacing={2} justifyContent="flex-end">
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{
-                  fontSize: 12,
-                  width: 150,
-                }}
-              >
-                Reserve
-              </Button>
-            </Stack>
-          </Box>
-        )} */}
+            This Donation cannot be confirmed yet until the donor provides a
+            proof of donation!
+          </Typography>
+          <Stack direction="row" spacing={2} justifyContent="flex-end">
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{
+                fontSize: 12,
+                width: 150,
+              }}
+              disabled={donation.receipt === undefined ? true : false}
+            >
+              Confirm Donation
+            </Button>
+          </Stack>
+        </Box>
       </Box>
     </>
   );
