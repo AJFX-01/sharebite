@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Divider,
-  Link,
   Menu,
   Stack,
   Typography,
@@ -11,6 +10,7 @@ import {
 // import ProfileImage from 'assets/avatar.jpg';
 import IconifyIcon from 'components/base/IconifyIcon';
 import ProfileInformation from 'components/profile/ProfileInfo';
+import ResetPassword from 'components/profile/ResetPassword';
 import { users } from 'data/dummydata';
 import { MouseEvent, useState } from 'react';
 // import { useDispatch } from 'react-redux';
@@ -33,6 +33,7 @@ const ProfileDropdown = () => {
   const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
     popover1: null,
     popover2: null,
+    popover3: null,
   });
 
   const handleOpen = (event: MouseEvent<HTMLElement>, popoverId: string) => {
@@ -142,7 +143,7 @@ const ProfileDropdown = () => {
             <Divider />
             <Box
               sx={{ py: 1.5, px: 0, cursor: 'pointer' }}
-              onClick={(event) => handleOpen(event, 'popover2')}
+              onClick={(event) => handleOpen(event, 'popover3')}
             >
               <Stack
                 direction="row"
@@ -202,6 +203,12 @@ const ProfileDropdown = () => {
         <ProfileInformation
           onClose={() => handleClose('popover2')}
           profileInfo={currentUser}
+        />
+      )}
+      {open.popover3 && (
+        <ResetPassword
+          onClose={() => handleClose('popover3')}
+          open={open.popover3}
         />
       )}
     </>

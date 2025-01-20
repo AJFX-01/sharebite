@@ -1,16 +1,4 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormHelperText,
-  Grid,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
 import { useFormValidation } from 'hooks/useFormValidation';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import { useState } from 'react';
@@ -29,13 +17,22 @@ const ProfileInformation = ({
   const { up } = useBreakpoints();
   const upSM = up('sm');
   const [formData, setFornData] = useState<SignupFormData>({
-    username: '',
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: '',
-    confirmpassword: '',
+    username: profileInfo.username,
+    first_name: profileInfo.first_name,
+    last_name: profileInfo.last_name,
+    email: profileInfo.email,
+    password: '******',
+    confirmpassword: '******',
   });
+
+  const [disabled, setDisabled] = useState<boolean>(true);
+  const handleToggle = () => {
+    setDisabled(!disabled);
+  };
+
+  const handSaveForm = () => {
+    console.log('changes saved');
+  };
 
   const { errors, validate } = useFormValidation(AuthSchemas.signupSchema);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +108,23 @@ const ProfileInformation = ({
               />
             </svg>
           </Button>
-          <Grid container spacing={3} sx={{ mb: 2.5, mt: 5 }}>
+          <Stack spacing={3} sx={{ mb: 2.5, mt: 5 }}>
+            <Typography
+              variant="h4"
+              fontWeight="700"
+              fontSize="15px"
+              color="textSecondary"
+            >
+              Profile Information
+            </Typography>
+            <Typography
+              color="textSecondary"
+              variant="body1"
+              fontWeight="400"
+              sx={{ mb: 2.5, mt: 1.5, fontSize: 12 }}
+            >
+              Please enter details for the donations
+            </Typography>
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -120,6 +133,7 @@ const ProfileInformation = ({
                 label="First Name"
                 value={formData.first_name}
                 onChange={handleChange}
+                disabled={disabled}
               />
               {errors.firstname && (
                 <Typography sx={{ color: 'red', fontSize: '10px' }}>
@@ -135,6 +149,7 @@ const ProfileInformation = ({
                 label="Last Name"
                 value={formData.last_name}
                 onChange={handleChange}
+                disabled={disabled}
               />
               {errors.lastname && (
                 <Typography sx={{ color: 'red', fontSize: '10px' }}>
@@ -150,6 +165,7 @@ const ProfileInformation = ({
                 label="Email address"
                 value={formData.email}
                 onChange={handleChange}
+                disabled={disabled}
               />
               {errors.email && (
                 <Typography sx={{ color: 'red', fontSize: '10px' }}>
@@ -165,6 +181,7 @@ const ProfileInformation = ({
                 label="Username"
                 value={formData.username}
                 onChange={handleChange}
+                disabled={disabled}
               />
               {errors.username && (
                 <Typography sx={{ color: 'red', fontSize: '10px' }}>
@@ -172,7 +189,7 @@ const ProfileInformation = ({
                 </Typography>
               )}
             </Grid>
-          </Grid>
+          </Stack>
         </Box>
         <Box
           sx={{
@@ -192,8 +209,9 @@ const ProfileInformation = ({
                 fontSize: 12,
                 width: 150,
               }}
+              onClick={disabled ? handleToggle : handSaveForm}
             >
-              Edit Profile
+              {disabled ? 'Edit Profile' : 'Save Changes'}
             </Button>
           </Stack>
         </Box>
