@@ -60,10 +60,10 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
         sx={{
           borderRadius: 5,
           position: 'fixed',
-          top: 154,
-          right: 150,
+          top: 0,
+          right: 0,
           width: { xs: '100%', md: '60%' },
-          height: '70%',
+          height: '100%',
           background: '#fff',
           zIndex: 1112,
           display: 'flex',

@@ -14,6 +14,7 @@ import { useBreakpoints } from 'providers/useBreakpoints';
 import DonationView from 'components/donor/DonationDetails';
 import { donations, reserveddonations } from 'data/dummydata';
 import DonationProofUpload from 'components/donor/DonationProofUpload';
+import CancelReservation from './CancelReservation';
 
 let rowHeight = 60;
 
@@ -345,6 +346,14 @@ const ReserveDonations = () => {
         <DonationProofUpload
           onClose={() => handleClose('popover2')}
           donation={rowDetails as ReDonation}
+          mode="reciept"
+        />
+      )}
+      {open.popover1 && (
+        <CancelReservation
+          open={open.popover1}
+          onClose={() => handleClose('popover1')}
+          donationData={rowDetails as ReDonation}
         />
       )}
     </Stack>
