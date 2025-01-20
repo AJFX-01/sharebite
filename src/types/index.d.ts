@@ -106,6 +106,11 @@ declare global {
     mode: string;
   }
 
+  interface ReceiptProps {
+    onClose: () => void;
+    donation: ReDonation;
+  }
+
   interface DonationViewProps {
     onClose: () => void;
     donation: Donation;
