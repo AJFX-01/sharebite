@@ -3,7 +3,7 @@ import ImagePreview from 'components/base/ImagePreview';
 import Details from 'components/donor/DetailsComponents';
 import { dateFormatFromUTC, transformBool } from 'helpers/utils';
 
-const RecieptView = ({ onClose, donation }: ReceiptProps) => {
+const AdminDonationDetails = ({ onClose, donation }: ReceiptProps) => {
   return (
     <>
       <Box
@@ -116,13 +116,25 @@ const RecieptView = ({ onClose, donation }: ReceiptProps) => {
                   titleLeft="Pickup Location"
                   titleRight="Pickup Date"
                   labelLeft={donation.location}
-                  labelRight={dateFormatFromUTC(donation.receipt!.pickup_date)}
+                  labelRight={
+                    donation.receipt != undefined
+                      ? dateFormatFromUTC(donation.receipt.pickup_date)
+                      : 'Not picked up yet'
+                  }
                 />
                 <Details
                   titleLeft="Reciver Name"
                   titleRight="Reciever Email"
-                  labelLeft={`${donation.reserved_by!.first_name} ${donation.reserved_by!.last_name}`}
-                  labelRight={donation.reserved_by!.email}
+                  labelLeft={
+                    donation.reserved_by != undefined
+                      ? `${donation.reserved_by!.first_name} ${donation.reserved_by!.last_name}`
+                      : 'Not Reserved yet'
+                  }
+                  labelRight={
+                    donation.reserved_by != undefined
+                      ? donation.reserved_by!.email
+                      : 'Not Reserved yet'
+                  }
                 />
                 <Typography
                   color="textSecondary"
@@ -216,4 +228,4 @@ const RecieptView = ({ onClose, donation }: ReceiptProps) => {
   );
 };
 
-export default RecieptView;
+export default AdminDonationDetails;

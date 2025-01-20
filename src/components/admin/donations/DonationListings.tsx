@@ -1,86 +1,32 @@
-import { Card, Stack, Typography } from '@mui/material';
+import { Button, Card, Stack, Typography } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
   GridPaginationModel,
   GridRowsProp,
+  GridValidRowModel,
 } from '@mui/x-data-grid';
-import { dateFormatFromUTC } from 'helpers/utils';
+import { dateFormatFromUTC, toUpperCase, transformBool } from 'helpers/utils';
 import NoData from '../../base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
 import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
+import FilterDropdown from 'components/base/FilterDropDown';
+import { donations } from 'data/dummydata';
+import AdminDonationDetails from './AdminDonationDetials';
 
-const columns: GridColDef[] = [
+const filter_data: FilterDataType[] = [
   {
-    field: 'title',
-    headerName: 'Title',
-    flex: 1,
-    width: 200,
-    hideable: false,
+    id: 1,
+    title: 'All',
   },
   {
-    field: 'donor',
-    headerName: 'Donated By',
-    flex: 1,
-    width: 200,
-    hideable: false,
+    id: 2,
+    title: 'Successful ',
   },
   {
-    field: 'reserved_by',
-    headerName: 'Recieved By',
-    flex: 1,
-    width: 200,
-    hideable: false,
-  },
-  {
-    field: 'is_reserved',
-    headerName: 'Reserved',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-    renderCell: (params) => {
-      const color =
-        params.row.status === 'TRUE'
-          ? '#06c9a9'
-          : params.row.status === 'FALSE'
-            ? '#0047CC'
-            : '#e30707';
-
-      return <Typography color={color}>{params.row.status}</Typography>;
-    },
-  },
-  {
-    field: 'is_delivered',
-    headerName: 'Delivered',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-    renderCell: (params) => {
-      const color =
-        params.row.status === 'TRUE'
-          ? '#06c9a9'
-          : params.row.status === 'FALSE'
-            ? '#0047CC'
-            : '#e30707';
-
-      return <Typography color={color}>{params.row.status}</Typography>;
-    },
-  },
-  {
-    field: 'location',
-    headerName: 'Location',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-  },
-  {
-    field: 'created_at',
-    headerName: 'Date',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-    renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
+    id: 3,
+    title: 'Pending',
   },
 ];
 
@@ -93,7 +39,12 @@ const RecentListings = () => {
   // );
   const [items, setItems] = useState<GridRowsProp<Donation>>([]);
   const { down } = useBreakpoints();
-  const [open, setOpen] = useState<null | HTMLElement>(null);
+  const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
+    popover1: null,
+    popover2: null,
+    popover3: null,
+  });
+  const [rowDetails, setRowDetails] = useState<GridValidRowModel | null>(null);
   const [issueModal, setIssueModal] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<string>('');
@@ -101,36 +52,122 @@ const RecentListings = () => {
   const title = 'No Donations Available';
   const description = 'There is no Donations to display at the moment.';
 
-  // const handleOpen = (event: MouseEvent<HTMLElement>) => {
-  //   setOpen(event.currentTarget);
-  // };
+  const handleOpen = (
+    event: MouseEvent<HTMLElement>,
+    popoverId: string,
+    row?: GridValidRowModel,
+  ) => {
+    setOpen({ ...open, [popoverId]: event.currentTarget });
+    if (row != null) {
+      setRowDetails(row);
+    }
+  };
 
-  // const handleClose = () => {
-  //   setOpen(null);
-  // };
+  const handleClose = (popoverId: string) => {
+    setOpen({ ...open, [popoverId]: null });
+  };
 
-  // const handleSelect = (value: string) => {
-  //   setSelectedItem(value);
-  //   setOpen(null);
-  //   setItems(
-  //     credentials.filter(
-  //       (item) => item.status.toUpperCase() === value.toUpperCase(),
-  //     ),
-  //   );
-  // };
+  const handleSelect = (value: string) => {
+    setSelectedItem(value);
+    setOpen({});
+    // setItems(
+    //   credentials.filter(
+    //     (item) => item.status.toUpperCase() === value.toUpperCase(),
+    //   ),
+    // );
+  };
 
-  // const handleRefresh = () => {
-  //   fetchListingData();
-  // };
+  const fetchListingData = () => {
+    setLoading(true);
+    setItems(donations); // Always set all items
+    setLoading(false);
+  };
 
-  // const handleSearch = (value: string) => {
-  //   setSearchTerm(value);
-  //   setItems(
-  //     credentials.filter((item) =>
-  //       item.id.toLowerCase().includes(value.toLowerCase()),
-  //     ),
-  //   );
-  // };
+  useEffect(() => {
+    fetchListingData();
+  });
+
+  const columns: GridColDef[] = [
+    {
+      field: 'title',
+      headerName: 'Title',
+      flex: 1,
+      width: 200,
+      hideable: false,
+    },
+    {
+      field: 'donor',
+      headerName: 'Donated By',
+      flex: 1,
+      width: 200,
+      hideable: false,
+      renderCell: (params) => {
+        return (
+          <>
+            {params.row.donor.first_name} {params.row.donor.last_name}
+          </>
+        );
+      },
+    },
+    {
+      field: 'is_delivered',
+      headerName: 'Delivered',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+      renderCell: (params) => {
+        const color =
+          toUpperCase(params.row.is_deleivered) === 'TRUE'
+            ? '#06c9a9'
+            : '#e30707';
+
+        return (
+          <Typography color={color}>
+            {transformBool(params.row.is_deleivered)}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: 'location',
+      headerName: 'Location',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+    },
+    {
+      field: 'created_at',
+      headerName: 'Date',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+      renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
+    },
+    {
+      field: '',
+      headerName: 'View Details',
+      flex: 1,
+      minWidth: 150,
+      hideable: false,
+      renderCell: (params) => {
+        return (
+          <>
+            <Button
+              onClick={(event) => handleOpen(event, 'popover2', params.row)}
+              variant="contained"
+              color="primary"
+              sx={{
+                fontSize: 12,
+                width: 150,
+              }}
+            >
+              Full Details
+            </Button>
+          </>
+        );
+      },
+    },
+  ];
 
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
@@ -174,25 +211,19 @@ const RecentListings = () => {
               xl: 'h3.fontSize',
             },
             fontWeight: 600,
-            alignSelf: 'center',
+            alignSelf: 'flex-start',
           }}
         >
           Donations
         </Typography>
-        {/* <Stack
+        <Stack
           direction="row"
           sx={{
             justifyContent: 'space-between',
-            width: '40%',
+            // width: '20%',
+            alignSelf: 'flex-end',
           }}
         >
-          <SearchInput
-            fullWidth={true}
-            size={'small'}
-            placeholder={'Enter DID to search'}
-            value={searchTerm}
-            onChange={handleSearch}
-          />
           <>
             <Button
               sx={{
@@ -202,7 +233,7 @@ const RecentListings = () => {
                 borderRadius: 2,
                 alignItems: 'center',
               }}
-              onClick={handleOpen}
+              onClick={(event) => handleOpen(event, 'popover1')}
             >
               <div style={{ alignSelf: 'center' }}>
                 <svg
@@ -230,14 +261,14 @@ const RecentListings = () => {
               </Typography>
             </Button>
             <FilterDropdown
-              open={open}
-              onClose={handleClose}
+              open={open.popover1}
+              onClose={() => handleClose('popover1')}
               selectedItem={selectedItem}
               onSelect={handleSelect}
               filterData={filter_data}
             />
           </>
-          <IconButton sx={{ bgcolor: 'neutral.light' }} onClick={handleRefresh}>
+          {/* <IconButton sx={{ bgcolor: 'neutral.light' }} onClick={handleRefresh}>
             <IconifyIcon
               color="#0047CC"
               icon="radix-icons:reload"
@@ -246,8 +277,8 @@ const RecentListings = () => {
                 height: { xs: 15, md: 15, xl: 15 },
               }}
             />
-          </IconButton>
-        </Stack> */}
+          </IconButton> */}
+        </Stack>
       </Stack>
       <Card
         sx={{
@@ -314,9 +345,13 @@ const RecentListings = () => {
             // },
           }}
         />
-        {/* )}
-        </> */}
       </Card>
+      {open.popover2 && (
+        <AdminDonationDetails
+          onClose={() => handleClose('popover2')}
+          donation={rowDetails as Donation}
+        />
+      )}
     </Stack>
   );
 };
