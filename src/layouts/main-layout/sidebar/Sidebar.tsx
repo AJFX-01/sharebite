@@ -2,10 +2,8 @@ import { Drawer, List, Toolbar, Typography } from '@mui/material';
 // import Logo from 'components/common/Logo';
 import { locationLinks } from 'layouts/main-layout/sidebar/MenuLinks';
 import { donationsMenuLinks } from 'layouts/main-layout/sidebar/DonationMenuLinks';
-import { devLinks } from 'layouts/main-layout/sidebar/DevMenuLinks';
 import MenuListItem from 'layouts/main-layout/sidebar/MenuListItem';
 import CredentailsItem from 'layouts/main-layout/sidebar/DonationsItem';
-import DevItem from 'layouts/main-layout/sidebar/DevItem';
 import SimpleBar from 'simplebar-react';
 import { usersMenuLinks } from './SettingsMenuLinks';
 import SettingsItem from './SettingsListItem';
@@ -92,7 +90,7 @@ const Sidebar = ({ drawerWidth }: SidebarProps) => {
           ))}
         </List>
       </SimpleBar>
-      <List
+      {/* <List
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -102,9 +100,9 @@ const Sidebar = ({ drawerWidth }: SidebarProps) => {
         }}
       >
         {devLinks.map((menu) => (
-          <DevItem key={menu.id} menuItem={menu} />
+          <DevItem key={menu.id} menuItem={menu} onDrawerClose={}/>
         ))}
-      </List>
+      </List> */}
     </Drawer>
   );
 };

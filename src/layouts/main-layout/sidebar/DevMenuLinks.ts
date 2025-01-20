@@ -2,7 +2,7 @@ import { SvgIconProps } from '@mui/material';
 import SettingsIcon from 'components/icons/menu-icons/SettingsIcon';
 
 export enum linkEnum {
-  Settings = 'Developer Settings',
+  Settings = 'Profile Settings',
 }
 
 export interface DevLinkType {
@@ -16,7 +16,7 @@ export const devLinks: DevLinkType[] = [
   {
     id: 1,
     title: linkEnum.Settings,
-    link: '/settings',
+    link: '/profile',
     icon: SettingsIcon,
     available: true,
   },
