@@ -45,7 +45,7 @@ const SignupForm = () => {
 
   const { errors, validate } = useFormValidation(AuthSchemas.signupSchema);
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent,
   ) => {
     const { name, value } = e.target;
 
@@ -83,16 +83,16 @@ const SignupForm = () => {
     if (validate(formData)) {
       toast.loading('Registering...', { id: 'asyntoast' });
       console.log(formData);
-      // signupMutation.mutate({
-      //   username: formData.username,
-      //   first_name: formData.first_name,
-      //   last_name: formData.last_name,
-      //   email: formData.email,
-      //   password: formData.password,
-      //   confirmpassword: formData.confirmpassword,
-      //   is_donor: formData.is_donor,
-      //   is_reciever: formData.is_reciever,
-      // });
+      signupMutation.mutate({
+        username: formData.username,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        email: formData.email,
+        password: formData.password,
+        confirmpassword: formData.confirmpassword,
+        is_donor: formData.is_donor,
+        is_reciever: formData.is_reciever,
+      });
     }
   };
 
