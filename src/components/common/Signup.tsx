@@ -49,14 +49,14 @@ const SignupForm = () => {
   ) => {
     const { name, value } = e.target;
 
-    setFornData((prev) => {
+    setFornData((prev: SignupFormData) => {
       if (name === 'role') {
         // Assuming the select field name is 'role'
         return {
           ...prev,
           role: value,
           is_donor: value === 'donor',
-          is_receiver: value === 'receiver',
+          is_reciever: value === 'reciever',
         };
       }
       return {
@@ -159,7 +159,7 @@ const SignupForm = () => {
             </Typography>
           )}
         </Grid>
-        <Grid item xs={12} >
+        <Grid item xs={12}>
           <FormControl fullWidth>
             <Select
               labelId="demo-simple-select-helper-label"
@@ -181,7 +181,7 @@ const SignupForm = () => {
               }}
             >
               <MenuItem value="">
-                <em>Select Your Role</em>
+                <em>--</em>
               </MenuItem>
               <MenuItem value="donor">Donor</MenuItem>
               <MenuItem value="reciever">Reciever</MenuItem>
