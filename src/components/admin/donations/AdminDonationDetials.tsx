@@ -214,7 +214,7 @@ const AdminDonationDetails = ({ onClose, donation }: ReceiptProps) => {
               fontSize: 11,
               fontWeight: 600,
               my: 1.5,
-              textTransform: 'uppercase'
+              textTransform: 'uppercase',
             }}
           >
             This Donation cannot be confirmed yet until the donor provides a

@@ -122,6 +122,21 @@ declare global {
     labelRight: string;
     labelLeft: string;
   }
+
+  // context
+  interface UserContext {
+    user: User | null;
+    isAuthenticated: boolean;
+    login: (user: User) => void;
+    logout: () => void;
+    setUser: (user: User | null) => void;
+    isDonor: () => boolean;
+    isReceiver: () => boolean;
+  }
+
+  type ContextProps = {
+    children: React.ReactNode;
+  };
 }
 
 export {};

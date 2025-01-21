@@ -15,9 +15,12 @@ import AuthSchemas from 'schema/auth';
 import { useMutation } from '@tanstack/react-query';
 import ApiRequests from 'api';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
+import paths from 'router/path';
 
 const LoginForm = () => {
   const { up } = useBreakpoints();
+  const navgate = useNavigate();
   const upSM = up('sm');
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState<LoginFormData>({
@@ -38,6 +41,7 @@ const LoginForm = () => {
     mutationFn: ApiRequests.loginUser,
     onSuccess(data) {
       toast.success('Login successful!', { id: 'asyntoast' });
+      navgate(paths.dashboard);
       console.log(data);
     },
     onError(error) {

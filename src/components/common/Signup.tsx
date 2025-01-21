@@ -14,9 +14,12 @@ import IconifyIcon from 'components/base/IconifyIcon';
 import { useMutation } from '@tanstack/react-query';
 import ApiRequests from 'api';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
+import paths from 'router/path';
 
 const SignupForm = () => {
   const { up } = useBreakpoints();
+  const navigate = useNavigate();
   const upSM = up('sm');
   const [formData, setFornData] = useState<SignupFormData>({
     username: '',
@@ -46,6 +49,7 @@ const SignupForm = () => {
     onSuccess(data) {
       toast.success('Login successful!', { id: 'asyntoast' });
       console.log(data);
+      navigate(paths.login);
     },
     onError(error) {
       toast.error(error.message, { id: 'asyntoast' });
