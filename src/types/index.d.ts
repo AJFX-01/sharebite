@@ -11,6 +11,9 @@ declare global {
     email: string;
     password: string;
     confirmpassword: string;
+    is_donor: boolean | string;
+    is_reciever: boolean | string;
+    role?: string;
   }
 
   interface User {

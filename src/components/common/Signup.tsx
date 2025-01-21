@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import {
   Button,
+  FormControl,
+  FormHelperText,
   Grid,
   IconButton,
   InputAdornment,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   TextField,
   Typography,
 } from '@mui/material';
@@ -16,6 +21,7 @@ import ApiRequests from 'api';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 import paths from 'router/path';
+import { transformBool } from 'helpers/utils';
 
 const SignupForm = () => {
   const { up } = useBreakpoints();
@@ -28,6 +34,9 @@ const SignupForm = () => {
     email: '',
     password: '',
     confirmpassword: '',
+    role: '',
+    is_donor: '',
+    is_reciever: '',
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -35,13 +44,26 @@ const SignupForm = () => {
     useState<boolean>(false);
 
   const { errors, validate } = useFormValidation(AuthSchemas.signupSchema);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
+  ) => {
     const { name, value } = e.target;
 
-    setFornData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFornData((prev) => {
+      if (name === 'role') {
+        // Assuming the select field name is 'role'
+        return {
+          ...prev,
+          role: value,
+          is_donor: value === 'donor',
+          is_receiver: value === 'receiver',
+        };
+      }
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
   };
 
   const signupMutation = useMutation({
@@ -60,7 +82,17 @@ const SignupForm = () => {
     e.preventDefault();
     if (validate(formData)) {
       toast.loading('Registering...', { id: 'asyntoast' });
-      signupMutation.mutate(formData);
+      console.log(formData);
+      // signupMutation.mutate({
+      //   username: formData.username,
+      //   first_name: formData.first_name,
+      //   last_name: formData.last_name,
+      //   email: formData.email,
+      //   password: formData.password,
+      //   confirmpassword: formData.confirmpassword,
+      //   is_donor: formData.is_donor,
+      //   is_reciever: formData.is_reciever,
+      // });
     }
   };
 
@@ -124,6 +156,47 @@ const SignupForm = () => {
           {errors.username && (
             <Typography sx={{ color: 'red', fontSize: '10px' }}>
               {errors.username}
+            </Typography>
+          )}
+        </Grid>
+        <Grid item xs={12} >
+          <FormControl fullWidth>
+            <Select
+              labelId="demo-simple-select-helper-label"
+              id="demo-simple-select-helper"
+              value={formData.role}
+              name="role"
+              onChange={handleChange}
+              label="Event to Send"
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    zIndex: 44444,
+                    maxHeight: 300,
+                  },
+                },
+              }}
+              style={{
+                zIndex: 44444,
+              }}
+            >
+              <MenuItem value="">
+                <em>Select Your Role</em>
+              </MenuItem>
+              <MenuItem value="donor">Donor</MenuItem>
+              <MenuItem value="reciever">Reciever</MenuItem>
+            </Select>
+            <FormHelperText
+              sx={{
+                ml: 0,
+              }}
+            >
+              Register As
+            </FormHelperText>
+          </FormControl>
+          {errors.role && (
+            <Typography sx={{ color: 'red', fontSize: '10px' }}>
+              {errors.role}
             </Typography>
           )}
         </Grid>

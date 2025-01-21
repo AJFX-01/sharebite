@@ -16,14 +16,14 @@ const ProfileInformation = ({
 }: ProfileInformationProps) => {
   const { up } = useBreakpoints();
   const upSM = up('sm');
-  const [formData, setFornData] = useState<SignupFormData>({
-    username: profileInfo.username,
-    first_name: profileInfo.first_name,
-    last_name: profileInfo.last_name,
-    email: profileInfo.email,
-    password: '******',
-    confirmpassword: '******',
-  });
+  // const [formData, setFornData] = useState<SignupFormData>({
+  //   username: profileInfo.username,
+  //   first_name: profileInfo.first_name,
+  //   last_name: profileInfo.last_name,
+  //   email: profileInfo.email,
+  //   password: '******',
+  //   confirmpassword: '******',
+  // });
 
   const [disabled, setDisabled] = useState<boolean>(true);
   const handleToggle = () => {
@@ -38,10 +38,10 @@ const ProfileInformation = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    setFornData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    // setFornData((prev) => ({
+    //   ...prev,
+    //   [name]: value,
+    // }));
   };
 
   return (
@@ -131,7 +131,7 @@ const ProfileInformation = ({
                 size={upSM ? 'medium' : 'small'}
                 name="first_name"
                 label="First Name"
-                value={formData.first_name}
+                // value={formData.first_name}
                 onChange={handleChange}
                 disabled={disabled}
               />
@@ -147,7 +147,7 @@ const ProfileInformation = ({
                 size={upSM ? 'medium' : 'small'}
                 name="last_name"
                 label="Last Name"
-                value={formData.last_name}
+                // value={formData.last_name}
                 onChange={handleChange}
                 disabled={disabled}
               />
@@ -163,7 +163,7 @@ const ProfileInformation = ({
                 size={upSM ? 'medium' : 'small'}
                 name="email"
                 label="Email address"
-                value={formData.email}
+                // value={formData.email}
                 onChange={handleChange}
                 disabled={disabled}
               />
@@ -179,7 +179,7 @@ const ProfileInformation = ({
                 size={upSM ? 'medium' : 'small'}
                 name="username"
                 label="Username"
-                value={formData.username}
+                // value={formData.username}
                 onChange={handleChange}
                 disabled={disabled}
               />

@@ -10,6 +10,7 @@ import SettingsItem from './SettingsListItem';
 import DonorMenuItem from './DonorMenuItem';
 import { recieverLinks } from './RecieverMenuLink';
 import { donorLinks } from './DonorMenuLinks';
+import { useUser } from 'context/userContext';
 interface SidebarProps {
   drawerWidth: {
     lg: number;
@@ -18,6 +19,7 @@ interface SidebarProps {
   };
 }
 const Sidebar = ({ drawerWidth }: SidebarProps) => {
+  const { user } = useUser();
   return (
     <Drawer
       variant="permanent"
@@ -73,22 +75,27 @@ const Sidebar = ({ drawerWidth }: SidebarProps) => {
             <SettingsItem key={menu.id} menuItem={menu} />
           ))}
         </List>
-        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
-            Donors
-          </h3>
-          {donorLinks.map((menu) => (
-            <DonorMenuItem key={menu.id} menuItem={menu} />
-          ))}
-        </List>
-        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
-            Recievers
-          </h3>
-          {recieverLinks.map((menu) => (
-            <MenuListItem key={menu.id} menuItem={menu} />
-          ))}
-        </List>
+        {user?.is_donor && (
+          <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+            <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
+              Donors
+            </h3>
+            {donorLinks.map((menu) => (
+              <DonorMenuItem key={menu.id} menuItem={menu} />
+            ))}
+          </List>
+        )}
+        {user?.is_reciever && (
+          <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+            <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
+              Recievers
+            </h3>
+            {recieverLinks.map((menu) => (
+              <MenuListItem key={menu.id} menuItem={menu} />
+            ))}
+          </List>
+        )}
+        ;
       </SimpleBar>
       {/* <List
         sx={{

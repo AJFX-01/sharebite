@@ -1,5 +1,5 @@
 import { Card, Grid, Typography } from '@mui/material';
-import ProfileForm from 'components/profile/Profile';
+// import ProfileForm from 'components/profile/Profile';
 
 const Profile = () => {
   return (
@@ -32,7 +32,7 @@ const Profile = () => {
           >
             Profile Informations
           </Typography>
-          <ProfileForm />
+          {/* <ProfileForm /> */}
         </Card>
       </Grid>
     </Grid>
