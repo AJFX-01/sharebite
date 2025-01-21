@@ -137,6 +137,12 @@ declare global {
   type ContextProps = {
     children: React.ReactNode;
   };
+
+  interface ProtectedRouteProps {
+    children: React.ReactNode;
+    // path: string;
+    // exact?: boolean;
+  }
 }
 
 export {};
