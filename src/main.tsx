@@ -16,11 +16,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ThemeProvider theme={theme}>
       <BreakpointsProvider>
         <CssBaseline />
-        <UserProvider>
-          <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-          </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          <UserProvider>
+          <RouterProvider router={router} />
         </UserProvider>
+        </QueryClientProvider>
       </BreakpointsProvider>
     </ThemeProvider>
   </React.StrictMode>,

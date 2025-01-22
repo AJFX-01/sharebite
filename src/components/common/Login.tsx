@@ -43,7 +43,9 @@ const LoginForm = () => {
     mutationFn: ApiRequests.loginUser,
     onSuccess(data) {
       toast.success('Login successful!', { id: 'asyntoast' });
+      console.log(data);
       login(data);
+      console.log(data);
       navgate(paths.dashboard);
       console.log(data);
     },

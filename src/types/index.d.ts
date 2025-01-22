@@ -135,15 +135,15 @@ declare global {
   }
 
   // context
-  interface UserContext {
+  type UserContextType = {
     user: User | null;
     isAuthenticated: boolean;
     login: (user: User) => void;
     logout: () => void;
-    setUser: (user: User | null) => void;
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;
     isDonor: () => boolean;
     isReceiver: () => boolean;
-  }
+  };
 
   type ContextProps = {
     children: React.ReactNode;
