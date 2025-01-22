@@ -11,7 +11,7 @@ import {
 import IconifyIcon from 'components/base/IconifyIcon';
 import ProfileInformation from 'components/profile/ProfileInfo';
 import ResetPassword from 'components/profile/ResetPassword';
-import { users } from 'data/dummydata';
+import { useUser } from 'context/userContext';
 import { MouseEvent, useState } from 'react';
 // import { useDispatch } from 'react-redux';
 import { Fragment } from 'react/jsx-runtime';
@@ -28,8 +28,7 @@ const profileData = [
 ];
 /* -------------------------------------------------------------------------- */
 const ProfileDropdown = () => {
-  // const dispatch = useDispatch();
-  const currentUser: User = users[0];
+  const { user, logout } = useUser();
   const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
     popover1: null,
     popover2: null,
@@ -52,7 +51,7 @@ const ProfileDropdown = () => {
           onClick={(event) => handleOpen(event, 'popover1')}
         >
           <Typography color="#0047CC" variant="h3" fontWeight="700">
-            Welcome, Ajegbomogun
+            Welcome, {user?.first_name.toUpperCase()}
           </Typography>
           <div style={{ paddingLeft: 15 }}>
             <svg
@@ -188,7 +187,7 @@ const ProfileDropdown = () => {
             </Box>
             <Box mt={1.25}>
               <Button
-                onClick={() => {}}
+                onClick={logout}
                 variant="outlined"
                 color="error"
                 fullWidth
@@ -202,7 +201,7 @@ const ProfileDropdown = () => {
       {open.popover2 && (
         <ProfileInformation
           onClose={() => handleClose('popover2')}
-          profileInfo={currentUser}
+          profileInfo={user!}
         />
       )}
       {open.popover3 && (

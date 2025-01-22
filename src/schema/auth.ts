@@ -67,6 +67,22 @@ class AuthSchemas {
       .min(2, 'Description is required and must have at least 2 characters')
       .max(255, 'Description must not exceed 255 characters'),
   });
+
+  static editprofileSchema = z.object({
+    first_name: z
+      .string()
+      .min(2, 'First name is required and must have at least 2 characters')
+      .max(30, 'First name must not exceed 30 characters'),
+    last_name: z
+      .string()
+      .min(2, 'Last name is required and must have at least 2 characters')
+      .max(30, 'Last name must not exceed 30 characters'),
+    username: z
+      .string()
+      .min(3, 'Username is required and must have at least 3 characters')
+      .max(30, 'Username must not exceed 30 characters'),
+    email: z.string().email('Invalid email address'),
+  });
 }
 
 export default AuthSchemas;

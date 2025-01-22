@@ -17,8 +17,10 @@ import ApiRequests from 'api';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 import paths from 'router/path';
+import { useUser } from 'context/userContext';
 
 const LoginForm = () => {
+  const { login } = useUser();
   const { up } = useBreakpoints();
   const navgate = useNavigate();
   const upSM = up('sm');
@@ -41,6 +43,7 @@ const LoginForm = () => {
     mutationFn: ApiRequests.loginUser,
     onSuccess(data) {
       toast.success('Login successful!', { id: 'asyntoast' });
+      login(data);
       navgate(paths.dashboard);
       console.log(data);
     },

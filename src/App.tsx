@@ -5,10 +5,8 @@ import { UserProvider } from 'context/userContext';
 const App = () => {
   return (
     <>
-      <UserProvider>
-        <Toaster />
-        <Outlet />
-      </UserProvider>
+      <Toaster />
+      <Outlet />
     </>
   );
 };

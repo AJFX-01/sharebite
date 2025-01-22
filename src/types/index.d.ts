@@ -17,6 +17,7 @@ declare global {
   }
 
   interface User {
+    token: string;
     id: number;
     username: string;
     first_name: string;
