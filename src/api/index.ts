@@ -25,6 +25,19 @@ class ApiRequests {
       handleAxiosError(error);
     }
   };
+
+  static editUser = async (credential: EditProfileFormData) => {
+    try {
+      const response = await axiosInstance.put(
+        `/${API_ENDPOINTS.auth.editprofile}`,
+        credential,
+      );
+      return response.data;
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
+
 }
 
 export default ApiRequests;

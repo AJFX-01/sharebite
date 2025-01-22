@@ -2,6 +2,8 @@ export const API_ENDPOINTS = {
   auth: {
     login: 'login/',
     signup: 'register/',
+    editprofile: 'editprofile/',
+    resetpassword: 'resetpassword/',
   },
   donation: {
     donations: 'donations/',

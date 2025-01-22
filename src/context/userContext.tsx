@@ -32,7 +32,6 @@ export const UserProvider = ({ children }: ContextProps) => {
   const login = (user: User) => {
     console.log('setting');
     setUser(user);
-
   };
   const logout = () => {
     setUser(null);
