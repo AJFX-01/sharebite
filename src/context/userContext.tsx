@@ -1,10 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import paths from 'router/path';
 
-// export const UserContext = createContext<UserContextType>(
-//   {} as UserContextType,
-// );
 const UserContext = createContext<UserContextType | undefined>(undefined);
 export const useUser = () => {
   const context = useContext(UserContext);
@@ -23,8 +19,10 @@ export const UserProvider = ({ children }: ContextProps) => {
   useEffect(() => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('token', user.token);
     } else {
       localStorage.removeItem('user');
+      localStorage.removeItem('token');
     }
   }, [user]);
 
@@ -36,6 +34,8 @@ export const UserProvider = ({ children }: ContextProps) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    window.location.href = paths.login;
   };
   const isDonor = () => user?.is_donor === true;
   const isReceiver = () => user?.is_receiver === false;

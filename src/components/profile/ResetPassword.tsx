@@ -6,22 +6,55 @@ import {
   TextField,
   Button,
 } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import ApiRequests from 'api';
+import { useFormValidation } from 'hooks/useFormValidation';
 import { useBreakpoints } from 'providers/useBreakpoints';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Fragment } from 'react/jsx-runtime';
+import AuthSchemas from 'schema/auth';
 
 interface ResetPasswordProps {
   open: HTMLElement | null;
   onClose: () => void;
 }
 const ResetPassword = ({ open, onClose }: ResetPasswordProps) => {
-  const [password, setPassword] = useState<string>();
-  const [confirmPassword, setconfirmPassword] = useState<string>();
+  const [oldPassword, setcOldPassword] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setconfirmPassword] = useState<string>('');
+  const { errors, validate } = useFormValidation(
+    AuthSchemas.resetpasswordSchema,
+  );
   const { up } = useBreakpoints();
   const upSM = up('sm');
 
-  const handleSubmit = () => {
+  const resetpasswordMutation = useMutation({
+    mutationFn: ApiRequests.resetPassword,
+    onSuccess(data) {
+      toast.success('passwordnreset successful');
+      console.log(data);
+      onClose();
+    },
+    onError(error) {
+      toast.error(error.message, { id: 'asyntoast' });
+    },
+  });
+
+  const handleSubmit = (e: FormEvent) => {
     // Handle password reset logic here
+    e.preventDefault();
+    if (
+      validate({
+        password: password,
+        confirmpassword: confirmPassword,
+      })
+    ) {
+      resetpasswordMutation.mutate({
+        current_password: oldPassword,
+        new_password: password,
+      });
+    }
     console.log('Adding a new member:', password);
   };
 
@@ -66,6 +99,14 @@ const ResetPassword = ({ open, onClose }: ResetPasswordProps) => {
               <TextField
                 fullWidth
                 size={upSM ? 'medium' : 'small'}
+                name="Old password"
+                label="Old Password"
+                value={oldPassword}
+                onChange={(e) => setcOldPassword(e.target.value)}
+              />
+              <TextField
+                fullWidth
+                size={upSM ? 'medium' : 'small'}
                 name="password"
                 label="New Password"
                 value={password}
@@ -75,7 +116,7 @@ const ResetPassword = ({ open, onClose }: ResetPasswordProps) => {
                 fullWidth
                 size={upSM ? 'medium' : 'small'}
                 name="confirmPassword"
-                label="Confirm Passowrd"
+                label="Confirm New Passowrd"
                 value={confirmPassword}
                 onChange={(e) => setconfirmPassword(e.target.value)}
               />

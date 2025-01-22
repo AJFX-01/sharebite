@@ -38,6 +38,20 @@ class ApiRequests {
     }
   };
 
+  static resetPassword = async (credential: {
+    current_password: string;
+    new_password: string;
+  }) => {
+    try {
+      const response = await axiosInstance.put(
+        `${API_ENDPOINTS.auth.resetpassword}`,
+        credential,
+      );
+      return response.data;
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
 }
 
 export default ApiRequests;

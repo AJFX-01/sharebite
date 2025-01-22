@@ -5,6 +5,8 @@ import { FormEvent, useState } from 'react';
 import AuthSchemas from 'schema/auth';
 import ImageUpload from 'components/base/ImageUpload';
 import toast from 'react-hot-toast';
+import { useMutation } from '@tanstack/react-query';
+import ApiRequests from 'api';
 
 interface ProfileInformationProps {
   onClose: () => void;
@@ -39,11 +41,24 @@ const ProfileInformation = ({
     }));
   };
 
+  const editProfileMutation = useMutation({
+    mutationFn: ApiRequests.editUser,
+    onSuccess(data) {
+      console.log(data);
+      toast.success('profile updated successful!');
+      onClose();
+    },
+    onError(error) {
+      toast.error(error.message);
+    },
+  });
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if (validate(formData)) {
       toast.loading('Logging in...', { id: 'asyntoast' });
+      editProfileMutation.mutate(formData);
     }
   };
 

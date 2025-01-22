@@ -2,7 +2,7 @@ export const API_ENDPOINTS = {
   auth: {
     login: 'login/',
     signup: 'register/',
-    editprofile: 'editprofile/',
+    editprofile: 'edituser/',
     resetpassword: 'resetpassword/',
   },
   donation: {

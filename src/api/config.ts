@@ -1,5 +1,6 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import paths from 'router/path';
 // import paths from 'router/path';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -13,9 +14,10 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('user.token');
+    const token = localStorage.getItem('token');
+    console.log(token);
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers['Authorization'] = `Token ${token}`;
     }
     return config;
   },
@@ -29,8 +31,8 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response.status === 401 && error.response) {
       // If we receive a 401 error, clear the token and redirect to login
-      localStorage.removeItem('accessToken');
-      // window.location.href = paths.login;
+      localStorage.removeItem('token');
+      window.location.href = paths.login;
       toast.error(error.response);
     }
   },
