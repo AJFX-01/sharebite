@@ -16,6 +16,13 @@ declare global {
     role?: string;
   }
 
+  interface EditProfileFormData {
+    username: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+  }
+
   interface User {
     token: string;
     id: number;

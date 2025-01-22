@@ -1,9 +1,10 @@
 import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
 import { useFormValidation } from 'hooks/useFormValidation';
 import { useBreakpoints } from 'providers/useBreakpoints';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import AuthSchemas from 'schema/auth';
 import ImageUpload from 'components/base/ImageUpload';
+import toast from 'react-hot-toast';
 
 interface ProfileInformationProps {
   onClose: () => void;
@@ -16,32 +17,34 @@ const ProfileInformation = ({
 }: ProfileInformationProps) => {
   const { up } = useBreakpoints();
   const upSM = up('sm');
-  // const [formData, setFornData] = useState<SignupFormData>({
-  //   username: profileInfo.username,
-  //   first_name: profileInfo.first_name,
-  //   last_name: profileInfo.last_name,
-  //   email: profileInfo.email,
-  //   password: '******',
-  //   confirmpassword: '******',
-  // });
+  const [formData, setFornData] = useState<EditProfileFormData>({
+    username: profileInfo.username,
+    first_name: profileInfo.first_name,
+    last_name: profileInfo.last_name,
+    email: profileInfo.email,
+  });
 
   const [disabled, setDisabled] = useState<boolean>(true);
   const handleToggle = () => {
     setDisabled(!disabled);
   };
 
-  const handSaveForm = () => {
-    console.log('changes saved');
-  };
-
-  const { errors, validate } = useFormValidation(AuthSchemas.signupSchema);
+  const { errors, validate } = useFormValidation(AuthSchemas.editprofileSchema);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    // setFornData((prev) => ({
-    //   ...prev,
-    //   [name]: value,
-    // }));
+    setFornData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (validate(formData)) {
+      toast.loading('Logging in...', { id: 'asyntoast' });
+    }
   };
 
   return (
@@ -131,7 +134,7 @@ const ProfileInformation = ({
                 size={upSM ? 'medium' : 'small'}
                 name="first_name"
                 label="First Name"
-                // value={formData.first_name}
+                value={formData.first_name}
                 onChange={handleChange}
                 disabled={disabled}
               />
@@ -147,7 +150,7 @@ const ProfileInformation = ({
                 size={upSM ? 'medium' : 'small'}
                 name="last_name"
                 label="Last Name"
-                // value={formData.last_name}
+                value={formData.last_name}
                 onChange={handleChange}
                 disabled={disabled}
               />
@@ -163,7 +166,7 @@ const ProfileInformation = ({
                 size={upSM ? 'medium' : 'small'}
                 name="email"
                 label="Email address"
-                // value={formData.email}
+                value={formData.email}
                 onChange={handleChange}
                 disabled={disabled}
               />
@@ -179,7 +182,7 @@ const ProfileInformation = ({
                 size={upSM ? 'medium' : 'small'}
                 name="username"
                 label="Username"
-                // value={formData.username}
+                value={formData.username}
                 onChange={handleChange}
                 disabled={disabled}
               />
@@ -209,7 +212,7 @@ const ProfileInformation = ({
                 fontSize: 12,
                 width: 150,
               }}
-              onClick={disabled ? handleToggle : handSaveForm}
+              onClick={disabled ? handleToggle : handleSubmit}
             >
               {disabled ? 'Edit Profile' : 'Save Changes'}
             </Button>
