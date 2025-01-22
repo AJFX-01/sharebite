@@ -19,7 +19,7 @@ interface SidebarProps {
   };
 }
 const Sidebar = ({ drawerWidth }: SidebarProps) => {
-  const { user } = useUser();
+  // const { user } = useUser();
   return (
     <Drawer
       variant="permanent"
@@ -75,7 +75,7 @@ const Sidebar = ({ drawerWidth }: SidebarProps) => {
             <SettingsItem key={menu.id} menuItem={menu} />
           ))}
         </List>
-        {user?.is_donor && (
+        {/* {user?.is_donor && ( */}
           <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
               Donors
@@ -84,8 +84,8 @@ const Sidebar = ({ drawerWidth }: SidebarProps) => {
               <DonorMenuItem key={menu.id} menuItem={menu} />
             ))}
           </List>
-        )}
-        {user?.is_reciever && (
+        {/* )} */}
+        {/* {user?.is_reciever && ( */}
           <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
               Recievers
@@ -94,8 +94,7 @@ const Sidebar = ({ drawerWidth }: SidebarProps) => {
               <MenuListItem key={menu.id} menuItem={menu} />
             ))}
           </List>
-        )}
-        ;
+        {/* )}; */}
       </SimpleBar>
       {/* <List
         sx={{

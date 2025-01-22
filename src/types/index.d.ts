@@ -12,7 +12,7 @@ declare global {
     password: string;
     confirmpassword: string;
     is_donor: boolean | string;
-    is_reciever: boolean | string;
+    is_receiver: boolean | string;
     role?: string;
   }
 
@@ -23,7 +23,7 @@ declare global {
     last_name: string;
     email: string;
     is_donor: boolean;
-    is_reciever: boolean;
+    is_receiver: boolean;
   }
 
   interface Donation {

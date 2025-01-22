@@ -27,7 +27,7 @@ class AuthSchemas {
         .min(3, 'Username is required and must have at least 3 characters')
         .max(30, 'Username must not exceed 30 characters'),
       is_donor: z.union([z.string(), z.boolean()]),
-      is_reciever: z.union([z.string(), z.boolean()]),
+      is_receiver: z.union([z.string(), z.boolean()]),
       role: z.union([
         z.string().min(1, 'must select at least an option'),
         z.undefined(),

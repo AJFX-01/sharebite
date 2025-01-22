@@ -36,7 +36,7 @@ const SignupForm = () => {
     confirmpassword: '',
     role: '',
     is_donor: '',
-    is_reciever: '',
+    is_receiver: '',
   });
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -56,7 +56,7 @@ const SignupForm = () => {
           ...prev,
           role: value,
           is_donor: value === 'donor',
-          is_reciever: value === 'reciever',
+          is_receiver: value === 'reciever',
         };
       }
       return {
@@ -91,7 +91,7 @@ const SignupForm = () => {
         password: formData.password,
         confirmpassword: formData.confirmpassword,
         is_donor: formData.is_donor,
-        is_reciever: formData.is_reciever,
+        is_receiver: formData.is_receiver,
       });
     }
   };

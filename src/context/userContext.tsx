@@ -19,7 +19,7 @@ export const UserProvider = ({ children }: ContextProps) => {
   const login = (user: User) => setUser(user);
   const logout = () => setUser(null);
   const isDonor = () => user?.is_donor === true;
-  const isReceiver = () => user?.is_reciever === false;
+  const isReceiver = () => user?.is_receiver === false;
 
   return (
     <UserContext.Provider
