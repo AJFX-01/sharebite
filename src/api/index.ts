@@ -5,7 +5,7 @@ class ApiRequests {
   static loginUser = async (credentials: LoginFormData) => {
     try {
       const response = await axiosInstance.post(
-        `/${API_ENDPOINTS.auth.login}`,
+        `/${API_ENDPOINTS.auth.login()}`,
         credentials,
       );
       return response.data;
@@ -17,7 +17,7 @@ class ApiRequests {
   static registerUser = async (credentials: SignupFormData) => {
     try {
       const response = await axiosInstance.post(
-        `/${API_ENDPOINTS.auth.signup}`,
+        `/${API_ENDPOINTS.auth.signup()}`,
         credentials,
       );
       return response.data;
@@ -29,7 +29,7 @@ class ApiRequests {
   static editUser = async (credential: EditProfileFormData) => {
     try {
       const response = await axiosInstance.put(
-        `/${API_ENDPOINTS.auth.editprofile}`,
+        `/${API_ENDPOINTS.auth.editprofile()}`,
         credential,
       );
       return response.data;
@@ -44,7 +44,7 @@ class ApiRequests {
   }) => {
     try {
       const response = await axiosInstance.put(
-        `${API_ENDPOINTS.auth.resetpassword}`,
+        `${API_ENDPOINTS.auth.resetpassword()}`,
         credential,
       );
       return response.data;

@@ -5,7 +5,7 @@ class DonationApiRequest {
   static getAllDonations = async () => {
     try {
       const response = await axiosInstance.get(
-        `/${API_ENDPOINTS.donation.donations}`,
+        `/${API_ENDPOINTS.donation.donations()}`,
       );
       return response.data;
     } catch (error) {
@@ -16,7 +16,7 @@ class DonationApiRequest {
   static getUserDonations = async () => {
     try {
       const response = await axiosInstance.get(
-        `/${API_ENDPOINTS.donation.userdonations}`,
+        `/${API_ENDPOINTS.donation.userdonations()}`,
       );
       return response.data;
     } catch (error) {
@@ -27,7 +27,7 @@ class DonationApiRequest {
   static makeDonation = async () => {
     try {
       const response = await axiosInstance.post(
-        `/${API_ENDPOINTS.donation.donations}`,
+        `/${API_ENDPOINTS.donation.donations()}`,
       );
       return response.data;
     } catch (error) {
@@ -35,10 +35,10 @@ class DonationApiRequest {
     }
   };
 
-  static updateDonationStatus = async (donation_id: string) => {
+  static updateDonationStatus = async (donation_id: number) => {
     try {
       const response = await axiosInstance.patch(
-        `/${API_ENDPOINTS.donation.updatestatus}`,
+        `/${API_ENDPOINTS.donation.updatestatus(donation_id)}`,
       );
       return response.data;
     } catch (error) {

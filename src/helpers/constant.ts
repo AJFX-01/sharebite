@@ -1,6 +1,6 @@
 export const API_ENDPOINTS = {
   auth: {
-    login: () => 'login/',
+    login: () : string => 'login/',
     signup: () => 'register/',
     editprofile: () => 'edituser/',
     resetpassword: () => 'resetpassword/',
