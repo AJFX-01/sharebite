@@ -8,6 +8,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import BreakpointsProvider from 'providers/useBreakpoints';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserProvider } from 'context/userContext';
+import { Toaster } from 'react-hot-toast';
 
 const queryClient = new QueryClient();
 
@@ -18,8 +19,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <CssBaseline />
         <QueryClientProvider client={queryClient}>
           <UserProvider>
-          <RouterProvider router={router} />
-        </UserProvider>
+            <Toaster />
+            <RouterProvider router={router} />
+          </UserProvider>
         </QueryClientProvider>
       </BreakpointsProvider>
     </ThemeProvider>

@@ -23,6 +23,13 @@ declare global {
     email: string;
   }
 
+  interface MakeDonation {
+    title: string;
+    description: string;
+    location: string;
+    donor?: number;
+  }
+
   interface User {
     token: string;
     id: number;

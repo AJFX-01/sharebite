@@ -11,35 +11,53 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import ImageUpload from 'components/base/ImageUpload';
+import { useMutation } from '@tanstack/react-query';
+import DonationApiRequest from 'api/donation';
+import { useUser } from 'context/userContext';
+import { useFormValidation } from 'hooks/useFormValidation';
 import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import DonationSchemas from 'schema/donation';
 
 const MakeDonation = ({ onClose }: MakeDonationProps) => {
-  const [title, setTitle] = useState<string>();
-  const [description, setDescription] = useState<string>();
-  const [selectedOption, setSelectedOption] = useState<string>();
-
-  // const handleAddHeader = () => {
-  //   setHeaders([...headers, { key: '', value: '' }]);
-  // };
-
-  // const handleRemoveHeader = (index: number) => {
-  //   if (headers.length > 1) {
-  //     setHeaders(headers.filter((_, i) => i !== index));
-  //   }
-  // };
-
-  // const handleHeaderChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  //   index: number,
-  // ) => {
-  //   const updatedHeaders = [...headers];
-  //   updatedHeaders[index] = { ...updatedHeaders[index], [e.target.name]: e.target.value };
-  //   setHeaders(updatedHeaders);
-  // };
-
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [selectedOption, setSelectedOption] = useState<string>('');
+  const { user } = useUser();
+  const { errors, validate } = useFormValidation(DonationSchemas.makeDonation);
   const handleSelectChange = (event: SelectChangeEvent) => {
     setSelectedOption(event.target.value);
+  };
+
+  const makeDonationMutation = useMutation({
+    mutationFn: DonationApiRequest.makeDonation,
+    onSuccess(data) {
+      toast.success('Donation sucessful', { id: 'asyntoast' });
+      console.log(data);
+      onClose();
+    },
+    onError(error) {
+      toast.error(error.message, { id: 'asyntoast' });
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (
+      validate({
+        title: title,
+        description: description,
+        location: selectedOption,
+      })
+    ) {
+      toast.loading('Donating...', { id: 'asyntoast' });
+      makeDonationMutation.mutate({
+        title: title,
+        description: description,
+        location: selectedOption,
+        donor: user?.id,
+      });
+    }
   };
 
   return (
@@ -114,7 +132,7 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
           >
             <>
               <Typography variant="h4" fontWeight="700" fontSize="15px">
-                Add Donations
+                Make Donations
               </Typography>
               <Typography
                 color="textSecondary"
@@ -132,6 +150,11 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
+                {errors.title && (
+                  <Typography sx={{ color: 'red', fontSize: '10px' }}>
+                    {errors.title}
+                  </Typography>
+                )}
                 <TextField
                   name="description"
                   label="Description *"
@@ -139,6 +162,11 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
                   multiline
                   onChange={(e) => setDescription(e.target.value)}
                 />
+                {errors.description && (
+                  <Typography sx={{ color: 'red', fontSize: '10px' }}>
+                    {errors.description}
+                  </Typography>
+                )}
                 <FormControl fullWidth>
                   <Select
                     labelId="demo-simple-select-helper-label"
@@ -161,9 +189,9 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value="option1">Option 1</MenuItem>
-                    <MenuItem value="option2">Option 2</MenuItem>
-                    <MenuItem value="option3">Option 3</MenuItem>
+                    <MenuItem value="New York, NY">Option 1</MenuItem>
+                    <MenuItem value="San Fransisco, CA">Option 2</MenuItem>
+                    <MenuItem value="Chicago, IL">Option 3</MenuItem>
                   </Select>
                   <FormHelperText
                     sx={{
@@ -172,8 +200,12 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
                   >
                     Select a drop off location
                   </FormHelperText>
+                  {errors.location && (
+                    <Typography sx={{ color: 'red', fontSize: '10px' }}>
+                      {errors.location}
+                    </Typography>
+                  )}
                 </FormControl>
-                <ImageUpload />
               </Stack>
             </>
           </Grid>
@@ -196,8 +228,9 @@ const MakeDonation = ({ onClose }: MakeDonationProps) => {
                 fontSize: 12,
                 width: 150,
               }}
+              onClick={handleSubmit}
             >
-              Make Donation
+              {makeDonationMutation.isPending ? 'Donating...' : 'Donate'}
             </Button>
           </Stack>
         </Box>

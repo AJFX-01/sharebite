@@ -24,10 +24,11 @@ class DonationApiRequest {
     }
   };
 
-  static makeDonation = async () => {
+  static makeDonation = async (credentials: MakeDonation) => {
     try {
       const response = await axiosInstance.post(
         `/${API_ENDPOINTS.donation.donations()}`,
+        credentials,
       );
       return response.data;
     } catch (error) {
