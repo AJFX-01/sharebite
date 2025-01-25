@@ -8,9 +8,11 @@ import {
 import { dateFormatFromUTC } from 'helpers/utils';
 import NoData from '../../base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState, MouseEvent } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import AddLocation from './AddLocation';
+import { useDonation } from 'context/donationContext';
+import ErrorDisplay from 'components/base/ErrorDisplay';
 
 const columns: GridColDef[] = [
   {
@@ -62,10 +64,9 @@ const columns: GridColDef[] = [
 let rowHeight = 60;
 
 const SiteListings = () => {
-  const [items, setItems] = useState<GridRowsProp<DroffSite>>([]);
+  const { locations, locationError, locationLoading } = useDonation();
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<null | HTMLElement>(null);
-  const [loading, setLoading] = useState<boolean>(false);
   const title = 'No Locations Available';
   const description = 'There is no Location to display at the moment.';
 
@@ -202,56 +203,56 @@ const SiteListings = () => {
           },
         }}
       >
-        {/* <>
-          {error ? (
+        <>
+          {locationError ? (
             <ErrorDisplay
               title={'Something went wrong, Please Try again'}
-              description={error.message}
+              description={locationError.message}
             />
-          ) : ( */}
-        <DataGrid
-          rowHeight={rowHeight}
-          rows={items.slice(
-            paginationModel.page * paginationModel.pageSize,
-            (paginationModel.page + 1) * paginationModel.pageSize,
+          ) : (
+            <DataGrid
+              rowHeight={rowHeight}
+              rows={locations.slice(
+                paginationModel.page * paginationModel.pageSize,
+                (paginationModel.page + 1) * paginationModel.pageSize,
+              )}
+              rowCount={locations.length}
+              columns={columns}
+              disableRowSelectionOnClick
+              paginationMode="server"
+              paginationModel={paginationModel}
+              onPaginationModelChange={handlePaginationModelChange}
+              slots={{
+                noRowsOverlay: () => (
+                  <NoData title={title} description={description} />
+                ),
+                pagination: () => null, // Hide the default pagination component
+              }}
+              loading={locationLoading}
+              sx={{
+                px: { xs: 0, md: 3 },
+                '& .MuiDataGrid-main': {
+                  minHeight: 300,
+                },
+                '& .MuiDataGrid-virtualScroller': {
+                  minHeight: 300,
+                  p: 0,
+                },
+                '& .MuiDataGrid-columnHeader': {
+                  fontSize: { xs: 10, lg: 13 },
+                  pl: 3,
+                },
+                '& .MuiDataGrid-cell': {
+                  fontSize: { xs: 10, lg: 12 },
+                  pl: 3,
+                },
+                // '& .MuiTypography-root': {
+                //   fontSize: { xs: 13, lg: 16 },
+                // },
+              }}
+            />
           )}
-          rowCount={items.length}
-          columns={columns}
-          disableRowSelectionOnClick
-          paginationMode="server"
-          paginationModel={paginationModel}
-          onPaginationModelChange={handlePaginationModelChange}
-          slots={{
-            noRowsOverlay: () => (
-              <NoData title={title} description={description} />
-            ),
-            pagination: () => null, // Hide the default pagination component
-          }}
-          loading={loading}
-          sx={{
-            px: { xs: 0, md: 3 },
-            '& .MuiDataGrid-main': {
-              minHeight: 300,
-            },
-            '& .MuiDataGrid-virtualScroller': {
-              minHeight: 300,
-              p: 0,
-            },
-            '& .MuiDataGrid-columnHeader': {
-              fontSize: { xs: 10, lg: 13 },
-              pl: 3,
-            },
-            '& .MuiDataGrid-cell': {
-              fontSize: { xs: 10, lg: 12 },
-              pl: 3,
-            },
-            // '& .MuiTypography-root': {
-            //   fontSize: { xs: 13, lg: 16 },
-            // },
-          }}
-        />
-        {/* )}
-        </> */}
+        </>
       </Card>
     </Stack>
   );

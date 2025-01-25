@@ -10,10 +10,12 @@ import NoData from '../../base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
 import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
+import { useDonation } from 'context/donationContext';
+import ErrorDisplay from 'components/base/ErrorDisplay';
 
 const columns: GridColDef[] = [
   {
-    field: 'firstname',
+    field: '',
     headerName: "Member's Name",
     flex: 1,
     minWidth: 300,
@@ -25,8 +27,8 @@ const columns: GridColDef[] = [
     },
   },
   {
-    field: 'Email',
-    headerName: 'email',
+    field: 'email',
+    headerName: 'Email',
     flex: 1,
     width: 200,
     hideable: false,
@@ -44,17 +46,14 @@ const columns: GridColDef[] = [
 let rowHeight = 60;
 
 const DonorsListings = () => {
-  // const dispatch = useDispatch();
-  // const credentials = useSelector(
-  //   (state: RootState) => state.credential.credentials.credentials,
-  // );
+  const { users, userLoading, userError } = useDonation();
   const [items, setItems] = useState<GridRowsProp<User>>([]);
   const { down } = useBreakpoints();
-  const [open, setOpen] = useState<null | HTMLElement>(null);
-  const [issueModal, setIssueModal] = useState<boolean>(false);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [selectedItem, setSelectedItem] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  // const [open, setOpen] = useState<null | HTMLElement>(null);
+  // const [issueModal, setIssueModal] = useState<boolean>(false);
+  // const [searchTerm, setSearchTerm] = useState<string>('');
+  // const [selectedItem, setSelectedItem] = useState<string>('');
+  // const [loading, setLoading] = useState<boolean>(false);
   const title = 'No Donors Available';
   const description = 'There is no Donors to display at the moment.';
 
@@ -154,56 +153,56 @@ const DonorsListings = () => {
           },
         }}
       >
-        {/* <>
-          {error ? (
+        <>
+          {userError ? (
             <ErrorDisplay
               title={'Something went wrong, Please Try again'}
-              description={error.message}
+              description={userError.message}
             />
-          ) : ( */}
-        <DataGrid
-          rowHeight={rowHeight}
-          rows={items.slice(
-            paginationModel.page * paginationModel.pageSize,
-            (paginationModel.page + 1) * paginationModel.pageSize,
+          ) : (
+            <DataGrid
+              rowHeight={rowHeight}
+              rows={items.slice(
+                paginationModel.page * paginationModel.pageSize,
+                (paginationModel.page + 1) * paginationModel.pageSize,
+              )}
+              rowCount={items.length}
+              columns={columns}
+              disableRowSelectionOnClick
+              paginationMode="server"
+              paginationModel={paginationModel}
+              onPaginationModelChange={handlePaginationModelChange}
+              slots={{
+                noRowsOverlay: () => (
+                  <NoData title={title} description={description} />
+                ),
+                pagination: () => null, // Hide the default pagination component
+              }}
+              loading={userLoading}
+              sx={{
+                px: { xs: 0, md: 3 },
+                '& .MuiDataGrid-main': {
+                  minHeight: 300,
+                },
+                '& .MuiDataGrid-virtualScroller': {
+                  minHeight: 300,
+                  p: 0,
+                },
+                '& .MuiDataGrid-columnHeader': {
+                  fontSize: { xs: 10, lg: 13 },
+                  pl: 3,
+                },
+                '& .MuiDataGrid-cell': {
+                  fontSize: { xs: 10, lg: 12 },
+                  pl: 3,
+                },
+                // '& .MuiTypography-root': {
+                //   fontSize: { xs: 13, lg: 16 },
+                // },
+              }}
+            />
           )}
-          rowCount={items.length}
-          columns={columns}
-          disableRowSelectionOnClick
-          paginationMode="server"
-          paginationModel={paginationModel}
-          onPaginationModelChange={handlePaginationModelChange}
-          slots={{
-            noRowsOverlay: () => (
-              <NoData title={title} description={description} />
-            ),
-            pagination: () => null, // Hide the default pagination component
-          }}
-          loading={loading}
-          sx={{
-            px: { xs: 0, md: 3 },
-            '& .MuiDataGrid-main': {
-              minHeight: 300,
-            },
-            '& .MuiDataGrid-virtualScroller': {
-              minHeight: 300,
-              p: 0,
-            },
-            '& .MuiDataGrid-columnHeader': {
-              fontSize: { xs: 10, lg: 13 },
-              pl: 3,
-            },
-            '& .MuiDataGrid-cell': {
-              fontSize: { xs: 10, lg: 12 },
-              pl: 3,
-            },
-            // '& .MuiTypography-root': {
-            //   fontSize: { xs: 13, lg: 16 },
-            // },
-          }}
-        />
-        {/* )}
-        </> */}
+        </>
       </Card>
     </Stack>
   );

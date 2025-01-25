@@ -17,7 +17,7 @@ import ErrorDisplay from 'components/base/ErrorDisplay';
 let rowHeight = 60;
 
 const AvailableDonations = () => {
-  const { donations, isLoading, error } = useDonation();
+  const { donations, donationLoading, donationError } = useDonation();
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<null | HTMLElement>(null);
   // const [searchTerm, setSearchTerm] = useState<string>('');
@@ -159,17 +159,6 @@ const AvailableDonations = () => {
   const handlePaginationModelChange = (model: GridPaginationModel) => {
     setPaginationModel(model);
   };
-
-  // const fetchListingData = () => {
-  //   setLoading(true);
-  //   setItems(donations); // Always set all items
-  //   setLoading(false);
-  // };
-
-  // useEffect(() => {
-  //   fetchListingData();
-  // });
-
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>
       <Stack
@@ -228,10 +217,10 @@ const AvailableDonations = () => {
         }}
       >
         <>
-          {error ? (
+          {donationError ? (
             <ErrorDisplay
               title={'Something went wrong, Please Try again'}
-              description={error.message}
+              description={donationError.message}
             />
           ) : (
             <DataGrid
@@ -252,7 +241,7 @@ const AvailableDonations = () => {
                 ),
                 pagination: () => null, // Hide the default pagination component
               }}
-              loading={isLoading}
+              loading={donationLoading}
               sx={{
                 px: { xs: 0, md: 3 },
                 '& .MuiDataGrid-main': {

@@ -34,7 +34,8 @@ const filter_data: FilterDataType[] = [
 let rowHeight = 60;
 
 const RecentListings = () => {
-  const { donations, isLoading, error, setStatusFilter } = useDonation();
+  const { donations, donationLoading, donationError, setStatusFilter } =
+    useDonation();
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
     popover1: null,
@@ -281,10 +282,10 @@ const RecentListings = () => {
         }}
       >
         <>
-          {error ? (
+          {donationError ? (
             <ErrorDisplay
               title={'Something went wrong, Please Try again'}
-              description={error.message}
+              description={donationError.message}
             />
           ) : (
             <DataGrid
@@ -305,7 +306,7 @@ const RecentListings = () => {
                 ),
                 pagination: () => null, // Hide the default pagination component
               }}
-              loading={isLoading}
+              loading={donationLoading}
               sx={{
                 px: { xs: 0, md: 3 },
                 '& .MuiDataGrid-main': {

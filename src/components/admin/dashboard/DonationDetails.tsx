@@ -1,9 +1,15 @@
 import { Stack, Typography, Card } from '@mui/material';
 import DonationIcon from './DonationDetailsIcon';
 import { useDonation } from 'context/donationContext';
+import { toUpperCase } from 'helpers/utils';
 
 const DonationDetails = () => {
-  const { donations } = useDonation();
+  const { donations, users } = useDonation();
+
+  const donors = users.filter((user) => {
+    const matchUsers = toUpperCase(user.is_donor) === 'TRUE';
+    return matchUsers;
+  });
   return (
     <Stack>
       <Stack direction="row" alignItems="center" sx={{ pt: 3, pb: 2.5 }}>
@@ -53,14 +59,14 @@ const DonationDetails = () => {
             iconName="carbon:credentials"
             iconColor="#0047CC"
             iconTitle="Donors"
-            IconNumber={190}
+            IconNumber={donors.length}
             iconBgColor="neutral.light"
           />
           <DonationIcon
             iconName="stash:shield-check-light"
             iconColor="#06c9a9"
             iconTitle="Recievers"
-            IconNumber={151}
+            IconNumber={users.length - donors.length}
             iconBgColor="#cffff9"
           />
           <DonationIcon

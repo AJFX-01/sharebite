@@ -2,19 +2,19 @@ import { Card, Stack } from '@mui/material';
 import DonationIcon from './DonationDetailsIcon';
 import DonationPieChart, { PieChartDataType } from './DonationPieChart';
 import { useDonation } from 'context/donationContext';
-import { calculatePercentage } from 'helpers/utils';
-
-const dataP: PieChartDataType[] = [
-  { name: 'Donor', value: 16.8, color: '#e30707' },
-  { name: 'Reciever', value: 14.8, color: '#f5ffc4' },
-];
+import { calculatePercentage, toUpperCase } from 'helpers/utils';
 
 const DonationChart = () => {
-  const { donations } = useDonation();
+  const { donations, users } = useDonation();
 
   const pendingDonation = donations.filter((donation) => {
     const matchDonation = donation.status.toUpperCase() === 'PENDING';
     return matchDonation;
+  });
+
+  const donors = users.filter((user) => {
+    const matchUsers = toUpperCase(user.is_donor) === 'TRUE';
+    return matchUsers;
   });
 
   const dataDonation: PieChartDataType[] = [
@@ -30,6 +30,19 @@ const DonationChart = () => {
       name: 'Pending',
       value: calculatePercentage(donations.length, pendingDonation.length),
       color: '#0047CC',
+    },
+  ];
+
+  const dataP: PieChartDataType[] = [
+    {
+      name: 'Donor',
+      value: calculatePercentage(users.length, donors.length),
+      color: '#e30707',
+    },
+    {
+      name: 'Reciever',
+      value: calculatePercentage(users.length, users.length - donors.length),
+      color: '#f5ffc4',
     },
   ];
 
