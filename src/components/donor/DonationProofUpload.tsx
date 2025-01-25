@@ -5,30 +5,10 @@ import { useState } from 'react';
 const DonationProofUpload = ({
   onClose,
   donation,
-  mode
+  mode,
 }: DonationProofUploadProps) => {
   const [title, setTitle] = useState<string>(donation.title);
   const [description, setDescription] = useState<string>(donation.description);
-
-  // const handleAddHeader = () => {
-  //   setHeaders([...headers, { key: '', value: '' }]);
-  // };
-
-  // const handleRemoveHeader = (index: number) => {
-  //   if (headers.length > 1) {
-  //     setHeaders(headers.filter((_, i) => i !== index));
-  //   }
-  // };
-
-  // const handleHeaderChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  //   index: number,
-  // ) => {
-  //   const updatedHeaders = [...headers];
-  //   updatedHeaders[index] = { ...updatedHeaders[index], [e.target.name]: e.target.value };
-  //   setHeaders(updatedHeaders);
-  // };
-
   return (
     <>
       <Box

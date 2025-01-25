@@ -107,7 +107,7 @@ const ReceiversListings = () => {
             alignSelf: 'center',
           }}
         >
-          Donations
+          Receivers
         </Typography>
       </Stack>
       <Card

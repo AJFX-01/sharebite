@@ -108,7 +108,7 @@ const DonorsListings = () => {
             alignSelf: 'center',
           }}
         >
-          Donations
+          Donors
         </Typography>
       </Stack>
       <Card

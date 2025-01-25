@@ -8,14 +8,15 @@ import {
 } from '@mui/x-data-grid';
 import { dateFormatFromUTC, toUpperCase, transformBool } from 'helpers/utils';
 import NoData from '../../components/base/NoData';
-// import IconifyIcon from 'components/base/IconifyIcon';
 import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import FilterDropdown from 'components/base/FilterDropDown';
 import DonationDetails from './DonationInsight';
 import MakeDonation from './MakeDonation';
-import { donations } from 'data/dummydata';
 import DonationView from './DonationDetails';
+import { useQuery } from '@tanstack/react-query';
+import DonationApiRequest from 'api/donation';
+import ErrorDisplay from 'components/base/ErrorDisplay';
 
 const filter_data: FilterDataType[] = [
   {
@@ -35,10 +36,6 @@ const filter_data: FilterDataType[] = [
 let rowHeight = 60;
 
 const DonationListings = () => {
-  // const dispatch = useDispatch();
-  // const credentials = useSelector(
-  //   (state: RootState) => state.credential.credentials.credentials,
-  // );
   const [items, setItems] = useState<GridRowsProp<Donation>>([]);
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
@@ -46,12 +43,15 @@ const DonationListings = () => {
     popover2: null,
     popover3: null,
   });
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [selectedItem, setSelectedItem] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = useState<string>('ALL');
   const [rowDetails, setRowDetails] = useState<GridValidRowModel | null>(null);
   const title = 'No Donations Available';
   const description = 'There is no Donations to display at the moment.';
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: [''],
+    queryFn: () => DonationApiRequest.getUserDonations(selectedItem),
+  });
 
   const handleOpen = (
     event: MouseEvent<HTMLElement>,
@@ -74,6 +74,7 @@ const DonationListings = () => {
     setItems(
       items.filter((item) => item.status.toUpperCase() === value.toUpperCase()),
     );
+    console.log(items);
   };
 
   const columns: GridColDef[] = [
@@ -83,6 +84,21 @@ const DonationListings = () => {
       flex: 1,
       width: 200,
       hideable: false,
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+      renderCell: (params) => {
+        const color =
+          toUpperCase(params.row.status.toUpperCase()) === 'SUCCESSFUL'
+            ? '#06c9a9'
+            : '#e30707';
+
+        return <Typography color={color}>{params.row.status}</Typography>;
+      },
     },
     {
       field: 'is_reserved',
@@ -144,19 +160,6 @@ const DonationListings = () => {
     },
   ];
 
-  // const handleRefresh = () => {
-  //   fetchListingData();
-  // };
-
-  // const handleSearch = (value: string) => {
-  //   setSearchTerm(value);
-  //   setItems(
-  //     credentials.filter((item) =>
-  //       item.id.toLowerCase().includes(value.toLowerCase()),
-  //     ),
-  //   );
-  // };
-
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
     pageSize: 10,
@@ -174,15 +177,18 @@ const DonationListings = () => {
     setPaginationModel(model);
   };
 
-  const fetchListingData = () => {
-    setLoading(true);
-    setItems(donations); // Always set all items
-    setLoading(false);
-  };
+  const fetchData = async () => {
+    if (data) {
+      setItems(data);
+    }
+  }
 
   useEffect(() => {
-    fetchListingData();
-  });
+    fetchData();
+    if (data) {
+      setItems(data);
+    }
+  }, [data]);
 
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>
@@ -314,16 +320,6 @@ const DonationListings = () => {
               </Typography>
             </Button>
           </Stack>
-          {/* <IconButton sx={{ bgcolor: 'neutral.light' }} onClick={handleRefresh}>
-            <IconifyIcon
-              color="#0047CC"
-              icon="radix-icons:reload"
-              sx={{
-                width: { xs: 15, md: 15, xl: 15 },
-                height: { xs: 15, md: 15, xl: 15 },
-              }}
-            />
-          </IconButton> */}
         </Stack>
       </Stack>
       <DonationDetails />
@@ -345,56 +341,56 @@ const DonationListings = () => {
           },
         }}
       >
-        {/* <>
+        <>
           {error ? (
             <ErrorDisplay
               title={'Something went wrong, Please Try again'}
               description={error.message}
             />
-          ) : ( */}
-        <DataGrid
-          rowHeight={rowHeight}
-          rows={items.slice(
-            paginationModel.page * paginationModel.pageSize,
-            (paginationModel.page + 1) * paginationModel.pageSize,
+          ) : (
+            <DataGrid
+              rowHeight={rowHeight}
+              rows={items.slice(
+                paginationModel.page * paginationModel.pageSize,
+                (paginationModel.page + 1) * paginationModel.pageSize,
+              )}
+              rowCount={items.length}
+              columns={columns}
+              disableRowSelectionOnClick
+              paginationMode="server"
+              paginationModel={paginationModel}
+              onPaginationModelChange={handlePaginationModelChange}
+              slots={{
+                noRowsOverlay: () => (
+                  <NoData title={title} description={description} />
+                ),
+                pagination: () => null, // Hide the default pagination component
+              }}
+              loading={isLoading}
+              sx={{
+                px: { xs: 0, md: 3 },
+                '& .MuiDataGrid-main': {
+                  minHeight: 300,
+                },
+                '& .MuiDataGrid-virtualScroller': {
+                  minHeight: 300,
+                  p: 0,
+                },
+                '& .MuiDataGrid-columnHeader': {
+                  fontSize: { xs: 10, lg: 13 },
+                  pl: 3,
+                },
+                '& .MuiDataGrid-cell': {
+                  fontSize: { xs: 10, lg: 12 },
+                  pl: 3,
+                },
+                // '& .MuiTypography-root': {
+                //   fontSize: { xs: 13, lg: 16 },
+                // },
+              }}
+            />
           )}
-          rowCount={items.length}
-          columns={columns}
-          disableRowSelectionOnClick
-          paginationMode="server"
-          paginationModel={paginationModel}
-          onPaginationModelChange={handlePaginationModelChange}
-          slots={{
-            noRowsOverlay: () => (
-              <NoData title={title} description={description} />
-            ),
-            pagination: () => null, // Hide the default pagination component
-          }}
-          loading={loading}
-          sx={{
-            px: { xs: 0, md: 3 },
-            '& .MuiDataGrid-main': {
-              minHeight: 300,
-            },
-            '& .MuiDataGrid-virtualScroller': {
-              minHeight: 300,
-              p: 0,
-            },
-            '& .MuiDataGrid-columnHeader': {
-              fontSize: { xs: 10, lg: 13 },
-              pl: 3,
-            },
-            '& .MuiDataGrid-cell': {
-              fontSize: { xs: 10, lg: 12 },
-              pl: 3,
-            },
-            // '& .MuiTypography-root': {
-            //   fontSize: { xs: 13, lg: 16 },
-            // },
-          }}
-        />
-        {/* )}
-        </> */}
+        </>
       </Card>
       {open.popover2 && (
         <MakeDonation onClose={() => handleClose('popover2')} />

@@ -13,7 +13,6 @@ let rowHeight = 60;
 
 const SiteListings = () => {
   const { locations, locationError, locationLoading } = useDonation();
-  console.log(locations);
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<null | HTMLElement>(null);
   const title = 'No Locations Available';
@@ -109,7 +108,7 @@ const SiteListings = () => {
             alignSelf: 'center',
           }}
         >
-          Donations
+          Locations
         </Typography>
         <Button
           variant="contained"

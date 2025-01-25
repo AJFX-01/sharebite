@@ -11,7 +11,7 @@ class DonationApiRequest {
 
       const filteredDonations = donations.filter((donation) => {
         const matchDonations =
-          status === 'all' ||
+          status === 'All' ||
           donation.status.toUpperCase() === status.toUpperCase();
         return matchDonations;
       });
@@ -22,13 +22,21 @@ class DonationApiRequest {
     }
   };
 
-  static getUserDonations = async () => {
+  static getUserDonations = async (status: string) => {
     try {
       const response = await axiosInstance.get(
         `/${API_ENDPOINTS.donation.userdonations()}`,
       );
 
-      return response.data;
+      const donations: Donation[] = response.data;
+
+      const filteredDonations = donations.filter((donation) => {
+        const matchDonations =
+          status === 'ALL' ||
+          donation.status.toUpperCase() === status.toUpperCase();
+        return matchDonations;
+      });
+      return filteredDonations;
     } catch (error) {
       handleAxiosError(error);
     }
