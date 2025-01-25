@@ -2,41 +2,10 @@ import { Card, Stack, Typography } from '@mui/material';
 import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import { dateFormatFromUTC, toUpperCase } from 'helpers/utils';
 import NoData from '../../base/NoData';
-// import IconifyIcon from 'components/base/IconifyIcon';
 import { useState } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import { useDonation } from 'context/donationContext';
 import ErrorDisplay from 'components/base/ErrorDisplay';
-
-const columns: GridColDef[] = [
-  {
-    field: 'firstname',
-    headerName: "Member's Name",
-    flex: 1,
-    minWidth: 300,
-    hideable: false,
-    renderCell: (params) => {
-      const fullname = params.row.first_name + ' ' + params.row.last_name;
-
-      return <>{fullname}</>;
-    },
-  },
-  {
-    field: 'email',
-    headerName: 'Email',
-    flex: 1,
-    width: 200,
-    hideable: false,
-  },
-  {
-    field: 'created_at',
-    headerName: 'Joined On',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-    renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
-  },
-];
 
 let rowHeight = 60;
 
@@ -50,6 +19,55 @@ const ReceiversListings = () => {
   const title = 'No Recievers Available';
   const description = 'There is no Recievers to display at the moment.';
 
+  const columns: GridColDef[] = [
+    {
+      field: '',
+      headerName: "Member's Name",
+      flex: 1,
+      minWidth: 250,
+      hideable: false,
+      renderCell: (params) => {
+        const fullname = params.row.first_name + ' ' + params.row.last_name;
+        return (
+          <Typography
+            sx={{
+              textTransform: 'capitalize',
+            }}
+          >
+            {fullname}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: 'email',
+      headerName: 'Email',
+      flex: 1,
+      width: 200,
+      hideable: false,
+      renderCell: (params) => {
+        return (
+          <Typography
+            sx={{
+              textTransform: 'capitalize',
+            }}
+          >
+            {params.value}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: 'created_at',
+      headerName: 'Joined On',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+      renderCell: (params) => (
+        <Typography>{dateFormatFromUTC(params.value)}</Typography>
+      ),
+    },
+  ];
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
     pageSize: 10,
