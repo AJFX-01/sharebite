@@ -1,8 +1,13 @@
 import { Stack, Typography } from '@mui/material';
-import NoContentImage from 'assets/no-content.svg';
 import Image from 'components/base/Image';
+import NoContentImage from 'assets/no-content.svg';
 
-const NoData = ({ title, description }: NoDataProps) => {
+interface ErrorDisplay {
+  title: string;
+  description: string;
+}
+
+const ErrorDisplay = ({ title, description }: ErrorDisplay) => {
   return (
     <>
       <Stack
@@ -40,9 +45,8 @@ const NoData = ({ title, description }: NoDataProps) => {
           </Typography>
         )}
       </Stack>
-      {/* {open && <IssueCredential onClose={() => setOpen(!open)} />} */}
     </>
   );
 };
 
-export default NoData;
+export default ErrorDisplay;

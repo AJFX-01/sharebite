@@ -19,7 +19,7 @@ export const UserProvider = ({ children }: ContextProps) => {
   useEffect(() => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', user.token);
+      localStorage.setItem('token', user.token!);
     } else {
       localStorage.removeItem('user');
       localStorage.removeItem('token');

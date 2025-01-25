@@ -31,7 +31,7 @@ declare global {
   }
 
   interface User {
-    token: string;
+    token?: string;
     id: number;
     username: string;
     first_name: string;
@@ -45,10 +45,11 @@ declare global {
     id: number;
     donor: User;
     title: string;
+    status: string;
     description: string;
     location: string;
     is_reserved: boolean;
-    is_deleivered: boolean;
+    is_delivered: boolean;
     created_at: string | Date;
     reserved_by: User | null;
     proof?: Proof;
@@ -61,7 +62,7 @@ declare global {
     description: string;
     location: string;
     is_reserved: boolean;
-    is_deleivered: boolean;
+    is_delivered: boolean;
     created_at: string | Date;
     reserved_by: User | null;
     proof?: Proof;

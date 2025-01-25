@@ -12,11 +12,11 @@ import NoData from '../../base/NoData';
 import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import FilterDropdown from 'components/base/FilterDropDown';
-import { donations } from 'data/dummydata';
 import AdminDonationDetails from './AdminDonationDetials';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import DonationApiRequest from 'api/donation';
-import toast from 'react-hot-toast';
+
+import ErrorDisplay from 'components/base/ErrorDisplay';
 
 const filter_data: FilterDataType[] = [
   {
@@ -36,10 +36,6 @@ const filter_data: FilterDataType[] = [
 let rowHeight = 60;
 
 const RecentListings = () => {
-  // const dispatch = useDispatch();
-  // const credentials = useSelector(
-  //   (state: RootState) => state.credential.credentials.credentials,
-  // );
   const [items, setItems] = useState<GridRowsProp<Donation>>([]);
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
@@ -48,15 +44,12 @@ const RecentListings = () => {
     popover3: null,
   });
   const [rowDetails, setRowDetails] = useState<GridValidRowModel | null>(null);
-  const [issueModal, setIssueModal] = useState<boolean>(false);
-  const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
   const title = 'No Donations Available';
   const description = 'There is no Donations to display at the moment.';
 
-  const { data, isLoading, error} = useQuery({
-    queryKey: ['donations'],
+  const { data, isLoading, error } = useQuery({
+    queryKey: [''],
     queryFn: () => DonationApiRequest.getAllDonations(),
   });
 
@@ -78,24 +71,20 @@ const RecentListings = () => {
   const handleSelect = (value: string) => {
     setSelectedItem(value);
     setOpen({});
-    // setItems(
-    //   credentials.filter(
-    //     (item) => item.status.toUpperCase() === value.toUpperCase(),
-    //   ),
-    // );
+    setItems(
+      items.filter((item) => item.status.toUpperCase() === value.toUpperCase()),
+    );
   };
 
+  const fetchListingData = async () => {
+    if (data) {
+      setItems(data); // Always set all items
+    }
+  };
 
-  // const fetchListingData = () => {
-  //   setLoading(true);
-  //   setItems(donations); // Always set all items
-  //   setLoading(false);
-  // };
-
-  // useEffect(() => {
-  //   // fetchListingData();
-  //   getDonationMutation.
-  // });
+  useEffect(() => {
+    fetchListingData();
+  }, [data]);
 
   const columns: GridColDef[] = [
     {
@@ -107,16 +96,35 @@ const RecentListings = () => {
     },
     {
       field: 'donor',
-      headerName: 'Donated By',
+      headerName: 'Donor',
       flex: 1,
       width: 200,
       hideable: false,
       renderCell: (params) => {
         return (
-          <>
+          <Typography
+            sx={{
+              textTransform: 'capitalize',
+            }}
+          >
             {params.row.donor.first_name} {params.row.donor.last_name}
-          </>
+          </Typography>
         );
+      },
+    },
+    {
+      field: 'status',
+      headerName: 'Delivered',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+      renderCell: (params) => {
+        const color =
+          toUpperCase(params.row.status.toUpperCase()) === 'SUCCESSFUL'
+            ? '#06c9a9'
+            : '#e30707';
+
+        return <Typography color={color}>{params.row.status}</Typography>;
       },
     },
     {
@@ -127,13 +135,13 @@ const RecentListings = () => {
       hideable: false,
       renderCell: (params) => {
         const color =
-          toUpperCase(params.row.is_deleivered) === 'TRUE'
+          toUpperCase(params.row.is_delivered) === 'TRUE'
             ? '#06c9a9'
             : '#e30707';
 
         return (
           <Typography color={color}>
-            {transformBool(params.row.is_deleivered)}
+            {transformBool(params.row.is_delivered)}
           </Typography>
         );
       },
@@ -301,54 +309,56 @@ const RecentListings = () => {
           },
         }}
       >
-        {/* <>
+        <>
           {error ? (
             <ErrorDisplay
               title={'Something went wrong, Please Try again'}
               description={error.message}
             />
-          ) : ( */}
-        <DataGrid
-          rowHeight={rowHeight}
-          rows={items.slice(
-            paginationModel.page * paginationModel.pageSize,
-            (paginationModel.page + 1) * paginationModel.pageSize,
+          ) : (
+            <DataGrid
+              rowHeight={rowHeight}
+              rows={items.slice(
+                paginationModel.page * paginationModel.pageSize,
+                (paginationModel.page + 1) * paginationModel.pageSize,
+              )}
+              rowCount={items.length}
+              columns={columns}
+              disableRowSelectionOnClick
+              paginationMode="server"
+              paginationModel={paginationModel}
+              onPaginationModelChange={handlePaginationModelChange}
+              slots={{
+                noRowsOverlay: () => (
+                  <NoData title={title} description={description} />
+                ),
+                pagination: () => null, // Hide the default pagination component
+              }}
+              loading={isLoading}
+              sx={{
+                px: { xs: 0, md: 3 },
+                '& .MuiDataGrid-main': {
+                  minHeight: 300,
+                },
+                '& .MuiDataGrid-virtualScroller': {
+                  minHeight: 300,
+                  p: 0,
+                },
+                '& .MuiDataGrid-columnHeader': {
+                  fontSize: { xs: 10, lg: 13 },
+                  pl: 3,
+                },
+                '& .MuiDataGrid-cell': {
+                  fontSize: { xs: 10, lg: 12 },
+                  pl: 3,
+                },
+                // '& .MuiTypography-root': {
+                //   fontSize: { xs: 13, lg: 16 },
+                // },
+              }}
+            />
           )}
-          rowCount={items.length}
-          columns={columns}
-          disableRowSelectionOnClick
-          paginationMode="server"
-          paginationModel={paginationModel}
-          onPaginationModelChange={handlePaginationModelChange}
-          slots={{
-            noRowsOverlay: () => (
-              <NoData title={title} description={description} />
-            ),
-            pagination: () => null, // Hide the default pagination component
-          }}
-          loading={loading}
-          sx={{
-            px: { xs: 0, md: 3 },
-            '& .MuiDataGrid-main': {
-              minHeight: 300,
-            },
-            '& .MuiDataGrid-virtualScroller': {
-              minHeight: 300,
-              p: 0,
-            },
-            '& .MuiDataGrid-columnHeader': {
-              fontSize: { xs: 10, lg: 13 },
-              pl: 3,
-            },
-            '& .MuiDataGrid-cell': {
-              fontSize: { xs: 10, lg: 12 },
-              pl: 3,
-            },
-            // '& .MuiTypography-root': {
-            //   fontSize: { xs: 13, lg: 16 },
-            // },
-          }}
-        />
+        </>
       </Card>
       {open.popover2 && (
         <AdminDonationDetails

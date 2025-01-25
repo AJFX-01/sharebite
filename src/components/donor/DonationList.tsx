@@ -46,7 +46,6 @@ const DonationListings = () => {
     popover2: null,
     popover3: null,
   });
-  const [issueModal, setIssueModal] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -72,11 +71,9 @@ const DonationListings = () => {
   const handleSelect = (value: string) => {
     setSelectedItem(value);
     setOpen({});
-    // setItems(
-    //   credentials.filter(
-    //     (item) => item.status.toUpperCase() === value.toUpperCase(),
-    //   ),
-    // );
+    setItems(
+      items.filter((item) => item.status.toUpperCase() === value.toUpperCase()),
+    );
   };
 
   const columns: GridColDef[] = [
