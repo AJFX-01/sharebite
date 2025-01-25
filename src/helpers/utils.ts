@@ -46,3 +46,8 @@ export const transformBool = (value: boolean): string => {
     return 'NO';
   }
 };
+
+export const calculatePercentage = (total: number, main: number): number => {
+  const percentage = (main / total) * 100;
+  return percentage;
+};

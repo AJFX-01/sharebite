@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardHeader, Typography, Box } from '@mui/material';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { styled } from '@mui/system';
@@ -11,6 +10,7 @@ export interface PieChartDataType {
 export interface DonationPieChartProps {
   data: PieChartDataType[];
   titleheader: string;
+  titleLenght: number;
 }
 
 const LegendItem = styled(Box)(({ theme }) => ({
@@ -27,7 +27,11 @@ const ColorBox = styled(Box)<{ color: string }>(({ color }) => ({
   backgroundColor: color,
 }));
 
-const DonationPieChart = ({ data, titleheader }: DonationPieChartProps) => {
+const DonationPieChart = ({
+  data,
+  titleheader,
+  titleLenght,
+}: DonationPieChartProps) => {
   return (
     <Card
       sx={{
@@ -93,7 +97,7 @@ const DonationPieChart = ({ data, titleheader }: DonationPieChartProps) => {
             }}
           >
             <Typography variant="h4" component="div" sx={{ fontWeight: '600' }}>
-              155
+              {titleLenght}
             </Typography>
             <Typography
               sx={{

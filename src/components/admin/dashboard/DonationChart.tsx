@@ -1,11 +1,9 @@
 import { Card, Stack } from '@mui/material';
 import DonationIcon from './DonationDetailsIcon';
 import DonationPieChart, { PieChartDataType } from './DonationPieChart';
+import { useDonation } from 'context/donationContext';
+import { calculatePercentage } from 'helpers/utils';
 
-const data: PieChartDataType[] = [
-  { name: 'Completed', value: 16.8, color: '#06c9a9' },
-  { name: 'Ongoing', value: 14.8, color: '#0047CC' },
-];
 
 const dataP: PieChartDataType[] = [
   { name: 'Donor', value: 16.8, color: '#e30707' },
@@ -13,10 +11,41 @@ const dataP: PieChartDataType[] = [
 ];
 
 const DonationChart = () => {
+  const { donations } = useDonation();
+
+  const pendingDonation = donations.filter((donation) => {
+    const matchDonation = donation.status.toUpperCase() === 'PENDING';
+    return matchDonation;
+  });
+
+  const dataDonation: PieChartDataType[] = [
+    {
+      name: 'Successful',
+      value: calculatePercentage(
+        donations.length,
+        donations.length - pendingDonation.length,
+      ),
+      color: '#06c9a9',
+    },
+    {
+      name: 'Pending',
+      value: calculatePercentage(donations.length, pendingDonation.length),
+      color: '#0047CC',
+    },
+  ];
+
   return (
     <Stack spacing={1.5} direction="row">
-      <DonationPieChart data={data} titleheader="Donation Distribution" />
-      <DonationPieChart data={dataP} titleheader="People distribution" />
+      <DonationPieChart
+        data={dataDonation}
+        titleheader="Donation Distribution"
+        titleLenght={donations.length}
+      />
+      <DonationPieChart
+        data={dataP}
+        titleheader="People distribution"
+        titleLenght={122}
+      />
       <Stack
         spacing={1.5}
         direction="column"
@@ -42,8 +71,8 @@ const DonationChart = () => {
           <DonationIcon
             iconName="iconoir:network"
             iconColor="#e6ed0c"
-            iconTitle="Completed Donations"
-            IconNumber={151}
+            iconTitle="Successful Donations"
+            IconNumber={donations.length - pendingDonation.length}
             iconBgColor="#f5ffc4"
           />
         </Card>
@@ -63,8 +92,8 @@ const DonationChart = () => {
           <DonationIcon
             iconName="streamline:interface-arrows-reload-2-arrows-load-arrow-sync-square-loading-reload-synchronize"
             iconColor="#0e80eb"
-            iconTitle="Ongoing Donations"
-            IconNumber={1034}
+            iconTitle="Pending Donations"
+            IconNumber={pendingDonation.length}
             iconBgColor="#e1effc"
           />
         </Card>
