@@ -1,12 +1,30 @@
 import React, { useState, useRef } from 'react';
 import { Card } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import ApiRequests from 'api';
+import toast from 'react-hot-toast';
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({
+  onImageUpload,
+  id,
+  userid,
+}) => {
   const [logo, setLogo] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  const uploadfileMutation = useMutation({
+    mutationFn: ApiRequests.uploadFile,
+    onSuccess() {
+      toast.success('Upload successful!', { id: 'asyntoast' });
+    },
+    onError(error) {
+      toast.error(error.message, { id: 'asyntoast' });
+    },
+  });
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -15,6 +33,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
         if (onImageUpload) onImageUpload(url); // Trigger callback if passed
       };
       reader.readAsDataURL(file); // Convert the image to a data URL
+      toast.loading('Uploading...', { id: 'asyntoast' });
+      uploadfileMutation.mutate({
+        proof_image: file,
+        donation: id,
+        uploaded_by: userid,
+      });
+    } else {
+      toast.error('No file was selected');
     }
   };
 

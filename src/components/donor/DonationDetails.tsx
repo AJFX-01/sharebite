@@ -112,7 +112,7 @@ const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
                   labelLeft={`${donation.donor.first_name} ${donation.donor.last_name}`}
                   labelRight={donation.donor.email}
                 />
-                <ImageUpload />
+                <ImageUpload id={donation.id} userid={donation.donor.id} />
               </Stack>
             </>
           </Grid>

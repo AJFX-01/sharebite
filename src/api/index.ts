@@ -63,6 +63,30 @@ class ApiRequests {
       handleAxiosError(error);
     }
   };
+
+  static uploadFile = async ({
+    proof_image,
+    donation,
+    uploaded_by,
+  }: {
+    proof_image: File;
+    donation: number;
+    uploaded_by: number;
+  }) => {
+    const formData = new FormData();
+    formData.append('proof_image', proof_image);
+    formData.append('uploaded_by', uploaded_by.toString());
+    formData.append('donation', donation.toString());
+    try {
+      const response = await axiosInstance.post(
+        `/${API_ENDPOINTS.donation.uploadProofs(donation)}`,
+        formData,
+      );
+      return response.data;
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
 }
 
 export default ApiRequests;

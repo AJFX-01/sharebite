@@ -128,6 +128,8 @@ declare global {
 
   interface ImageUploadProps {
     onImageUpload?: (logoUrl: string) => void;
+    id: number;
+    userid: number;
   }
 
   interface DonationProofUploadProps {
