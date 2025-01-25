@@ -51,3 +51,7 @@ export const calculatePercentage = (total: number, main: number): number => {
   const percentage = (main / total) * 100;
   return percentage;
 };
+
+export const roundUpToTwoDecimalPlaces = (num: number) => {
+  return Math.ceil(num * 100) / 100;
+};

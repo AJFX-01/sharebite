@@ -1,4 +1,15 @@
 declare global {
+  interface PieChartDataType {
+    name: string;
+    color: string;
+    value: number;
+  }
+  interface DonationPieChartProps {
+    data: PieChartDataType[];
+    titleheader: string;
+    titleLenght: number;
+    centerTitle: string;
+  }
   interface LoginFormData {
     username: string;
     password: string;

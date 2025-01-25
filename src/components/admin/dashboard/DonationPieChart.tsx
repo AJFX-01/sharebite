@@ -1,17 +1,7 @@
 import { Card, CardHeader, Typography, Box } from '@mui/material';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { styled } from '@mui/system';
-
-export interface PieChartDataType {
-  name: string;
-  color: string;
-  value: number;
-}
-export interface DonationPieChartProps {
-  data: PieChartDataType[];
-  titleheader: string;
-  titleLenght: number;
-}
+import { roundUpToTwoDecimalPlaces } from 'helpers/utils';
 
 const LegendItem = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -31,6 +21,7 @@ const DonationPieChart = ({
   data,
   titleheader,
   titleLenght,
+  centerTitle,
 }: DonationPieChartProps) => {
   return (
     <Card
@@ -105,7 +96,7 @@ const DonationPieChart = ({
                 md: 'caption.fontSize',
               }}
             >
-              Donations
+              {centerTitle}
             </Typography>
           </Box>
         </Box>
@@ -132,7 +123,7 @@ const DonationPieChart = ({
                 variant="body2"
                 sx={{ marginLeft: 'auto', fontWeight: 600 }}
               >
-                {entry.value}%
+                {roundUpToTwoDecimalPlaces(entry.value)}%
               </Typography>
             </LegendItem>
           ))}

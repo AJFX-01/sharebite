@@ -56,7 +56,7 @@ class ApiRequests {
   static getMembers = async () => {
     try {
       const response = await axiosInstance.get(
-        `/${API_ENDPOINTS.users.members}`,
+        `/${API_ENDPOINTS.users.members()}`,
       );
       return { users: response.data };
     } catch (error) {

@@ -3,81 +3,22 @@ import {
   DataGrid,
   GridColDef,
   GridPaginationModel,
-  GridRowsProp,
 } from '@mui/x-data-grid';
 import { dateFormatFromUTC } from 'helpers/utils';
 import NoData from '../../base/NoData';
-// import IconifyIcon from 'components/base/IconifyIcon';
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import { useDonation } from 'context/donationContext';
 import ErrorDisplay from 'components/base/ErrorDisplay';
-
-const columns: GridColDef[] = [
-  {
-    field: '',
-    headerName: "Member's Name",
-    flex: 1,
-    minWidth: 300,
-    hideable: false,
-    renderCell: (params) => {
-      const fullname = params.row.first_name + ' ' + params.row.last_name;
-
-      return <>{fullname}</>;
-    },
-  },
-  {
-    field: 'email',
-    headerName: 'Email',
-    flex: 1,
-    width: 200,
-    hideable: false,
-  },
-  {
-    field: 'created_at',
-    headerName: 'Joined On',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-    renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
-  },
-];
 
 let rowHeight = 60;
 
 const DonorsListings = () => {
   const { users, userLoading, userError } = useDonation();
-  const [items, setItems] = useState<GridRowsProp<User>>([]);
   const { down } = useBreakpoints();
-  // const [open, setOpen] = useState<null | HTMLElement>(null);
-  // const [issueModal, setIssueModal] = useState<boolean>(false);
   // const [searchTerm, setSearchTerm] = useState<string>('');
-  // const [selectedItem, setSelectedItem] = useState<string>('');
-  // const [loading, setLoading] = useState<boolean>(false);
   const title = 'No Donors Available';
   const description = 'There is no Donors to display at the moment.';
-
-  // const handleOpen = (event: MouseEvent<HTMLElement>) => {
-  //   setOpen(event.currentTarget);
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(null);
-  // };
-
-  // const handleSelect = (value: string) => {
-  //   setSelectedItem(value);
-  //   setOpen(null);
-  //   setItems(
-  //     credentials.filter(
-  //       (item) => item.status.toUpperCase() === value.toUpperCase(),
-  //     ),
-  //   );
-  // };
-
-  // const handleRefresh = () => {
-  //   fetchListingData();
-  // };
 
   // const handleSearch = (value: string) => {
   //   setSearchTerm(value);
@@ -87,6 +28,35 @@ const DonorsListings = () => {
   //     ),
   //   );
   // };
+
+  const columns: GridColDef[] = [
+    {
+      field: '',
+      headerName: "Member's Name",
+      flex: 1,
+      minWidth: 300,
+      hideable: false,
+      renderCell: (params) => {
+        const fullname = params.row.first_name + ' ' + params.row.last_name;
+        return <>{fullname}</>;
+      },
+    },
+    {
+      field: 'email',
+      headerName: 'Email',
+      flex: 1,
+      width: 200,
+      hideable: false,
+    },
+    {
+      field: 'created_at',
+      headerName: 'Joined On',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+      renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
+    },
+  ];
 
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
@@ -104,12 +74,6 @@ const DonorsListings = () => {
   const handlePaginationModelChange = (model: GridPaginationModel) => {
     setPaginationModel(model);
   };
-
-  // const fetchListingData = async () => {};
-
-  // useEffect(() => {
-  //   fetchListingData();
-  // });
 
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>
@@ -162,11 +126,11 @@ const DonorsListings = () => {
           ) : (
             <DataGrid
               rowHeight={rowHeight}
-              rows={items.slice(
+              rows={users.slice(
                 paginationModel.page * paginationModel.pageSize,
                 (paginationModel.page + 1) * paginationModel.pageSize,
               )}
-              rowCount={items.length}
+              rowCount={users.length}
               columns={columns}
               disableRowSelectionOnClick
               paginationMode="server"

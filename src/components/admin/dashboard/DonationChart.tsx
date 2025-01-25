@@ -1,6 +1,6 @@
 import { Card, Stack } from '@mui/material';
 import DonationIcon from './DonationDetailsIcon';
-import DonationPieChart, { PieChartDataType } from './DonationPieChart';
+import DonationPieChart from './DonationPieChart';
 import { useDonation } from 'context/donationContext';
 import { calculatePercentage, toUpperCase } from 'helpers/utils';
 
@@ -52,11 +52,13 @@ const DonationChart = () => {
         data={dataDonation}
         titleheader="Donation Distribution"
         titleLenght={donations.length}
+        centerTitle="Donations"
       />
       <DonationPieChart
         data={dataP}
         titleheader="People distribution"
-        titleLenght={122}
+        titleLenght={users.length}
+        centerTitle="People"
       />
       <Stack
         spacing={1.5}

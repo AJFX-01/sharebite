@@ -44,7 +44,7 @@ export const DonationProvider: React.FC<{ children: React.ReactNode }> = ({
   } = useQuery({
     queryKey: ['dropoffsites'],
     queryFn: () => DroffSiteApiRequest.getAllSites(),
-    enabled: !!user && !isDonor && !isReceiver,
+    enabled: !!user && !user.is_donor && !user.is_receiver,
   });
 
   const locations = locationsData?.locations || [];
@@ -56,7 +56,7 @@ export const DonationProvider: React.FC<{ children: React.ReactNode }> = ({
   } = useQuery({
     queryKey: ['users'],
     queryFn: () => ApiRequests.getMembers(),
-    enabled: !!user && !isDonor && !isReceiver,
+    enabled: !!user && !user.is_donor && !user.is_receiver,
   });
 
   const users = usersData?.users || [];
