@@ -1,4 +1,5 @@
 import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
+import ImagePreview from 'components/base/ImagePreview';
 import ImageUpload from 'components/base/ImageUpload';
 import { useState } from 'react';
 
@@ -110,7 +111,11 @@ const DonationProofUpload = ({
                   onChange={(e) => setDescription(e.target.value)}
                   disabled
                 />
-                <ImageUpload />
+                {donation.proof?.proof_image === undefined ? (
+                  <ImageUpload id={donation.id} userid={donation.donor.id} />
+                ) : (
+                  <ImagePreview logo={donation.proof?.proof_image} />
+                )}
               </Stack>
             </>
           </Grid>

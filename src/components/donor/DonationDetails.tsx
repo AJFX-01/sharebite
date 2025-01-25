@@ -2,6 +2,7 @@ import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import ImageUpload from 'components/base/ImageUpload';
 import Details from './DetailsComponents';
 import { dateFormatFromUTC, transformBool } from 'helpers/utils';
+import ImagePreview from 'components/base/ImagePreview';
 
 const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
   return (
@@ -112,7 +113,11 @@ const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
                   labelLeft={`${donation.donor.first_name} ${donation.donor.last_name}`}
                   labelRight={donation.donor.email}
                 />
-                <ImageUpload id={donation.id} userid={donation.donor.id} />
+                {donation.proof?.proof_image === undefined ? (
+                  <ImageUpload id={donation.id} userid={donation.donor.id} />
+                ) : (
+                  <ImagePreview logo={donation.proof?.proof_image} />
+                )}
               </Stack>
             </>
           </Grid>
