@@ -228,7 +228,7 @@ const AdminDonationDetails = ({ onClose, donation }: ReceiptProps) => {
                 fontSize: 12,
                 width: 150,
               }}
-              disabled={donation.receipt === undefined ? true : false}
+              disabled={donation.proof === undefined ? true : false}
             >
               Confirm Donation
             </Button>

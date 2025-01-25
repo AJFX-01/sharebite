@@ -116,7 +116,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     justifyContent: 'center',
     alignItems: 'center',
     width: '90%',
-    height: 'auto',
+    height: '150px',
     backgroundColor: '#f4f4f4',
     borderRadius: '100%',
     minHeight: '150px',
@@ -129,7 +129,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   logoPreview: {
     width: '100%',
     height: '100%',
-    // objectFit: 'cover',
+    objectFit: 'contain',
     // borderRadius: '100%',
   },
 };
