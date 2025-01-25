@@ -3,6 +3,7 @@ import DonationApiRequest from 'api/donation';
 import { createContext, useContext, useState } from 'react';
 import { useUser } from './userContext';
 import DroffSiteApiRequest from 'api/droffoff';
+import ApiRequests from 'api';
 
 const DonationContext = createContext<DonationContextType | undefined>(
   undefined,
@@ -51,14 +52,14 @@ export const DonationProvider: React.FC<{ children: React.ReactNode }> = ({
   const {
     data: usersData,
     isLoading: userLoading,
-    error: userError
+    error: userError,
   } = useQuery({
     queryKey: ['users'],
-    queryFn: () => (),
+    queryFn: () => ApiRequests.getMembers(),
     enabled: !!user && !isDonor && !isReceiver,
   });
 
-  const users = usersData.users || []
+  const users = usersData?.users || [];
 
   return (
     <DonationContext.Provider
