@@ -1,10 +1,5 @@
 import { Button, Card, Stack, Typography } from '@mui/material';
-import {
-  DataGrid,
-  GridColDef,
-  GridPaginationModel,
-  GridRowsProp,
-} from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import { dateFormatFromUTC } from 'helpers/utils';
 import NoData from '../../base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
@@ -14,57 +9,11 @@ import AddLocation from './AddLocation';
 import { useDonation } from 'context/donationContext';
 import ErrorDisplay from 'components/base/ErrorDisplay';
 
-const columns: GridColDef[] = [
-  {
-    field: 'location',
-    headerName: 'Location',
-    flex: 1,
-    width: 200,
-    hideable: false,
-    renderCell: (params) => (
-      <Typography
-        sx={{
-          textTransform: 'capitalize',
-        }}
-      >
-        {params.value}
-      </Typography>
-    ),
-  },
-  {
-    field: 'added_by',
-    headerName: 'Location',
-    flex: 1,
-    minWidth: 300,
-    hideable: false,
-    renderCell: (params) => {
-      const fullname = params.row.first_name + ' ' + params.row.last_name;
-
-      return (
-        <Typography
-          sx={{
-            textTransform: 'capitalize',
-          }}
-        >
-          {fullname}
-        </Typography>
-      );
-    },
-  },
-  {
-    field: 'created_at',
-    headerName: 'Date Added',
-    flex: 1,
-    minWidth: 100,
-    hideable: false,
-    renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
-  },
-];
-
 let rowHeight = 60;
 
 const SiteListings = () => {
   const { locations, locationError, locationLoading } = useDonation();
+  console.log(locations);
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<null | HTMLElement>(null);
   const title = 'No Locations Available';
@@ -74,32 +23,52 @@ const SiteListings = () => {
     setOpen(event.currentTarget);
   };
 
-  // const handleClose = () => {
-  //   setOpen(null);
-  // };
-
-  // const handleSelect = (value: string) => {
-  //   setSelectedItem(value);
-  //   setOpen(null);
-  //   setItems(
-  //     credentials.filter(
-  //       (item) => item.status.toUpperCase() === value.toUpperCase(),
-  //     ),
-  //   );
-  // };
-
-  // const handleRefresh = () => {
-  //   fetchListingData();
-  // };
-
-  // const handleSearch = (value: string) => {
-  //   setSearchTerm(value);
-  //   setItems(
-  //     credentials.filter((item) =>
-  //       item.id.toLowerCase().includes(value.toLowerCase()),
-  //     ),
-  //   );
-  // };
+  const columns: GridColDef[] = [
+    {
+      field: 'location',
+      headerName: 'Location',
+      flex: 1,
+      width: 200,
+      hideable: false,
+      renderCell: (params) => (
+        <Typography
+          sx={{
+            textTransform: 'capitalize',
+          }}
+        >
+          {params.value}
+        </Typography>
+      ),
+    },
+    {
+      field: 'added_by',
+      headerName: 'Added By',
+      flex: 1,
+      minWidth: 300,
+      hideable: false,
+      renderCell: (params) => {
+        const fullname =
+          params.row.added_by.first_name + ' ' + params.row.added_by.last_name;
+        return (
+          <Typography
+            sx={{
+              textTransform: 'capitalize',
+            }}
+          >
+            {fullname}
+          </Typography>
+        );
+      },
+    },
+    {
+      field: 'created_at',
+      headerName: 'Date Added',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+      renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
+    },
+  ];
 
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
@@ -117,12 +86,6 @@ const SiteListings = () => {
   const handlePaginationModelChange = (model: GridPaginationModel) => {
     setPaginationModel(model);
   };
-
-  // const fetchListingData = async () => {};
-
-  // useEffect(() => {
-  //   fetchListingData();
-  // });
 
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>

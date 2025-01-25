@@ -1,10 +1,6 @@
 import { Card, Stack, Typography } from '@mui/material';
-import {
-  DataGrid,
-  GridColDef,
-  GridPaginationModel,
-} from '@mui/x-data-grid';
-import { dateFormatFromUTC } from 'helpers/utils';
+import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
+import { dateFormatFromUTC, toUpperCase } from 'helpers/utils';
 import NoData from '../../base/NoData';
 import { useState } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
@@ -15,30 +11,32 @@ let rowHeight = 60;
 
 const DonorsListings = () => {
   const { users, userLoading, userError } = useDonation();
+  const donors = users.filter((user) => {
+    const matchUsers = toUpperCase(user.is_donor) === 'TRUE';
+    return matchUsers;
+  });
   const { down } = useBreakpoints();
-  // const [searchTerm, setSearchTerm] = useState<string>('');
   const title = 'No Donors Available';
   const description = 'There is no Donors to display at the moment.';
-
-  // const handleSearch = (value: string) => {
-  //   setSearchTerm(value);
-  //   setItems(
-  //     credentials.filter((item) =>
-  //       item.id.toLowerCase().includes(value.toLowerCase()),
-  //     ),
-  //   );
-  // };
 
   const columns: GridColDef[] = [
     {
       field: '',
       headerName: "Member's Name",
       flex: 1,
-      minWidth: 300,
+      minWidth: 250,
       hideable: false,
       renderCell: (params) => {
         const fullname = params.row.first_name + ' ' + params.row.last_name;
-        return <>{fullname}</>;
+        return (
+          <Typography
+            sx={{
+              textTransform: 'capitalize',
+            }}
+          >
+            {fullname}
+          </Typography>
+        );
       },
     },
     {
@@ -47,6 +45,17 @@ const DonorsListings = () => {
       flex: 1,
       width: 200,
       hideable: false,
+      renderCell: (params) => {
+        return (
+          <Typography
+            sx={{
+              textTransform: 'capitalize',
+            }}
+          >
+            {params.value}
+          </Typography>
+        );
+      },
     },
     {
       field: 'created_at',
@@ -54,7 +63,9 @@ const DonorsListings = () => {
       flex: 1,
       minWidth: 100,
       hideable: false,
-      renderCell: (params) => <>{dateFormatFromUTC(params.value)}</>,
+      renderCell: (params) => (
+        <Typography>{dateFormatFromUTC(params.value)}</Typography>
+      ),
     },
   ];
 
@@ -126,11 +137,11 @@ const DonorsListings = () => {
           ) : (
             <DataGrid
               rowHeight={rowHeight}
-              rows={users.slice(
+              rows={donors.slice(
                 paginationModel.page * paginationModel.pageSize,
                 (paginationModel.page + 1) * paginationModel.pageSize,
               )}
-              rowCount={users.length}
+              rowCount={donors.length}
               columns={columns}
               disableRowSelectionOnClick
               paginationMode="server"
