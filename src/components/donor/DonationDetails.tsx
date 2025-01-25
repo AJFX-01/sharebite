@@ -4,25 +4,6 @@ import Details from './DetailsComponents';
 import { dateFormatFromUTC, transformBool } from 'helpers/utils';
 
 const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
-  // const handleAddHeader = () => {
-  //   setHeaders([...headers, { key: '', value: '' }]);
-  // };
-
-  // const handleRemoveHeader = (index: number) => {
-  //   if (headers.length > 1) {
-  //     setHeaders(headers.filter((_, i) => i !== index));
-  //   }
-  // };
-
-  // const handleHeaderChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  //   index: number,
-  // ) => {
-  //   const updatedHeaders = [...headers];
-  //   updatedHeaders[index] = { ...updatedHeaders[index], [e.target.name]: e.target.value };
-  //   setHeaders(updatedHeaders);
-  // };
-
   return (
     <>
       <Box
@@ -117,7 +98,7 @@ const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
                   titleLeft="Reserved"
                   titleRight="Delievered"
                   labelLeft={transformBool(donation.is_reserved)}
-                  labelRight={transformBool(donation.is_deleivered)}
+                  labelRight={transformBool(donation.is_delivered)}
                 />
                 <Details
                   titleLeft="Dropoff location"

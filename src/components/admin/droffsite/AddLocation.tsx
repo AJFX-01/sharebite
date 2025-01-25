@@ -6,9 +6,13 @@ import {
   TextField,
   Button,
 } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import DroffSiteApiRequest from 'api/droffoff';
+import { useUser } from 'context/userContext';
 
 import { useBreakpoints } from 'providers/useBreakpoints';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Fragment } from 'react/jsx-runtime';
 
 interface AddLocationProps {
@@ -16,13 +20,33 @@ interface AddLocationProps {
   onClose: () => void;
 }
 const AddLocation = ({ open, onClose }: AddLocationProps) => {
+  const { user } = useUser();
   const [location, setLocation] = useState<string>('');
   const { up } = useBreakpoints();
   const upSM = up('sm');
 
-  const handleSubmit = () => {
-    // Handle password reset logic here
-    console.log('Adding a new member:', location);
+  const addsiteMutation = useMutation({
+    mutationFn: DroffSiteApiRequest.addSite,
+    onSuccess() {
+      toast.success('location added', { id: 'asyntoast' });
+      onClose();
+    },
+    onError(error) {
+      toast.error(error.message, { id: 'asyntoast' });
+    },
+  });
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (!location) {
+      toast.error('please enter location');
+      return;
+    }
+    toast.loading('adding location', { id: 'asyntoast' });
+    addsiteMutation.mutate({
+      location: location,
+      added_by: user!.id,
+    });
   };
 
   return (
@@ -70,8 +94,8 @@ const AddLocation = ({ open, onClose }: AddLocationProps) => {
               <TextField
                 fullWidth
                 size={upSM ? 'medium' : 'small'}
-                name="firstanme"
-                label="First Name"
+                name="location"
+                label="Location"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
               />
@@ -86,7 +110,7 @@ const AddLocation = ({ open, onClose }: AddLocationProps) => {
               sx={{ mt: 3, fontSize: 12 }}
               onClick={handleSubmit}
             >
-              Save location
+              {addsiteMutation.isPending ? 'Adding...' : 'Add location'}
             </Button>
           </>
         </Card>

@@ -4,7 +4,6 @@ import DonationPieChart, { PieChartDataType } from './DonationPieChart';
 import { useDonation } from 'context/donationContext';
 import { calculatePercentage } from 'helpers/utils';
 
-
 const dataP: PieChartDataType[] = [
   { name: 'Donor', value: 16.8, color: '#e30707' },
   { name: 'Reciever', value: 14.8, color: '#f5ffc4' },

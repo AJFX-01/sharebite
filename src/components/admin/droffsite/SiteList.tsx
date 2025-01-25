@@ -14,27 +14,44 @@ import AddLocation from './AddLocation';
 
 const columns: GridColDef[] = [
   {
-    field: 'firstname',
-    headerName: "Member's Name",
+    field: 'location',
+    headerName: 'Location',
+    flex: 1,
+    width: 200,
+    hideable: false,
+    renderCell: (params) => (
+      <Typography
+        sx={{
+          textTransform: 'capitalize',
+        }}
+      >
+        {params.value}
+      </Typography>
+    ),
+  },
+  {
+    field: 'added_by',
+    headerName: 'Location',
     flex: 1,
     minWidth: 300,
     hideable: false,
     renderCell: (params) => {
       const fullname = params.row.first_name + ' ' + params.row.last_name;
 
-      return <>{fullname}</>;
+      return (
+        <Typography
+          sx={{
+            textTransform: 'capitalize',
+          }}
+        >
+          {fullname}
+        </Typography>
+      );
     },
   },
   {
-    field: 'email',
-    headerName: 'Email',
-    flex: 1,
-    width: 200,
-    hideable: false,
-  },
-  {
     field: 'created_at',
-    headerName: 'Joined On',
+    headerName: 'Date Added',
     flex: 1,
     minWidth: 100,
     hideable: false,
@@ -45,16 +62,9 @@ const columns: GridColDef[] = [
 let rowHeight = 60;
 
 const SiteListings = () => {
-  // const dispatch = useDispatch();
-  // const credentials = useSelector(
-  //   (state: RootState) => state.credential.credentials.credentials,
-  // );
   const [items, setItems] = useState<GridRowsProp<DroffSite>>([]);
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<null | HTMLElement>(null);
-  const [issueModal, setIssueModal] = useState<boolean>(false);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [selectedItem, setSelectedItem] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const title = 'No Locations Available';
   const description = 'There is no Location to display at the moment.';

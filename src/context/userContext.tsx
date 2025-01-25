@@ -1,6 +1,11 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import paths from 'router/path';
-import { DonationProvider } from './donationContext';
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 export const useUser = () => {
@@ -14,7 +19,11 @@ export const useUser = () => {
 export const UserProvider = ({ children }: ContextProps) => {
   const [user, setUser] = useState<User | null>(() => {
     const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : undefined;
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return localStorage.getItem('token') !== null;
   });
 
   useEffect(() => {
@@ -27,19 +36,20 @@ export const UserProvider = ({ children }: ContextProps) => {
     }
   }, [user]);
 
-  const isAuthenticated = Boolean(user);
-  const login = (user: User) => {
-    console.log('setting');
+  const login = useCallback((user: User) => {
     setUser(user);
-  };
-  const logout = () => {
+    setIsAuthenticated(true);
+  }, []);
+
+  const logout = useCallback(() => {
     setUser(null);
+    setIsAuthenticated(false);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     window.location.href = paths.login;
-  };
+  }, []);
   const isDonor = () => user?.is_donor === true;
-  const isReceiver = () => user?.is_receiver === false;
+  const isReceiver = () => user?.is_receiver === true;
 
   return (
     <UserContext.Provider
@@ -53,7 +63,7 @@ export const UserProvider = ({ children }: ContextProps) => {
         isReceiver,
       }}
     >
-      <DonationProvider>{children}</DonationProvider>
+      {children}
     </UserContext.Provider>
   );
 };

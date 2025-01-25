@@ -1,6 +1,6 @@
 export const API_ENDPOINTS = {
   auth: {
-    login: () : string => 'login/',
+    login: () => 'login/',
     signup: () => 'register/',
     editprofile: () => 'edituser/',
     resetpassword: () => 'resetpassword/',
@@ -17,10 +17,9 @@ export const API_ENDPOINTS = {
   },
   droffsites: {
     getAllSites: () => 'dropoff-sites/',
-    addSite: () => 'addsite/',
+    addSite: () => 'dropoff-sites/',
   },
   users: {
-    donors: () => 'donors/',
-    receiver: () => 'receivers/',
+    members: () => 'members/',
   },
 };

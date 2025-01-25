@@ -165,8 +165,14 @@ declare global {
 
   interface DonationContextType {
     donations: Donation[];
-    isLoading: boolean;
-    error: Error | null;
+    locations: DroffSite[];
+    users: User[];
+    donationLoading: boolean;
+    locationLoading: boolean;
+    userLoading: boolean;
+    donationError: Error | null;
+    locationError: Error | null;
+    userError: Error | null;
     statusFilter: string;
     setStatusFilter: React.Dispatch<React.SetStateAction<string>>;
   }

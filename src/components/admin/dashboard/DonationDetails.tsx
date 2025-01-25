@@ -1,7 +1,9 @@
 import { Stack, Typography, Card } from '@mui/material';
 import DonationIcon from './DonationDetailsIcon';
+import { useDonation } from 'context/donationContext';
 
 const DonationDetails = () => {
+  const { donations } = useDonation();
   return (
     <Stack>
       <Stack direction="row" alignItems="center" sx={{ pt: 3, pb: 2.5 }}>
@@ -65,7 +67,7 @@ const DonationDetails = () => {
             iconName="mdi:donation-outline"
             iconColor="#e30707"
             iconTitle="Donations Made"
-            IconNumber={23}
+            IconNumber={donations.length}
             iconBgColor="#f7b5b5"
           />
           {/* <DonationIcon
