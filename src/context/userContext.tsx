@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import paths from 'router/path';
+import { DonationProvider } from './donationContext';
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 export const useUser = () => {
@@ -52,7 +53,7 @@ export const UserProvider = ({ children }: ContextProps) => {
         isReceiver,
       }}
     >
-      {children}
+      <DonationProvider>{children}</DonationProvider>
     </UserContext.Provider>
   );
 };

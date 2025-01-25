@@ -2,12 +2,21 @@ import { API_ENDPOINTS } from 'helpers/constant';
 import { axiosInstance, handleAxiosError } from './config';
 
 class DonationApiRequest {
-  static getAllDonations = async () => {
+  static getAllDonations = async (status: string) => {
     try {
       const response = await axiosInstance.get(
         `/${API_ENDPOINTS.donation.donations()}`,
       );
-      return response.data;
+      const donations: Donation[] = response.data;
+
+      const filteredDonations = donations.filter((donation) => {
+        const matchDonations =
+          status === 'all' ||
+          donation.status.toUpperCase() === status.toUpperCase();
+        return matchDonations;
+      });
+
+      return { donations: filteredDonations };
     } catch (error) {
       handleAxiosError(error);
     }
@@ -18,6 +27,7 @@ class DonationApiRequest {
       const response = await axiosInstance.get(
         `/${API_ENDPOINTS.donation.userdonations()}`,
       );
+
       return response.data;
     } catch (error) {
       handleAxiosError(error);

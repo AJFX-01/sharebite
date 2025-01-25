@@ -162,6 +162,14 @@ declare global {
     // path: string;
     // exact?: boolean;
   }
+
+  interface DonationContextType {
+    donations: Donation[];
+    isLoading: boolean;
+    error: Error | null;
+    statusFilter: string;
+    setStatusFilter: React.Dispatch<React.SetStateAction<string>>;
+  }
 }
 
 export {};

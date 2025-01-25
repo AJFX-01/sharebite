@@ -98,7 +98,7 @@ const AdminDonationDetails = ({ onClose, donation }: ReceiptProps) => {
                   titleLeft="Reserved"
                   titleRight="Delievered"
                   labelLeft={transformBool(donation.is_reserved)}
-                  labelRight={transformBool(donation.is_deleivered)}
+                  labelRight={transformBool(donation.is_delivered)}
                 />
                 <Details
                   titleLeft="Dropoff location"

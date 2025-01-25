@@ -3,20 +3,18 @@ import {
   DataGrid,
   GridColDef,
   GridPaginationModel,
-  GridRowsProp,
   GridValidRowModel,
 } from '@mui/x-data-grid';
 import { dateFormatFromUTC, toUpperCase, transformBool } from 'helpers/utils';
 import NoData from '../../base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState, MouseEvent } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import FilterDropdown from 'components/base/FilterDropDown';
 import AdminDonationDetails from './AdminDonationDetials';
-import { useQuery } from '@tanstack/react-query';
-import DonationApiRequest from 'api/donation';
 
 import ErrorDisplay from 'components/base/ErrorDisplay';
+import { useDonation } from 'context/donationContext';
 
 const filter_data: FilterDataType[] = [
   {
@@ -36,7 +34,7 @@ const filter_data: FilterDataType[] = [
 let rowHeight = 60;
 
 const RecentListings = () => {
-  const [items, setItems] = useState<GridRowsProp<Donation>>([]);
+  const { donations, isLoading, error, setStatusFilter } = useDonation();
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
     popover1: null,
@@ -47,11 +45,6 @@ const RecentListings = () => {
   const [selectedItem, setSelectedItem] = useState<string>('');
   const title = 'No Donations Available';
   const description = 'There is no Donations to display at the moment.';
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: [''],
-    queryFn: () => DonationApiRequest.getAllDonations(),
-  });
 
   const handleOpen = (
     event: MouseEvent<HTMLElement>,
@@ -71,20 +64,8 @@ const RecentListings = () => {
   const handleSelect = (value: string) => {
     setSelectedItem(value);
     setOpen({});
-    setItems(
-      items.filter((item) => item.status.toUpperCase() === value.toUpperCase()),
-    );
+    setStatusFilter(value);
   };
-
-  const fetchListingData = async () => {
-    if (data) {
-      setItems(data); // Always set all items
-    }
-  };
-
-  useEffect(() => {
-    fetchListingData();
-  }, [data]);
 
   const columns: GridColDef[] = [
     {
@@ -280,16 +261,6 @@ const RecentListings = () => {
               filterData={filter_data}
             />
           </>
-          {/* <IconButton sx={{ bgcolor: 'neutral.light' }} onClick={handleRefresh}>
-            <IconifyIcon
-              color="#0047CC"
-              icon="radix-icons:reload"
-              sx={{
-                width: { xs: 15, md: 15, xl: 15 },
-                height: { xs: 15, md: 15, xl: 15 },
-              }}
-            />
-          </IconButton> */}
         </Stack>
       </Stack>
       <Card
@@ -318,11 +289,11 @@ const RecentListings = () => {
           ) : (
             <DataGrid
               rowHeight={rowHeight}
-              rows={items.slice(
+              rows={donations.slice(
                 paginationModel.page * paginationModel.pageSize,
                 (paginationModel.page + 1) * paginationModel.pageSize,
               )}
-              rowCount={items.length}
+              rowCount={donations.length}
               columns={columns}
               disableRowSelectionOnClick
               paginationMode="server"
