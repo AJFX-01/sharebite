@@ -95,7 +95,7 @@ const RecentListings = () => {
     },
     {
       field: 'status',
-      headerName: 'Delivered',
+      headerName: 'Status',
       flex: 1,
       minWidth: 100,
       hideable: false,

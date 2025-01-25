@@ -3,34 +3,32 @@ import {
   DataGrid,
   GridColDef,
   GridPaginationModel,
-  GridRowsProp,
   GridValidRowModel,
 } from '@mui/x-data-grid';
 import { dateFormatFromUTC, toUpperCase, transformBool } from 'helpers/utils';
 import NoData from '../../components/base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState, MouseEvent } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import DonationView from 'components/donor/DonationDetails';
-import { donations } from 'data/dummydata';
+import { useDonation } from 'context/donationContext';
+import ErrorDisplay from 'components/base/ErrorDisplay';
 
 let rowHeight = 60;
 
 const AvailableDonations = () => {
-  // const dispatch = useDispatch();
-  // const credentials = useSelector(
-  //   (state: RootState) => state.credential.credentials.credentials,
-  // );
-  const [items, setItems] = useState<GridRowsProp<Donation>>([]);
+  const { donations, isLoading, error } = useDonation();
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<null | HTMLElement>(null);
-  const [issueModal, setIssueModal] = useState<boolean>(false);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [selectedItem, setSelectedItem] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  // const [searchTerm, setSearchTerm] = useState<string>('');
   const [rowDetails, setRowDetails] = useState<GridValidRowModel | null>(null);
   const title = 'No Donation is Avaliable for pickup';
   const description = 'No Donations is avaliable.';
+
+  const filteredDonations = donations.filter((donation) => {
+    const matchDonations = toUpperCase(donation.is_reserved) === 'FALSE';
+    return matchDonations;
+  });
 
   const handleOpen = (
     event: MouseEvent<HTMLElement>,
@@ -44,29 +42,6 @@ const AvailableDonations = () => {
     setOpen(null);
   };
 
-  // const handleSelect = (value: string) => {
-  //   setSelectedItem(value);
-  //   setOpen(null);
-  //   setItems(
-  //     credentials.filter(
-  //       (item) => item.status.toUpperCase() === value.toUpperCase(),
-  //     ),
-  //   );
-  // };
-
-  // const handleRefresh = () => {
-  //   fetchListingData();
-  // };
-
-  // const handleSearch = (value: string) => {
-  //   setSearchTerm(value);
-  //   setItems(
-  //     credentials.filter((item) =>
-  //       item.id.toLowerCase().includes(value.toLowerCase()),
-  //     ),
-  //   );
-  // };
-
   const columns: GridColDef[] = [
     {
       field: 'title',
@@ -76,10 +51,25 @@ const AvailableDonations = () => {
       hideable: false,
     },
     {
+      field: 'status',
+      headerName: 'Status',
+      flex: 1,
+      minWidth: 100,
+      hideable: false,
+      renderCell: (params) => {
+        const color =
+          toUpperCase(params.row.status.toUpperCase()) === 'SUCCESSFUL'
+            ? '#06c9a9'
+            : '#e30707';
+
+        return <Typography color={color}>{params.row.status}</Typography>;
+      },
+    },
+    {
       field: 'is_reserved',
       headerName: 'Reserved',
       flex: 1,
-      minWidth: 100,
+      minWidth: 50,
       hideable: false,
       renderCell: (params) => {
         const color =
@@ -98,16 +88,16 @@ const AvailableDonations = () => {
       field: 'is_delivered',
       headerName: 'Delivered',
       flex: 1,
-      minWidth: 100,
+      minWidth: 50,
       hideable: false,
       renderCell: (params) => {
         const color =
-          toUpperCase(params.row.is_deleivered) === 'TRUE'
+          toUpperCase(params.row.is_delivered) === 'TRUE'
             ? '#06c9a9'
             : '#e30707';
         return (
           <Typography color={color}>
-            {transformBool(params.row.is_deleivered)}
+            {transformBool(params.row.is_delivered)}
           </Typography>
         );
       },
@@ -170,15 +160,15 @@ const AvailableDonations = () => {
     setPaginationModel(model);
   };
 
-  const fetchListingData = () => {
-    setLoading(true);
-    setItems(donations); // Always set all items
-    setLoading(false);
-  };
+  // const fetchListingData = () => {
+  //   setLoading(true);
+  //   setItems(donations); // Always set all items
+  //   setLoading(false);
+  // };
 
-  useEffect(() => {
-    fetchListingData();
-  });
+  // useEffect(() => {
+  //   fetchListingData();
+  // });
 
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>
@@ -218,60 +208,6 @@ const AvailableDonations = () => {
             value={searchTerm}
             onChange={handleSearch}
           />
-          <>
-            <Button
-              sx={{
-                px: 1,
-                position: 'relative',
-                border: '2px solid #0047CC',
-                borderRadius: 2,
-                alignItems: 'center',
-              }}
-              onClick={handleOpen}
-            >
-              <div style={{ alignSelf: 'center' }}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="15"
-                  height="15"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill="#0047CC"
-                    d="M7 11h10v2H7zM4 7h16v2H4zm6 8h4v2h-4z"
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </div>
-              <Typography
-                color="#0047CC"
-                fontWeight="400"
-                textAlign="center"
-                alignSelf="center"
-                paddingLeft={0.5}
-              >
-                Filter By
-              </Typography>
-            </Button>
-            <FilterDropdown
-              open={open}
-              onClose={handleClose}
-              selectedItem={selectedItem}
-              onSelect={handleSelect}
-              filterData={filter_data}
-            />
-          </>
-          <IconButton sx={{ bgcolor: 'neutral.light' }} onClick={handleRefresh}>
-            <IconifyIcon
-              color="#0047CC"
-              icon="radix-icons:reload"
-              sx={{
-                width: { xs: 15, md: 15, xl: 15 },
-                height: { xs: 15, md: 15, xl: 15 },
-              }}
-            />
-          </IconButton>
         </Stack> */}
       </Stack>
       <Card
@@ -291,56 +227,56 @@ const AvailableDonations = () => {
           },
         }}
       >
-        {/* <>
+        <>
           {error ? (
             <ErrorDisplay
               title={'Something went wrong, Please Try again'}
               description={error.message}
             />
-          ) : ( */}
-        <DataGrid
-          rowHeight={rowHeight}
-          rows={items.slice(
-            paginationModel.page * paginationModel.pageSize,
-            (paginationModel.page + 1) * paginationModel.pageSize,
+          ) : (
+            <DataGrid
+              rowHeight={rowHeight}
+              rows={filteredDonations.slice(
+                paginationModel.page * paginationModel.pageSize,
+                (paginationModel.page + 1) * paginationModel.pageSize,
+              )}
+              rowCount={filteredDonations.length}
+              columns={columns}
+              disableRowSelectionOnClick
+              paginationMode="server"
+              paginationModel={paginationModel}
+              onPaginationModelChange={handlePaginationModelChange}
+              slots={{
+                noRowsOverlay: () => (
+                  <NoData title={title} description={description} />
+                ),
+                pagination: () => null, // Hide the default pagination component
+              }}
+              loading={isLoading}
+              sx={{
+                px: { xs: 0, md: 3 },
+                '& .MuiDataGrid-main': {
+                  minHeight: 300,
+                },
+                '& .MuiDataGrid-virtualScroller': {
+                  minHeight: 300,
+                  p: 0,
+                },
+                '& .MuiDataGrid-columnHeader': {
+                  fontSize: { xs: 10, lg: 13 },
+                  pl: 3,
+                },
+                '& .MuiDataGrid-cell': {
+                  fontSize: { xs: 10, lg: 12 },
+                  pl: 3,
+                },
+                // '& .MuiTypography-root': {
+                //   fontSize: { xs: 13, lg: 16 },
+                // },
+              }}
+            />
           )}
-          rowCount={items.length}
-          columns={columns}
-          disableRowSelectionOnClick
-          paginationMode="server"
-          paginationModel={paginationModel}
-          onPaginationModelChange={handlePaginationModelChange}
-          slots={{
-            noRowsOverlay: () => (
-              <NoData title={title} description={description} />
-            ),
-            pagination: () => null, // Hide the default pagination component
-          }}
-          loading={loading}
-          sx={{
-            px: { xs: 0, md: 3 },
-            '& .MuiDataGrid-main': {
-              minHeight: 300,
-            },
-            '& .MuiDataGrid-virtualScroller': {
-              minHeight: 300,
-              p: 0,
-            },
-            '& .MuiDataGrid-columnHeader': {
-              fontSize: { xs: 10, lg: 13 },
-              pl: 3,
-            },
-            '& .MuiDataGrid-cell': {
-              fontSize: { xs: 10, lg: 12 },
-              pl: 3,
-            },
-            // '& .MuiTypography-root': {
-            //   fontSize: { xs: 13, lg: 16 },
-            // },
-          }}
-        />
-        {/* )}
-        </> */}
+        </>
       </Card>
       {open && (
         <DonationView
