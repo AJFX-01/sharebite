@@ -1,16 +1,8 @@
 import { Stack, Typography } from '@mui/material';
 import NoContentImage from 'assets/no-content.svg';
 import Image from 'components/base/Image';
-// import { useBreakpoints } from 'providers/useBreakpoints';
-// import { useState, MouseEvent } from 'react';
-// import IssueCredential from './IssueCredential';
 
-// interface NoDataProps {
-//   open?: () => void;
-// }
 const NoData = ({ title, description }: NoDataProps) => {
-  // const { up } = useBreakpoints();
-  // const upSM = up('sm');
 
   return (
     <>

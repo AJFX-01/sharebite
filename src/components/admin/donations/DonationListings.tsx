@@ -14,6 +14,9 @@ import { useBreakpoints } from 'providers/useBreakpoints';
 import FilterDropdown from 'components/base/FilterDropDown';
 import { donations } from 'data/dummydata';
 import AdminDonationDetails from './AdminDonationDetials';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import DonationApiRequest from 'api/donation';
+import toast from 'react-hot-toast';
 
 const filter_data: FilterDataType[] = [
   {
@@ -52,6 +55,11 @@ const RecentListings = () => {
   const title = 'No Donations Available';
   const description = 'There is no Donations to display at the moment.';
 
+  const { data, isLoading, error} = useQuery({
+    queryKey: ['donations'],
+    queryFn: () => DonationApiRequest.getAllDonations(),
+  });
+
   const handleOpen = (
     event: MouseEvent<HTMLElement>,
     popoverId: string,
@@ -77,15 +85,17 @@ const RecentListings = () => {
     // );
   };
 
-  const fetchListingData = () => {
-    setLoading(true);
-    setItems(donations); // Always set all items
-    setLoading(false);
-  };
 
-  useEffect(() => {
-    fetchListingData();
-  });
+  // const fetchListingData = () => {
+  //   setLoading(true);
+  //   setItems(donations); // Always set all items
+  //   setLoading(false);
+  // };
+
+  // useEffect(() => {
+  //   // fetchListingData();
+  //   getDonationMutation.
+  // });
 
   const columns: GridColDef[] = [
     {
@@ -185,12 +195,6 @@ const RecentListings = () => {
   const handlePaginationModelChange = (model: GridPaginationModel) => {
     setPaginationModel(model);
   };
-
-  // const fetchListingData = async () => {};
-
-  // useEffect(() => {
-  //   fetchListingData();
-  // });
 
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>
