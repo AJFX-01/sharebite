@@ -22,8 +22,9 @@ export const useDonation = () => {
 export const DonationProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [statusFilter, setStatusFilter] = useState('all');
-  const { user, isDonor, isReceiver } = useUser();
+  const [statusFilter, setStatusFilter] = useState('All');
+  const [cstatus, setCstatus] = useState('All');
+  const { user } = useUser();
 
   const {
     data: donationData,
@@ -61,20 +62,37 @@ export const DonationProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const users = usersData?.users || [];
 
+  const {
+    data: currentUserData,
+    isLoading: currentUserDonationLoading,
+    error: currentUserDonationError,
+  } = useQuery({
+    queryKey: ['cdonation', cstatus],
+    queryFn: () => DonationApiRequest.getUserDonations(cstatus),
+    enabled: !!user && !!user.is_donor,
+  });
+
+  const currentUserDonations = currentUserData?.cdonations || [];
+
   return (
     <DonationContext.Provider
       value={{
         donations,
         locations,
         users,
+        currentUserDonations,
         donationLoading,
         locationLoading,
         userLoading,
+        currentUserDonationLoading,
         donationError,
         locationError,
         userError,
+        currentUserDonationError,
         statusFilter,
         setStatusFilter,
+        cstatus,
+        setCstatus,
       }}
     >
       {children}

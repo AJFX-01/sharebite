@@ -34,13 +34,19 @@ class DonationApiRequest {
 
       const donations: Donation[] = response.data;
 
-      const filteredDonations = donations.filter((donation) => {
-        const matchDonations =
-          status === 'ALL' ||
-          donation.status.toUpperCase() === status.toUpperCase();
-        return matchDonations;
-      });
-      return filteredDonations;
+      if (status) {
+        console.log(status);
+        const filteredDonations = donations.filter((donation) => {
+          const matchDonations =
+            status === 'All' ||
+            donation.status.toUpperCase() === status!.toUpperCase();
+          return matchDonations;
+        });
+
+        return { cdonations: filteredDonations };
+      } else {
+        return { cdonations: donations };
+      }
     } catch (error) {
       handleAxiosError(error);
     }

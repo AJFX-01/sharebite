@@ -16,7 +16,7 @@ import DonationApiRequest from 'api/donation';
 import { useUser } from 'context/userContext';
 import { useFormValidation } from 'hooks/useFormValidation';
 import { useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import DonationSchemas from 'schema/donation';
 
 const MakeDonation = ({ onClose }: MakeDonationProps) => {

@@ -3,20 +3,18 @@ import {
   DataGrid,
   GridColDef,
   GridPaginationModel,
-  GridRowsProp,
   GridValidRowModel,
 } from '@mui/x-data-grid';
 import { dateFormatFromUTC, toUpperCase, transformBool } from 'helpers/utils';
 import NoData from '../../components/base/NoData';
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState, MouseEvent } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import FilterDropdown from 'components/base/FilterDropDown';
 import DonationDetails from './DonationInsight';
 import MakeDonation from './MakeDonation';
 import DonationView from './DonationDetails';
-import { useQuery } from '@tanstack/react-query';
-import DonationApiRequest from 'api/donation';
 import ErrorDisplay from 'components/base/ErrorDisplay';
+import { useDonation } from 'context/donationContext';
 
 const filter_data: FilterDataType[] = [
   {
@@ -25,7 +23,7 @@ const filter_data: FilterDataType[] = [
   },
   {
     id: 2,
-    title: 'Successful ',
+    title: 'Successful',
   },
   {
     id: 3,
@@ -36,22 +34,23 @@ const filter_data: FilterDataType[] = [
 let rowHeight = 60;
 
 const DonationListings = () => {
-  const [items, setItems] = useState<GridRowsProp<Donation>>([]);
+  const {
+    currentUserDonations,
+    currentUserDonationLoading,
+    currentUserDonationError,
+    setCstatus,
+  } = useDonation();
+
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
     popover1: null,
     popover2: null,
     popover3: null,
   });
-  const [selectedItem, setSelectedItem] = useState<string>('ALL');
+  const [selectedItem, setSelectedItem] = useState<string>('All');
   const [rowDetails, setRowDetails] = useState<GridValidRowModel | null>(null);
   const title = 'No Donations Available';
   const description = 'There is no Donations to display at the moment.';
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: [''],
-    queryFn: () => DonationApiRequest.getUserDonations(selectedItem),
-  });
 
   const handleOpen = (
     event: MouseEvent<HTMLElement>,
@@ -71,10 +70,7 @@ const DonationListings = () => {
   const handleSelect = (value: string) => {
     setSelectedItem(value);
     setOpen({});
-    setItems(
-      items.filter((item) => item.status.toUpperCase() === value.toUpperCase()),
-    );
-    console.log(items);
+    setCstatus(value);
   };
 
   const columns: GridColDef[] = [
@@ -176,19 +172,6 @@ const DonationListings = () => {
   const handlePaginationModelChange = (model: GridPaginationModel) => {
     setPaginationModel(model);
   };
-
-  const fetchData = async () => {
-    if (data) {
-      setItems(data);
-    }
-  }
-
-  useEffect(() => {
-    fetchData();
-    if (data) {
-      setItems(data);
-    }
-  }, [data]);
 
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>
@@ -342,19 +325,19 @@ const DonationListings = () => {
         }}
       >
         <>
-          {error ? (
+          {currentUserDonationError ? (
             <ErrorDisplay
               title={'Something went wrong, Please Try again'}
-              description={error.message}
+              description={currentUserDonationError.message}
             />
           ) : (
             <DataGrid
               rowHeight={rowHeight}
-              rows={items.slice(
+              rows={currentUserDonations.slice(
                 paginationModel.page * paginationModel.pageSize,
                 (paginationModel.page + 1) * paginationModel.pageSize,
               )}
-              rowCount={items.length}
+              rowCount={currentUserDonations.length}
               columns={columns}
               disableRowSelectionOnClick
               paginationMode="server"
@@ -366,7 +349,7 @@ const DonationListings = () => {
                 ),
                 pagination: () => null, // Hide the default pagination component
               }}
-              loading={isLoading}
+              loading={currentUserDonationLoading}
               sx={{
                 px: { xs: 0, md: 3 },
                 '& .MuiDataGrid-main': {
