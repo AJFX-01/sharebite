@@ -74,6 +74,18 @@ export const DonationProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const currentUserDonations = currentUserData?.cdonations || [];
 
+  const {
+    data: reserveData,
+    isLoading: reservationLoading,
+    error: reservationError
+  } = useQuery({
+    queryKey: ['receipts'],
+    queryFn: () => DonationApiRequest.getReciepts(),
+    enabled: !!user && !!user.is_receiver,
+  });
+
+  const reservations = reserveData?.receipts || [];
+
   return (
     <DonationContext.Provider
       value={{
@@ -81,13 +93,16 @@ export const DonationProvider: React.FC<{ children: React.ReactNode }> = ({
         locations,
         users,
         currentUserDonations,
+        reservations,
         donationLoading,
         locationLoading,
         userLoading,
         currentUserDonationLoading,
+        reservationLoading,
         donationError,
         locationError,
         userError,
+        reservationError,
         currentUserDonationError,
         statusFilter,
         setStatusFilter,

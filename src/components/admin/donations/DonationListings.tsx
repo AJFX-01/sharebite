@@ -110,20 +110,20 @@ const RecentListings = () => {
       },
     },
     {
-      field: 'is_delivered',
-      headerName: 'Delivered',
+      field: 'is_reserved',
+      headerName: 'Reserved',
       flex: 1,
       minWidth: 100,
       hideable: false,
       renderCell: (params) => {
         const color =
-          toUpperCase(params.row.is_delivered) === 'TRUE'
+          toUpperCase(params.row.is_reserved) === 'TRUE'
             ? '#06c9a9'
             : '#e30707';
 
         return (
           <Typography color={color}>
-            {transformBool(params.row.is_delivered)}
+            {transformBool(params.row.is_reserved)}
           </Typography>
         );
       },

@@ -4,12 +4,25 @@ import Details from './DetailsComponents';
 import { dateFormatFromUTC, transformBool } from 'helpers/utils';
 import ImagePreview from 'components/base/ImagePreview';
 import { useMutation } from '@tanstack/react-query';
+import DonationApiRequest from 'api/donation';
+import toast from 'react-hot-toast';
 
 const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
-
   const reservedonationMutation = useMutation({
-    
-  })
+    mutationFn: DonationApiRequest.reserveDonation,
+    onSuccess() {
+      toast.success('Reserved Successfully!', { id: 'async' });
+      onClose();
+    },
+    onError(error) {
+      toast.error(error.message, { id: 'async' });
+    },
+  });
+
+  const handleReservation = async () => {
+    toast.loading('Reserving...', { id: 'async' });
+    reservedonationMutation.mutate(donation.id);
+  };
   return (
     <>
       <Box
@@ -118,9 +131,7 @@ const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
                   labelLeft={`${donation.donor.first_name} ${donation.donor.last_name}`}
                   labelRight={donation.donor.email}
                 />
-                {donation.proof?.proof_image === undefined ? (
-                  <ImageUpload id={donation.id} userid={donation.donor.id} />
-                ) : (
+                {mode === 'Reserved' ? (
                   <Stack
                     direction="column"
                     sx={{
@@ -139,6 +150,34 @@ const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
                     </Typography>
                     <ImagePreview logo={donation.proof?.proof_image} />
                   </Stack>
+                ) : (
+                  <>
+                    {donation.proof?.proof_image === undefined ? (
+                      <ImageUpload
+                        id={donation.id}
+                        userid={donation.donor.id}
+                      />
+                    ) : (
+                      <Stack
+                        direction="column"
+                        sx={{
+                          alignContent: 'center',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <Typography
+                          color="textSecondary"
+                          variant="body1"
+                          fontWeight="400"
+                          sx={{ mb: 2.5, mt: 1.5, fontSize: 12 }}
+                        >
+                          Donation Proof
+                        </Typography>
+                        <ImagePreview logo={donation.proof?.proof_image} />
+                      </Stack>
+                    )}
+                  </>
                 )}
               </Stack>
             </>
@@ -176,6 +215,7 @@ const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
                   fontSize: 12,
                   width: 150,
                 }}
+                onClick={handleReservation}
                 disabled={
                   donation.status.toUpperCase() === 'PENDING' ? true : false
                 }

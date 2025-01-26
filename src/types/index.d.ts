@@ -182,14 +182,17 @@ declare global {
     locations: DroffSite[];
     users: User[];
     currentUserDonations: Donation[];
+    reservations: Reciept[];
     donationLoading: boolean;
     locationLoading: boolean;
     userLoading: boolean;
+    reservationLoading: boolean;
     currentUserDonationLoading: boolean;
     donationError: Error | null;
     locationError: Error | null;
     userError: Error | null;
     currentUserDonationError: Error | null;
+    reservationError: Error | null;
     statusFilter: string;
     setStatusFilter: React.Dispatch<React.SetStateAction<string>>;
     cstatus: string;

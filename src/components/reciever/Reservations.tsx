@@ -15,14 +15,13 @@ import DonationView from 'components/donor/DonationDetails';
 import { donations, reserveddonations } from 'data/dummydata';
 import DonationProofUpload from 'components/donor/DonationProofUpload';
 import CancelReservation from './CancelReservation';
+import { useDonation } from 'context/donationContext';
 
 let rowHeight = 60;
 
 const ReserveDonations = () => {
-  // const dispatch = useDispatch();
-  // const credentials = useSelector(
-  //   (state: RootState) => state.credential.credentials.credentials,
-  // );
+  const { reservations, reservationError, reservationLoading } = useDonation();
+  console.log(reservations);
   const [items, setItems] = useState<GridRowsProp<ReDonation>>([]);
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
@@ -52,29 +51,6 @@ const ReserveDonations = () => {
   const handleClose = (popoverId: string) => {
     setOpen({ ...open, [popoverId]: null });
   };
-
-  // const handleSelect = (value: string) => {
-  //   setSelectedItem(value);
-  //   setOpen(null);
-  //   setItems(
-  //     credentials.filter(
-  //       (item) => item.status.toUpperCase() === value.toUpperCase(),
-  //     ),
-  //   );
-  // };
-
-  // const handleRefresh = () => {
-  //   fetchListingData();
-  // };
-
-  // const handleSearch = (value: string) => {
-  //   setSearchTerm(value);
-  //   setItems(
-  //     credentials.filter((item) =>
-  //       item.id.toLowerCase().includes(value.toLowerCase()),
-  //     ),
-  //   );
-  // };
 
   const columns: GridColDef[] = [
     {
@@ -172,7 +148,7 @@ const ReserveDonations = () => {
 
   const fetchListingData = () => {
     setLoading(true);
-    setItems(reserveddonations)// Always set all items
+    setItems(reserveddonations);// Always set all items
     setLoading(false);
   };
 

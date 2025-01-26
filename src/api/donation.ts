@@ -103,6 +103,28 @@ class DonationApiRequest {
       handleAxiosError(error);
     }
   };
+
+  static getReciepts = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/${API_ENDPOINTS.donation.receipts()}`,
+      );
+      return { receipts: response.data };
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
+
+  static getReservations = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/${API_ENDPOINTS.donation.reservations()}`,
+      );
+      return { reservations: response.data };
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
 }
 
 export default DonationApiRequest;

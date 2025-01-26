@@ -12,7 +12,6 @@ import NoData from '../../components/base/NoData';
 import { useState, MouseEvent, useEffect } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import { reserveddonations } from 'data/dummydata';
-import DonationProofUpload from 'components/donor/DonationProofUpload';
 import RecieptView from './RecieptView';
 
 let rowHeight = 60;
@@ -222,7 +221,7 @@ const RecieptList = () => {
       {open && (
         <RecieptView
           onClose={() => handleClose()}
-          donation={rowDetails as ReDonation}
+          donation={rowDetails as Donation}
         />
       )}
     </Stack>

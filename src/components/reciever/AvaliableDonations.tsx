@@ -13,15 +13,35 @@ import { useBreakpoints } from 'providers/useBreakpoints';
 import DonationView from 'components/donor/DonationDetails';
 import { useDonation } from 'context/donationContext';
 import ErrorDisplay from 'components/base/ErrorDisplay';
+import FilterDropdown from 'components/base/FilterDropDown';
 
 let rowHeight = 60;
 
+const filter_data: FilterDataType[] = [
+  {
+    id: 1,
+    title: 'All',
+  },
+  {
+    id: 2,
+    title: 'Successful',
+  },
+  {
+    id: 3,
+    title: 'Pending',
+  },
+];
+
 const AvailableDonations = () => {
-  const { donations, donationLoading, donationError } = useDonation();
+  const { donations, donationLoading, donationError, setStatusFilter } =
+    useDonation();
   const { down } = useBreakpoints();
-  const [open, setOpen] = useState<null | HTMLElement>(null);
-  // const [searchTerm, setSearchTerm] = useState<string>('');
+  const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
+    popover1: null,
+    popover2: null,
+  });
   const [rowDetails, setRowDetails] = useState<GridValidRowModel | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string>('All');
   const title = 'No Donation is Avaliable for pickup';
   const description = 'No Donations is avaliable.';
 
@@ -32,14 +52,23 @@ const AvailableDonations = () => {
 
   const handleOpen = (
     event: MouseEvent<HTMLElement>,
-    row: GridValidRowModel,
+    popoverId: string,
+    row?: GridValidRowModel,
   ) => {
-    setOpen(event.currentTarget);
-    setRowDetails(row);
+    setOpen({ ...open, [popoverId]: event.currentTarget });
+    if (row != null) {
+      setRowDetails(row);
+    }
   };
 
-  const handleClose = () => {
-    setOpen(null);
+  const handleClose = (popoverId: string) => {
+    setOpen({ ...open, [popoverId]: null });
+  };
+
+  const handleSelect = (value: string) => {
+    setSelectedItem(value);
+    setOpen({});
+    setStatusFilter(value);
   };
 
   const columns: GridColDef[] = [
@@ -127,7 +156,7 @@ const AvailableDonations = () => {
         return (
           <>
             <Button
-              onClick={(event) => handleOpen(event, params.row)}
+              onClick={(event) => handleOpen(event, 'popover2', params.row)}
               variant="contained"
               color="primary"
               sx={{
@@ -183,21 +212,58 @@ const AvailableDonations = () => {
         >
           Avaliable Donations
         </Typography>
-        {/* <Stack
+        <Stack
           direction="row"
           sx={{
             justifyContent: 'space-between',
-            width: '40%',
+            // width: '40%',
           }}
         >
-          <SearchInput
-            fullWidth={true}
-            size={'small'}
-            placeholder={'Enter DID to search'}
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-        </Stack> */}
+          <>
+            <Button
+              sx={{
+                px: 1,
+                position: 'relative',
+                border: '2px solid #0047CC',
+                borderRadius: 2,
+                alignItems: 'center',
+              }}
+              onClick={(event) => handleOpen(event, 'popover1')}
+            >
+              <div style={{ alignSelf: 'center' }}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill="#0047CC"
+                    d="M7 11h10v2H7zM4 7h16v2H4zm6 8h4v2h-4z"
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <Typography
+                color="#0047CC"
+                fontWeight="400"
+                textAlign="center"
+                alignSelf="center"
+                paddingLeft={0.5}
+              >
+                Filter By
+              </Typography>
+            </Button>
+            <FilterDropdown
+              open={open.popover1}
+              onClose={() => handleClose('popover1')}
+              selectedItem={selectedItem}
+              onSelect={handleSelect}
+              filterData={filter_data}
+            />
+          </>
+        </Stack>
       </Stack>
       <Card
         sx={{
@@ -267,9 +333,9 @@ const AvailableDonations = () => {
           )}
         </>
       </Card>
-      {open && (
+      {open.popover2 && (
         <DonationView
-          onClose={() => handleClose()}
+          onClose={() => handleClose('popover2')}
           donation={rowDetails as Donation}
           mode="Reserved"
         />

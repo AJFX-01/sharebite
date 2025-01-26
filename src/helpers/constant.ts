@@ -14,6 +14,8 @@ export const API_ENDPOINTS = {
     reserve: (donation_id: number) => `donations/${donation_id}/reserve/`,
     cancelDonation: (donation_id: number) => `donations/${donation_id}/cancel/`,
     receipts: () => 'receipts/',
+    uploadReceipt: (donation_id: number) => `donations/${donation_id}/receipt/`,
+    reservations: () => 'donations/reserved/',
   },
   droffsites: {
     getAllSites: () => 'dropoff-sites/',
