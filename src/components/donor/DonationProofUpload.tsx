@@ -111,10 +111,27 @@ const DonationProofUpload = ({
                   onChange={(e) => setDescription(e.target.value)}
                   disabled
                 />
-                {donation.proof?.proof_image === undefined ? (
+                {donation.proof === null ? (
                   <ImageUpload id={donation.id} userid={donation.donor.id} />
                 ) : (
-                  <ImagePreview logo={donation.proof?.proof_image} />
+                  <Stack
+                    direction="column"
+                    sx={{
+                      alignContent: 'center',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Typography
+                      color="textSecondary"
+                      variant="body1"
+                      fontWeight="400"
+                      sx={{ mb: 2.5, mt: 1.5, fontSize: 12 }}
+                    >
+                      Donation Proof
+                    </Typography>
+                    <ImagePreview logo={donation.proof?.proof_image} />
+                  </Stack>
                 )}
               </Stack>
             </>

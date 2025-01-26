@@ -98,7 +98,7 @@ const RecieptView = ({ onClose, donation }: ReceiptProps) => {
                   titleLeft="Reserved"
                   titleRight="Delievered"
                   labelLeft={transformBool(donation.is_reserved)}
-                  labelRight={transformBool(donation.is_deleivered)}
+                  labelRight={transformBool(donation.is_delivered)}
                 />
                 <Details
                   titleLeft="Dropoff location"
@@ -186,31 +186,6 @@ const RecieptView = ({ onClose, donation }: ReceiptProps) => {
             </>
           </Grid>
         </Box>
-        {/* {mode === 'Reserved' && (
-          <Box
-            sx={{
-              mt: 3,
-              mb: 0,
-              background: '#',
-              zIndex: 1112,
-              borderTop: '1px solid #c7ebfc',
-              p: 1,
-            }}
-          >
-            <Stack direction="row" spacing={2} justifyContent="flex-end">
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{
-                  fontSize: 12,
-                  width: 150,
-                }}
-              >
-                Reserve
-              </Button>
-            </Stack>
-          </Box>
-        )} */}
       </Box>
     </>
   );

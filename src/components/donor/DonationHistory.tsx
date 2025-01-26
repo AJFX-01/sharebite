@@ -1,15 +1,9 @@
-import { Button, Card, Stack, Typography } from '@mui/material';
-import {
-  DataGrid,
-  GridColDef,
-  GridPaginationModel,
-  GridValidRowModel,
-} from '@mui/x-data-grid';
+import { Card, Stack, Typography } from '@mui/material';
+import { DataGrid, GridColDef, GridPaginationModel } from '@mui/x-data-grid';
 import { dateFormatFromUTC, toUpperCase, transformBool } from 'helpers/utils';
 import NoData from '../../components/base/NoData';
 import { useEffect, useState } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
-import DonationProofUpload from './DonationProofUpload';
 import { useDonation } from 'context/donationContext';
 import ErrorDisplay from 'components/base/ErrorDisplay';
 
@@ -25,14 +19,6 @@ const DonationHistory = () => {
   const { down } = useBreakpoints();
   const title = 'You have not made any donations';
   const description = 'No Donations History.';
-
-  const [isProofBox, setProofBox] = useState(false);
-  const [rowDetails, setRowDetails] = useState<GridValidRowModel | null>(null);
-
-  const handleOpen = (row: GridValidRowModel) => {
-    setRowDetails(row);
-    setProofBox(true);
-  };
 
   const columns: GridColDef[] = [
     {
@@ -100,21 +86,7 @@ const DonationHistory = () => {
       hideable: false,
       renderCell: (params) => {
         if (params.row.proof === undefined || params.row.proof === null) {
-          return (
-            <>
-              <Button
-                onClick={() => handleOpen(params.row)}
-                variant="contained"
-                color="primary"
-                sx={{
-                  fontSize: 12,
-                  width: 150,
-                }}
-              >
-                Upload Proof
-              </Button>
-            </>
-          );
+          return <Typography color={'#06c9a9'}>Not Avaliable</Typography>;
         } else {
           return <Typography color={'#06c9a9'}>Avaliable</Typography>;
         }
@@ -240,13 +212,6 @@ const DonationHistory = () => {
           )}
         </>
       </Card>
-      {isProofBox && (
-        <DonationProofUpload
-          onClose={() => setProofBox(false)}
-          donation={rowDetails as Donation}
-          mode="proof"
-        />
-      )}
     </Stack>
   );
 };
