@@ -20,7 +20,7 @@ import paths from 'router/path';
 import { useUser } from 'context/userContext';
 
 const LoginForm = () => {
-  const { login, user } = useUser();
+  const { login } = useUser();
   const { up } = useBreakpoints();
   const navigate = useNavigate();
   const upSM = up('sm');
@@ -40,13 +40,13 @@ const LoginForm = () => {
   };
   const loginMutation = useMutation({
     mutationFn: ApiRequests.loginUser,
-    onSuccess(data) {
+    onSuccess(data: User) {
       toast.success('Login successful!', { id: 'asyntoast' });
       login(data);
       navigate(
-        user?.is_donor
+        data?.is_donor
           ? paths.donordashboard
-          : user?.is_receiver
+          : data?.is_receiver
             ? paths.recieverdashboard
             : paths.dashboard,
       );

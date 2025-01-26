@@ -81,6 +81,28 @@ class DonationApiRequest {
       handleAxiosError(error);
     }
   };
+
+  static reserveDonation = async (donation_id: number) => {
+    try {
+      const response = await axiosInstance.post(
+        `/${API_ENDPOINTS.donation.reserve(donation_id)}`,
+      );
+      return response.data;
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
+
+  static cancelDonation = async (donation_id: number) => {
+    try {
+      const response = await axiosInstance.post(
+        `/${API_ENDPOINTS.donation.cancelDonation(donation_id)}`,
+      );
+      return response.data;
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
 }
 
 export default DonationApiRequest;

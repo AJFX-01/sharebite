@@ -3,8 +3,13 @@ import ImageUpload from 'components/base/ImageUpload';
 import Details from './DetailsComponents';
 import { dateFormatFromUTC, transformBool } from 'helpers/utils';
 import ImagePreview from 'components/base/ImagePreview';
+import { useMutation } from '@tanstack/react-query';
 
 const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
+
+  const reservedonationMutation = useMutation({
+    
+  })
   return (
     <>
       <Box
@@ -159,8 +164,9 @@ const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
                 textTransform: 'uppercase',
               }}
             >
-              This Donation cannot be reserved yet! until it is confirmed by the
-              administrator
+              {donation.status.toUpperCase() === 'PENDING'
+                ? 'This Donation cannot be reserved yet! until it is confirmed by the administrator'
+                : ''}
             </Typography>
             <Stack direction="row" spacing={2} justifyContent="flex-end">
               <Button
