@@ -87,6 +87,33 @@ class ApiRequests {
       handleAxiosError(error);
     }
   };
+
+  static uploadFileReceipt = async ({
+    user,
+    proof_image,
+    donation,
+    pickup_date,
+  }: {
+    user: number;
+    proof_image: File;
+    donation: number;
+    pickup_date: Date;
+  }) => {
+    const formData = new FormData();
+    formData.append('proof_image', proof_image);
+    formData.append('user', user.toString());
+    formData.append('donation', donation.toString());
+    formData.append('pick_update', pickup_date.toISOString());
+    try {
+      const response = await axiosInstance.post(
+        `/${API_ENDPOINTS.donation.uploadReceipt(donation)}`,
+        formData,
+      );
+      return response.data;
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
 }
 
 export default ApiRequests;
