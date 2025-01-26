@@ -18,6 +18,11 @@ let rowHeight = 60;
 
 const ReserveDonations = () => {
   const { reservations, reservationError, reservationLoading } = useDonation();
+  const filteredReservations = reservations.filter((reservation) => {
+    const matchedReservations =
+      reservation.receipt === null || reservation.receipt === undefined;
+    return matchedReservations;
+  });
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
     popover1: null,
@@ -79,6 +84,11 @@ const ReserveDonations = () => {
               onClick={(event) => handleOpen(event, 'popover1', params.row)}
               variant="contained"
               color="primary"
+              disabled={
+                params.row.receipt === undefined || params.row.receipt === null
+                  ? false
+                  : true
+              }
               sx={{
                 fontSize: 12,
                 width: 150,
@@ -188,11 +198,11 @@ const ReserveDonations = () => {
           ) : (
             <DataGrid
               rowHeight={rowHeight}
-              rows={reservations.slice(
+              rows={filteredReservations.slice(
                 paginationModel.page * paginationModel.pageSize,
                 (paginationModel.page + 1) * paginationModel.pageSize,
               )}
-              rowCount={reservations.length}
+              rowCount={filteredReservations.length}
               columns={columns}
               disableRowSelectionOnClick
               paginationMode="server"

@@ -78,7 +78,7 @@ declare global {
     created_at: string | Date;
     reserved_by: User | null;
     proof?: Proof;
-    receipt?: Reciept;
+    receipt?: Reciept2;
   }
 
   interface Proof {
@@ -88,11 +88,18 @@ declare global {
     uploaded_by: User;
   }
 
+  interface Reciept2 {
+    id: number;
+    proof_image: string;
+    pickup_date: string;
+    created_at: string;
+  }
+
   interface Reciept {
     id: number;
     donation: Donation;
     proof_image: string;
-    uploaded_by: User;
+    user: User;
     pickup_date: string;
     created_at: string;
   }
@@ -131,6 +138,7 @@ declare global {
     onImageUpload?: (logoUrl: string) => void;
     id: number;
     userid: number;
+    mode: string;
   }
 
   interface DonationProofUploadProps {

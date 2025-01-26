@@ -8,12 +8,23 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   onImageUpload,
   id,
   userid,
+  mode,
 }) => {
   const [logo, setLogo] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const uploadfileMutation = useMutation({
+  const uploadProofMutation = useMutation({
     mutationFn: ApiRequests.uploadFile,
+    onSuccess() {
+      toast.success('Upload successful!', { id: 'asyntoast' });
+    },
+    onError(error) {
+      toast.error(error.message, { id: 'asyntoast' });
+    },
+  });
+
+  const uploadRecieptMutation = useMutation({
+    mutationFn: ApiRequests.uploadFileReceipt,
     onSuccess() {
       toast.success('Upload successful!', { id: 'asyntoast' });
     },
@@ -34,11 +45,19 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       };
       reader.readAsDataURL(file); // Convert the image to a data URL
       toast.loading('Uploading...', { id: 'asyntoast' });
-      uploadfileMutation.mutate({
-        proof_image: file,
-        donation: id,
-        uploaded_by: userid,
-      });
+      if (mode === 'proof') {
+        uploadProofMutation.mutate({
+          proof_image: file,
+          donation: id,
+          uploaded_by: userid,
+        });
+      } else {
+        uploadRecieptMutation.mutate({
+          user: userid,
+          proof_image: file,
+          donation: id,
+        });
+      }
     } else {
       toast.error('No file was selected');
     }
@@ -59,7 +78,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           onChange={handleFileChange}
           style={styles.fileInput}
         />
-        <p style={styles.uploadText}>Click to upload your donation proof</p>
+        <p style={styles.uploadText}>
+          {mode === 'proof'
+            ? 'Click to upload your donation proof'
+            : 'Click to upload your pickup proof'}
+        </p>
       </div>
 
       <Card

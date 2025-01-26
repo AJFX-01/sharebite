@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Stack, TextField, Typography } from '@mui/material';
 import ImagePreview from 'components/base/ImagePreview';
 import ImageUpload from 'components/base/ImageUpload';
+import { useUser } from 'context/userContext';
 import { useState } from 'react';
 
 const DonationProofUpload = ({
@@ -8,6 +9,7 @@ const DonationProofUpload = ({
   donation,
   mode,
 }: DonationProofUploadProps) => {
+  const { user } = useUser();
   const [title, setTitle] = useState<string>(donation.title);
   const [description, setDescription] = useState<string>(donation.description);
   return (
@@ -111,15 +113,17 @@ const DonationProofUpload = ({
                   onChange={(e) => setDescription(e.target.value)}
                   disabled
                 />
-                {donation.proof === null ? (
-                  <ImageUpload id={donation.id} userid={donation.donor.id} />
+                {donation.receipt === null || donation.receipt === undefined ? (
+                  <ImageUpload id={donation.id} userid={user!.id} mode="" />
                 ) : (
                   <Stack
                     direction="column"
                     sx={{
+                      alignSelf: 'center',
                       alignContent: 'center',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      width: '50%',
                     }}
                   >
                     <Typography
@@ -128,9 +132,9 @@ const DonationProofUpload = ({
                       fontWeight="400"
                       sx={{ mb: 2.5, mt: 1.5, fontSize: 12 }}
                     >
-                      Donation Proof
+                      Pickup Proof
                     </Typography>
-                    <ImagePreview logo={donation.proof?.proof_image} />
+                    <ImagePreview logo={donation.receipt?.proof_image} />
                   </Stack>
                 )}
               </Stack>
@@ -147,7 +151,7 @@ const DonationProofUpload = ({
             p: 1,
           }}
         >
-          <Stack direction="row" spacing={2} justifyContent="flex-end">
+          {/* <Stack direction="row" spacing={2} justifyContent="flex-end">
             <Button
               variant="contained"
               color="primary"
@@ -158,7 +162,7 @@ const DonationProofUpload = ({
             >
               Upload
             </Button>
-          </Stack>
+          </Stack> */}
         </Box>
       </Box>
     </>

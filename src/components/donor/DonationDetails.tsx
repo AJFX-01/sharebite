@@ -6,8 +6,10 @@ import ImagePreview from 'components/base/ImagePreview';
 import { useMutation } from '@tanstack/react-query';
 import DonationApiRequest from 'api/donation';
 import toast from 'react-hot-toast';
+import { useUser } from 'context/userContext';
 
 const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
+  const { user } = useUser();
   const reservedonationMutation = useMutation({
     mutationFn: DonationApiRequest.reserveDonation,
     onSuccess() {
@@ -155,7 +157,8 @@ const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
                     {donation.proof?.proof_image === undefined ? (
                       <ImageUpload
                         id={donation.id}
-                        userid={donation.donor.id}
+                        userid={user!.id}
+                        mode="proof"
                       />
                     ) : (
                       <Stack

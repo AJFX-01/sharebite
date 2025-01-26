@@ -96,7 +96,6 @@ class ApiRequests {
     user: number;
     proof_image: File;
     donation: number;
-    pickup_date: Date;
   }) => {
     const formData = new FormData();
     formData.append('proof_image', proof_image);

@@ -3,28 +3,29 @@ import {
   DataGrid,
   GridColDef,
   GridPaginationModel,
-  GridRowsProp,
   GridValidRowModel,
 } from '@mui/x-data-grid';
 import { dateFormatFromUTC } from 'helpers/utils';
 import NoData from '../../components/base/NoData';
 // import IconifyIcon from 'components/base/IconifyIcon';
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState, MouseEvent } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
-import { reserveddonations } from 'data/dummydata';
 import RecieptView from './RecieptView';
+import { useDonation } from 'context/donationContext';
+import ErrorDisplay from 'components/base/ErrorDisplay';
 
 let rowHeight = 60;
 
 const RecieptList = () => {
-  // const dispatch = useDispatch();
-  // const credentials = useSelector(
-  //   (state: RootState) => state.credential.credentials.credentials,
-  // );
-  const [items, setItems] = useState<GridRowsProp<ReDonation>>([]);
+  const { reservations, reservationError, reservationLoading } = useDonation();
+
+  const filteredDonations = reservations.filter((reservation) => {
+    const matchedReservations =
+      reservation.receipt != null || reservation.receipt != undefined;
+    return matchedReservations;
+  });
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<HTMLElement | null>();
-  const [loading, setLoading] = useState<boolean>(false);
   const [rowDetails, setRowDetails] = useState<GridValidRowModel | null>(null);
   const title = 'No Donation is Avaliable for pickup';
   const description = 'No Donations is avaliable.';
@@ -115,16 +116,6 @@ const RecieptList = () => {
     setPaginationModel(model);
   };
 
-  const fetchListingData = () => {
-    setLoading(true);
-    setItems(reserveddonations); // Always set all items
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchListingData();
-  });
-
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>
       <Stack
@@ -167,56 +158,56 @@ const RecieptList = () => {
           },
         }}
       >
-        {/* <>
-          {error ? (
+        <>
+          {reservationError ? (
             <ErrorDisplay
               title={'Something went wrong, Please Try again'}
-              description={error.message}
+              description={reservationError.message}
             />
-          ) : ( */}
-        <DataGrid
-          rowHeight={rowHeight}
-          rows={items.slice(
-            paginationModel.page * paginationModel.pageSize,
-            (paginationModel.page + 1) * paginationModel.pageSize,
+          ) : (
+            <DataGrid
+              rowHeight={rowHeight}
+              rows={filteredDonations.slice(
+                paginationModel.page * paginationModel.pageSize,
+                (paginationModel.page + 1) * paginationModel.pageSize,
+              )}
+              rowCount={filteredDonations.length}
+              columns={columns}
+              disableRowSelectionOnClick
+              paginationMode="server"
+              paginationModel={paginationModel}
+              onPaginationModelChange={handlePaginationModelChange}
+              slots={{
+                noRowsOverlay: () => (
+                  <NoData title={title} description={description} />
+                ),
+                pagination: () => null, // Hide the default pagination component
+              }}
+              loading={reservationLoading}
+              sx={{
+                px: { xs: 0, md: 3 },
+                '& .MuiDataGrid-main': {
+                  minHeight: 300,
+                },
+                '& .MuiDataGrid-virtualScroller': {
+                  minHeight: 300,
+                  p: 0,
+                },
+                '& .MuiDataGrid-columnHeader': {
+                  fontSize: { xs: 10, lg: 13 },
+                  pl: 3,
+                },
+                '& .MuiDataGrid-cell': {
+                  fontSize: { xs: 10, lg: 12 },
+                  pl: 3,
+                },
+                // '& .MuiTypography-root': {
+                //   fontSize: { xs: 13, lg: 16 },
+                // },
+              }}
+            />
           )}
-          rowCount={items.length}
-          columns={columns}
-          disableRowSelectionOnClick
-          paginationMode="server"
-          paginationModel={paginationModel}
-          onPaginationModelChange={handlePaginationModelChange}
-          slots={{
-            noRowsOverlay: () => (
-              <NoData title={title} description={description} />
-            ),
-            pagination: () => null, // Hide the default pagination component
-          }}
-          loading={loading}
-          sx={{
-            px: { xs: 0, md: 3 },
-            '& .MuiDataGrid-main': {
-              minHeight: 300,
-            },
-            '& .MuiDataGrid-virtualScroller': {
-              minHeight: 300,
-              p: 0,
-            },
-            '& .MuiDataGrid-columnHeader': {
-              fontSize: { xs: 10, lg: 13 },
-              pl: 3,
-            },
-            '& .MuiDataGrid-cell': {
-              fontSize: { xs: 10, lg: 12 },
-              pl: 3,
-            },
-            // '& .MuiTypography-root': {
-            //   fontSize: { xs: 13, lg: 16 },
-            // },
-          }}
-        />
-        {/* )}
-        </> */}
+        </>
       </Card>
       {open && (
         <RecieptView
