@@ -241,7 +241,7 @@ const ReserveDonations = () => {
         <CancelReservation
           open={open.popover1}
           onClose={() => handleClose('popover1')}
-          donationData={rowDetails as ReDonation}
+          donationData={rowDetails as Donation}
         />
       )}
     </Stack>

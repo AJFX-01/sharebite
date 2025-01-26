@@ -1,24 +1,39 @@
 import { Button, Popover, Stack, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import DonationApiRequest from 'api/donation';
 import IconifyIcon from 'components/base/IconifyIcon';
 import { useBreakpoints } from 'providers/useBreakpoints';
+import toast from 'react-hot-toast';
 import { Fragment } from 'react/jsx-runtime';
 
 interface CancelReservationDropdownProps {
   onClose: () => void;
   open: HTMLElement | null;
-  donationData?: ReDonation;
+  donationData?: Donation;
 }
 
 const CancelReservation = ({
   open,
   onClose,
+  donationData,
 }: CancelReservationDropdownProps) => {
   const { up } = useBreakpoints();
   const upSM = up('sm');
 
+  const canceldonationMutation = useMutation({
+    mutationFn: DonationApiRequest.cancelDonation,
+    onSuccess() {
+      toast.success('Cancel Successfully!', { id: 'async' });
+      onClose();
+    },
+    onError(error) {
+      toast.error(error.message, { id: 'async' });
+    },
+  });
+
   const handleSubmit = () => {
-    // Handle password reset logic here
-    console.log('Adding a new member:');
+    toast.loading('Canceling...', { id: 'async' });
+    canceldonationMutation.mutate(donationData!.id);
   };
 
   return (
@@ -83,7 +98,7 @@ const CancelReservation = ({
             variant="contained"
             color="primary"
             sx={{ fontSize: 13 }}
-            onClick={handleSubmit}
+            onClick={onClose}
           >
             No
           </Button>
