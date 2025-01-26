@@ -3,36 +3,27 @@ import {
   DataGrid,
   GridColDef,
   GridPaginationModel,
-  GridRowsProp,
   GridValidRowModel,
 } from '@mui/x-data-grid';
-import { dateFormatFromUTC, toUpperCase, transformBool } from 'helpers/utils';
+import { dateFormatFromUTC } from 'helpers/utils';
 import NoData from '../../components/base/NoData';
-// import IconifyIcon from 'components/base/IconifyIcon';
-import { useState, MouseEvent, useEffect } from 'react';
+import { useState, MouseEvent } from 'react';
 import { useBreakpoints } from 'providers/useBreakpoints';
-import DonationView from 'components/donor/DonationDetails';
-import { donations, reserveddonations } from 'data/dummydata';
 import DonationProofUpload from 'components/donor/DonationProofUpload';
 import CancelReservation from './CancelReservation';
 import { useDonation } from 'context/donationContext';
+import ErrorDisplay from 'components/base/ErrorDisplay';
 
 let rowHeight = 60;
 
 const ReserveDonations = () => {
   const { reservations, reservationError, reservationLoading } = useDonation();
-  console.log(reservations);
-  const [items, setItems] = useState<GridRowsProp<ReDonation>>([]);
   const { down } = useBreakpoints();
   const [open, setOpen] = useState<{ [key: string]: HTMLElement | null }>({
     popover1: null,
     popover2: null,
     popover3: null,
   });
-  const [issueModal, setIssueModal] = useState<boolean>(false);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [selectedItem, setSelectedItem] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
   const [rowDetails, setRowDetails] = useState<GridValidRowModel | null>(null);
   const title = 'No Donation is Avaliable for pickup';
   const description = 'No Donations is avaliable.';
@@ -146,16 +137,6 @@ const ReserveDonations = () => {
     setPaginationModel(model);
   };
 
-  const fetchListingData = () => {
-    setLoading(true);
-    setItems(reserveddonations);// Always set all items
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchListingData();
-  });
-
   return (
     <Stack sx={{ overflow: 'auto', justifyContent: 'space-between' }}>
       <Stack
@@ -180,75 +161,6 @@ const ReserveDonations = () => {
         >
           Reserved Donations
         </Typography>
-        {/* <Stack
-          direction="row"
-          sx={{
-            justifyContent: 'space-between',
-            width: '40%',
-          }}
-        >
-          <SearchInput
-            fullWidth={true}
-            size={'small'}
-            placeholder={'Enter DID to search'}
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-          <>
-            <Button
-              sx={{
-                px: 1,
-                position: 'relative',
-                border: '2px solid #0047CC',
-                borderRadius: 2,
-                alignItems: 'center',
-              }}
-              onClick={handleOpen}
-            >
-              <div style={{ alignSelf: 'center' }}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="15"
-                  height="15"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fill="#0047CC"
-                    d="M7 11h10v2H7zM4 7h16v2H4zm6 8h4v2h-4z"
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </div>
-              <Typography
-                color="#0047CC"
-                fontWeight="400"
-                textAlign="center"
-                alignSelf="center"
-                paddingLeft={0.5}
-              >
-                Filter By
-              </Typography>
-            </Button>
-            <FilterDropdown
-              open={open}
-              onClose={handleClose}
-              selectedItem={selectedItem}
-              onSelect={handleSelect}
-              filterData={filter_data}
-            />
-          </>
-          <IconButton sx={{ bgcolor: 'neutral.light' }} onClick={handleRefresh}>
-            <IconifyIcon
-              color="#0047CC"
-              icon="radix-icons:reload"
-              sx={{
-                width: { xs: 15, md: 15, xl: 15 },
-                height: { xs: 15, md: 15, xl: 15 },
-              }}
-            />
-          </IconButton>
-        </Stack> */}
       </Stack>
       <Card
         sx={{
@@ -267,61 +179,61 @@ const ReserveDonations = () => {
           },
         }}
       >
-        {/* <>
-          {error ? (
+        <>
+          {reservationError ? (
             <ErrorDisplay
               title={'Something went wrong, Please Try again'}
-              description={error.message}
+              description={reservationError.message}
             />
-          ) : ( */}
-        <DataGrid
-          rowHeight={rowHeight}
-          rows={items.slice(
-            paginationModel.page * paginationModel.pageSize,
-            (paginationModel.page + 1) * paginationModel.pageSize,
+          ) : (
+            <DataGrid
+              rowHeight={rowHeight}
+              rows={reservations.slice(
+                paginationModel.page * paginationModel.pageSize,
+                (paginationModel.page + 1) * paginationModel.pageSize,
+              )}
+              rowCount={reservations.length}
+              columns={columns}
+              disableRowSelectionOnClick
+              paginationMode="server"
+              paginationModel={paginationModel}
+              onPaginationModelChange={handlePaginationModelChange}
+              slots={{
+                noRowsOverlay: () => (
+                  <NoData title={title} description={description} />
+                ),
+                pagination: () => null, // Hide the default pagination component
+              }}
+              loading={reservationLoading}
+              sx={{
+                px: { xs: 0, md: 3 },
+                '& .MuiDataGrid-main': {
+                  minHeight: 300,
+                },
+                '& .MuiDataGrid-virtualScroller': {
+                  minHeight: 300,
+                  p: 0,
+                },
+                '& .MuiDataGrid-columnHeader': {
+                  fontSize: { xs: 10, lg: 13 },
+                  pl: 3,
+                },
+                '& .MuiDataGrid-cell': {
+                  fontSize: { xs: 10, lg: 12 },
+                  pl: 3,
+                },
+                // '& .MuiTypography-root': {
+                //   fontSize: { xs: 13, lg: 16 },
+                // },
+              }}
+            />
           )}
-          rowCount={items.length}
-          columns={columns}
-          disableRowSelectionOnClick
-          paginationMode="server"
-          paginationModel={paginationModel}
-          onPaginationModelChange={handlePaginationModelChange}
-          slots={{
-            noRowsOverlay: () => (
-              <NoData title={title} description={description} />
-            ),
-            pagination: () => null, // Hide the default pagination component
-          }}
-          loading={loading}
-          sx={{
-            px: { xs: 0, md: 3 },
-            '& .MuiDataGrid-main': {
-              minHeight: 300,
-            },
-            '& .MuiDataGrid-virtualScroller': {
-              minHeight: 300,
-              p: 0,
-            },
-            '& .MuiDataGrid-columnHeader': {
-              fontSize: { xs: 10, lg: 13 },
-              pl: 3,
-            },
-            '& .MuiDataGrid-cell': {
-              fontSize: { xs: 10, lg: 12 },
-              pl: 3,
-            },
-            // '& .MuiTypography-root': {
-            //   fontSize: { xs: 13, lg: 16 },
-            // },
-          }}
-        />
-        {/* )}
-        </> */}
+        </>
       </Card>
       {open.popover2 && (
         <DonationProofUpload
           onClose={() => handleClose('popover2')}
-          donation={rowDetails as ReDonation}
+          donation={rowDetails as Donation}
           mode="reciept"
         />
       )}
