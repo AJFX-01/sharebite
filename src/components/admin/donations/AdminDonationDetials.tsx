@@ -1,9 +1,29 @@
 import { Box, Button, Grid, Stack, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import DonationApiRequest from 'api/donation';
 import ImagePreview from 'components/base/ImagePreview';
 import Details from 'components/donor/DetailsComponents';
 import { dateFormatFromUTC, transformBool } from 'helpers/utils';
+import toast from 'react-hot-toast';
 
 const AdminDonationDetails = ({ onClose, donation }: ReceiptProps) => {
+  const updateStatusMutation = useMutation({
+    mutationFn: DonationApiRequest.updateDonationStatus,
+    onSuccess() {
+      toast.success('status updated', { id: 'async' });
+      onClose();
+    },
+    onError(error) {
+      toast.error(error.message, { id: 'async' });
+    },
+  });
+  const handleConfirm = async () => {
+    toast.loading('confirming...', { id: 'async' });
+    updateStatusMutation.mutate({
+      status: 'Successful',
+      donation_id: donation.id,
+    });
+  };
   return (
     <>
       <Box
@@ -217,21 +237,38 @@ const AdminDonationDetails = ({ onClose, donation }: ReceiptProps) => {
               textTransform: 'uppercase',
             }}
           >
-            This Donation cannot be confirmed yet until the donor provides a
-            proof of donation!
+            {donation.proof === null
+              ? 'This Donation cannot be confirmed yet until the donor provides a proof of donation!'
+              : ''}
           </Typography>
           <Stack direction="row" spacing={2} justifyContent="flex-end">
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{
-                fontSize: 12,
-                width: 150,
-              }}
-              disabled={donation.proof === undefined ? true : false}
-            >
-              Confirm Donation
-            </Button>
+            {donation.status.toUpperCase() === 'PENDING' ? (
+              <Button
+                onClick={handleConfirm}
+                variant="contained"
+                color="primary"
+                sx={{
+                  fontSize: 12,
+                  width: 150,
+                }}
+                disabled={donation.proof === null ? true : false}
+              >
+                Confirm Donation
+              </Button>
+            ) : (
+              <Typography
+                variant="h4"
+                sx={{
+                  fontSize: 11,
+                  fontWeight: 600,
+                  my: 1.5,
+                  textTransform: 'uppercase',
+                }}
+              >
+                {' '}
+                donation confirmed!!{' '}
+              </Typography>
+            )}
           </Stack>
         </Box>
       </Box>

@@ -64,6 +64,7 @@ declare global {
     created_at: string | Date;
     reserved_by: User | null;
     proof?: Proof;
+    receipt?: Reciept;
   }
 
   interface ReDonation {
@@ -140,7 +141,7 @@ declare global {
 
   interface ReceiptProps {
     onClose: () => void;
-    donation: ReDonation;
+    donation: Donation;
   }
 
   interface DonationViewProps {

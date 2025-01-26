@@ -23,7 +23,7 @@ const filter_data: FilterDataType[] = [
   },
   {
     id: 2,
-    title: 'Successful ',
+    title: 'Successful',
   },
   {
     id: 3,

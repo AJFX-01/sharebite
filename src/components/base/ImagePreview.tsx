@@ -45,8 +45,8 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   logoPreview: {
     width: '100%',
-    height: '100%',
-    // objectFit: 'cover',
+    height: '200px',
+    objectFit: 'cover',
     // borderRadius: '100%',
   },
 };
