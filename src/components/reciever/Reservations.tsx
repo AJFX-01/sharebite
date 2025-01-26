@@ -202,7 +202,7 @@ const ReserveDonations = () => {
             alignSelf: 'center',
           }}
         >
-          Avaliable Donations
+          Reserved Donations
         </Typography>
         {/* <Stack
           direction="row"

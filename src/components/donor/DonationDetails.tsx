@@ -116,7 +116,24 @@ const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
                 {donation.proof?.proof_image === undefined ? (
                   <ImageUpload id={donation.id} userid={donation.donor.id} />
                 ) : (
-                  <ImagePreview logo={donation.proof?.proof_image} />
+                  <Stack
+                    direction="column"
+                    sx={{
+                      alignContent: 'center',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Typography
+                      color="textSecondary"
+                      variant="body1"
+                      fontWeight="400"
+                      sx={{ mb: 2.5, mt: 1.5, fontSize: 12 }}
+                    >
+                      Donation Proof
+                    </Typography>
+                    <ImagePreview logo={donation.proof?.proof_image} />
+                  </Stack>
                 )}
               </Stack>
             </>
@@ -133,6 +150,18 @@ const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
               p: 1,
             }}
           >
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: 11,
+                fontWeight: 600,
+                my: 1.5,
+                textTransform: 'uppercase',
+              }}
+            >
+              This Donation cannot be reserved yet! until it is confirmed by the
+              administrator
+            </Typography>
             <Stack direction="row" spacing={2} justifyContent="flex-end">
               <Button
                 variant="contained"
@@ -141,6 +170,9 @@ const DonationView = ({ onClose, donation, mode }: DonationViewProps) => {
                   fontSize: 12,
                   width: 150,
                 }}
+                disabled={
+                  donation.status.toUpperCase() === 'PENDING' ? true : false
+                }
               >
                 Reserve
               </Button>
