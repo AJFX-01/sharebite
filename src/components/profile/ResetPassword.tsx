@@ -112,6 +112,11 @@ const ResetPassword = ({ open, onClose }: ResetPasswordProps) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {errors.password && (
+                <Typography sx={{ color: 'red', fontSize: '10px' }}>
+                  {errors.password}
+                </Typography>
+              )}
               <TextField
                 fullWidth
                 size={upSM ? 'medium' : 'small'}
@@ -120,6 +125,11 @@ const ResetPassword = ({ open, onClose }: ResetPasswordProps) => {
                 value={confirmPassword}
                 onChange={(e) => setconfirmPassword(e.target.value)}
               />
+              {errors.confirmpassword && (
+                <Typography sx={{ color: 'red', fontSize: '10px' }}>
+                  {errors.confirmpassword}
+                </Typography>
+              )}
             </Stack>
 
             <Button

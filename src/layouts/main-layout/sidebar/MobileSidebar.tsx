@@ -12,6 +12,7 @@ import SettingsItem from './SettingsListItem';
 import { donorLinks } from './DonorMenuLinks';
 import DonorMenuItem from './DonorMenuItem';
 import { recieverLinks } from './RecieverMenuLink';
+import { useUser } from 'context/userContext';
 
 interface MobileSidebarProps {
   onDrawerClose: () => void;
@@ -25,6 +26,7 @@ const MobileSidebar = ({
   mobileOpen,
   drawerWidth,
 }: MobileSidebarProps) => {
+  const { user } = useUser();
   return (
     <Drawer
       anchor="left"
@@ -53,44 +55,54 @@ const MobileSidebar = ({
       }}
     >
       <Toolbar sx={{ gap: 1, minHeight: 100 }}>
-        <Typography>SHAREBITE</Typography>
+        <Typography color="#0047CC" variant="h3" fontWeight="700">
+          SHAREBITE
+        </Typography>
       </Toolbar>
 
       <SimpleBar style={{ maxHeight: 'calc(100vh - 100px)' }}>
-        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Overview</h3>
-          {donationsMenuLinks.map((menu) => (
-            <CredentailsItem key={menu.id} menuItem={menu} />
-          ))}
-        </List>
-        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Locations</h3>
-          {locationLinks.map((menu) => (
-            <MenuListItem key={menu.id} menuItem={menu} />
-          ))}
-        </List>
-        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Users</h3>
-          {usersMenuLinks.map((menu) => (
-            <SettingsItem key={menu.id} menuItem={menu} />
-          ))}
-        </List>
-        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
-            Donors
-          </h3>
-          {donorLinks.map((menu) => (
-            <DonorMenuItem key={menu.id} menuItem={menu} />
-          ))}
-        </List>
-        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
-            Recievers
-          </h3>
-          {recieverLinks.map((menu) => (
-            <MenuListItem key={menu.id} menuItem={menu} />
-          ))}
-        </List>
+        {!user?.is_donor && !user?.is_receiver && (
+          <>
+            <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Overview</h3>
+              {donationsMenuLinks.map((menu) => (
+                <CredentailsItem key={menu.id} menuItem={menu} />
+              ))}
+            </List>
+            <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Locations</h3>
+              {locationLinks.map((menu) => (
+                <MenuListItem key={menu.id} menuItem={menu} />
+              ))}
+            </List>
+            <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              <h3 style={{ paddingLeft: 14, fontSize: 16 }}>Users</h3>
+              {usersMenuLinks.map((menu) => (
+                <SettingsItem key={menu.id} menuItem={menu} />
+              ))}
+            </List>
+          </>
+        )}
+        {user?.is_donor && (
+          <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+            <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
+              Donors
+            </h3>
+            {donorLinks.map((menu) => (
+              <DonorMenuItem key={menu.id} menuItem={menu} />
+            ))}
+          </List>
+        )}
+        {user?.is_receiver && (
+          <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+            <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
+              Recievers
+            </h3>
+            {recieverLinks.map((menu) => (
+              <MenuListItem key={menu.id} menuItem={menu} />
+            ))}
+          </List>
+        )}
       </SimpleBar>
       <List
         sx={{

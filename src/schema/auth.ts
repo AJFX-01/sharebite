@@ -50,24 +50,6 @@ class AuthSchemas {
       path: ['confirmPassword'],
     });
 
-  static setupOrganizationSchema = z.object({
-    name: z
-      .string()
-      .min(
-        2,
-        'Organization name is required and must have at least 2 characters',
-      )
-      .max(30, 'Organization name must not exceed 30 characters'),
-    domain: z
-      .string()
-      .min(2, 'Domain is required and must have at least 2 characters')
-      .max(30, 'Domain must not exceed 30 characters'),
-    description: z
-      .string()
-      .min(2, 'Description is required and must have at least 2 characters')
-      .max(255, 'Description must not exceed 255 characters'),
-  });
-
   static editprofileSchema = z.object({
     first_name: z
       .string()

@@ -21,7 +21,6 @@ import ApiRequests from 'api';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 import paths from 'router/path';
-import { transformBool } from 'helpers/utils';
 
 const SignupForm = () => {
   const { up } = useBreakpoints();

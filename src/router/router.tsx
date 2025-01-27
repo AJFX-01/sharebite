@@ -1,7 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import paths, { rootPaths } from './path';
-import { UserProvider } from 'context/userContext';
 import ProtectedRoute from './protectedroute';
 
 /* ---------------- Lazy loads various components ------------------------- */

@@ -1,5 +1,4 @@
 import { Drawer, List, Toolbar, Typography } from '@mui/material';
-// import Logo from 'components/common/Logo';
 import { locationLinks } from 'layouts/main-layout/sidebar/MenuLinks';
 import { donationsMenuLinks } from 'layouts/main-layout/sidebar/DonationMenuLinks';
 import MenuListItem from 'layouts/main-layout/sidebar/MenuListItem';
@@ -19,7 +18,7 @@ interface SidebarProps {
   };
 }
 const Sidebar = ({ drawerWidth }: SidebarProps) => {
-  // const { user } = useUser();
+  const { user } = useUser();
   return (
     <Drawer
       variant="permanent"
@@ -51,31 +50,35 @@ const Sidebar = ({ drawerWidth }: SidebarProps) => {
       </Toolbar>
 
       <SimpleBar style={{ maxHeight: 'calc(100vh - 100px)' }}>
-        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
-            Overview
-          </h3>
-          {donationsMenuLinks.map((menu) => (
-            <CredentailsItem key={menu.id} menuItem={menu} />
-          ))}
-        </List>
-        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
-            Locations
-          </h3>
-          {locationLinks.map((menu) => (
-            <MenuListItem key={menu.id} menuItem={menu} />
-          ))}
-        </List>
-        <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
-            Users
-          </h3>
-          {usersMenuLinks.map((menu) => (
-            <SettingsItem key={menu.id} menuItem={menu} />
-          ))}
-        </List>
-        {/* {user?.is_donor && ( */}
+        {!user?.is_receiver && !user?.is_donor && (
+          <>
+            <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
+                Overview
+              </h3>
+              {donationsMenuLinks.map((menu) => (
+                <CredentailsItem key={menu.id} menuItem={menu} />
+              ))}
+            </List>
+            <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
+                Locations
+              </h3>
+              {locationLinks.map((menu) => (
+                <MenuListItem key={menu.id} menuItem={menu} />
+              ))}
+            </List>
+            <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
+                Users
+              </h3>
+              {usersMenuLinks.map((menu) => (
+                <SettingsItem key={menu.id} menuItem={menu} />
+              ))}
+            </List>
+          </>
+        )}
+        {user?.is_donor && (
           <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
               Donors
@@ -84,8 +87,8 @@ const Sidebar = ({ drawerWidth }: SidebarProps) => {
               <DonorMenuItem key={menu.id} menuItem={menu} />
             ))}
           </List>
-        {/* )} */}
-        {/* {user?.is_reciever && ( */}
+        )}
+        {user?.is_receiver && (
           <List sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
             <h3 style={{ paddingLeft: 14, fontSize: 16, fontWeight: 700 }}>
               Recievers
@@ -94,7 +97,7 @@ const Sidebar = ({ drawerWidth }: SidebarProps) => {
               <MenuListItem key={menu.id} menuItem={menu} />
             ))}
           </List>
-        {/* )}; */}
+        )}
       </SimpleBar>
       {/* <List
         sx={{

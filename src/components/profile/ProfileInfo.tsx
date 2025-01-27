@@ -3,7 +3,6 @@ import { useFormValidation } from 'hooks/useFormValidation';
 import { useBreakpoints } from 'providers/useBreakpoints';
 import { FormEvent, useState } from 'react';
 import AuthSchemas from 'schema/auth';
-import ImageUpload from 'components/base/ImageUpload';
 import toast from 'react-hot-toast';
 import { useMutation } from '@tanstack/react-query';
 import ApiRequests from 'api';
