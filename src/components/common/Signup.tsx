@@ -81,7 +81,6 @@ const SignupForm = () => {
     e.preventDefault();
     if (validate(formData)) {
       toast.loading('Registering...', { id: 'asyntoast' });
-      console.log(formData);
       signupMutation.mutate({
         username: formData.username,
         first_name: formData.first_name,
@@ -92,6 +91,8 @@ const SignupForm = () => {
         is_donor: formData.is_donor,
         is_receiver: formData.is_receiver,
       });
+    } else {
+      toast.error('Please correct error');
     }
   };
 

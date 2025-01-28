@@ -1,7 +1,13 @@
 import { Card, Stack } from '@mui/material';
 import DonationIcon from 'components/admin/dashboard/DonationDetailsIcon';
+import { useDonation } from 'context/donationContext';
 
 const DonationDetails = () => {
+  const { currentUserDonations } = useDonation();
+
+  const filteredDonation = currentUserDonations.filter(
+    (donation) => donation.status.toUpperCase() === 'SUCCESSFUL',
+  );
   return (
     <Stack>
       <Card
@@ -25,21 +31,21 @@ const DonationDetails = () => {
             iconName="carbon:credentials"
             iconColor="#0047CC"
             iconTitle="Donations Made"
-            IconNumber={190}
+            IconNumber={currentUserDonations.length}
             iconBgColor="neutral.light"
           />
           <DonationIcon
             iconName="stash:shield-check-light"
             iconColor="#06c9a9"
             iconTitle="Succesful Donations"
-            IconNumber={151}
+            IconNumber={filteredDonation.length}
             iconBgColor="#cffff9"
           />
           <DonationIcon
             iconName="mdi:donation-outline"
             iconColor="#e30707"
             iconTitle="Pending Donations"
-            IconNumber={23}
+            IconNumber={currentUserDonations.length - filteredDonation.length}
             iconBgColor="#f7b5b5"
           />
         </Stack>
