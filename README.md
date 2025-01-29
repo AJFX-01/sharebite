@@ -1,50 +1,99 @@
-# React + TypeScript + Vite
+# Sharebitee Frontend 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Project Name - ShareBite Management Frontend
 
-Currently, two official plugins are available:
+This is the frontend for the Donation Management System, built using **React (Vite)**, **TypeScript**, and **Material UI**. It provides separate dashboards for **Donors, Admins, and Receivers** to manage donations efficiently.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
+- Donor Dashboard: Manage donations, view history, and upload proofs.
+- Admin Dashboard: Oversee donations, users, and manage site settings.
+- Receiver Dashboard: Reserve donations, track receipts, and confirm deliveries.
+- Authentication: Secure login and registration.
+- API Integration: Communicates with the backend Django API.
+- Responsive UI: Material UI components for a clean and professional design.
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
+- **React** (Vite for fast development)
+- **TypeScript** (for type safety)
+- **Material UI** (for styling and UI components)
+- **React Router** (for navigation)
+- **Axios** (for API requests)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 📦 Installation
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-repo/frontend.git
+   cd frontend
+   ```
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+3. **Set up environment variables:**
+   Create a `.env` file in the root directory with:
+   ```env
+   VITE_API_BASE_URL=http://localhost:8000/api
+   ```
+4. **Start the development server:**
+   ```sh
+   npm run dev
+   ```
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+## 🔧 Project Structure
+```
+frontend/
+│-- src/
+│   │-- components/   # Reusable UI components
+│   │-- helpers/      # Reusable functions
+│   │-- layouts/      # Layouts
+│   │-- providers/    # context providers 
+│   │-- router/       # Routes setup
+│   │-- schema/       # Zod Validation schemas
+│   │-- themes/       # Material UI components
+│   │-- types/        # Global types declaring
+│   │-- pages/        # Page components (Dashboards, Auth, etc.)
+│   │-- hooks/        # Custom React hooks
+│   │-- context/      # Global state management
+│   │-- services/     # API request functions
+│   │-- utils/        # Helper functions
+│-- public/           # Static assets
+│-- .env              # Environment variables
+│-- vite.config.ts    # Vite configuration
+│-- tsconfig.json     # TypeScript configuration
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 📌 Available Pages
+### 🔹 Donor Dashboard
+- View & create donations
+- Upload proof of donation
+- Track donation status
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react';
+### 🔹 Admin Dashboard
+- Manage donations
+- Approve or reject donations
+- Manage users
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-});
+### 🔹 Receiver Dashboard
+- View available donations
+- Reserve a donation
+- Upload receipt after pickup
+
+## 🔗 API Integration
+- Uses Axios to fetch data from the Django backend.
+- Authentication via JWT tokens stored in **localStorage**.
+- Uses React Query (optional) for caching API responses.
+
+## 🚀 Deployment
+To build for production:
+```sh
+npm run build
 ```
+For deployment, upload the `dist/` folder to your hosting service.
+
+## 📄 License
+This project is licensed under the MIT License.
+
+## 📞 Contact
+For support or contributions, contact [Your Name] at [opeyemi.ajegbomogun@yahoo.com].
+
+
