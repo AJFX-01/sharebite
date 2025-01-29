@@ -191,17 +191,14 @@ declare global {
     users: User[];
     currentUserDonations: Donation[];
     reservations: Donation[];
-    receipts: Reciept[];
     donationLoading: boolean;
     locationLoading: boolean;
     userLoading: boolean;
     reservationLoading: boolean;
-    receiptLoading: boolean;
     currentUserDonationLoading: boolean;
     donationError: Error | null;
     locationError: Error | null;
     userError: Error | null;
-    receiptError: Error | null;
     currentUserDonationError: Error | null;
     reservationError: Error | null;
     statusFilter: string;
